@@ -1,0 +1,112 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* dark mode color */
+  /* background-color: #282c34; */
+  background-color: var(--darkest-black);
+  color: #fff;
+  /* light mode color */
+  /* background-color: #fff;
+  color: #000; */
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+:root {
+  --black: #000000;
+  --darkest-black: #111113;
+  --light-black: #29282b;
+  --transparent-black: #00000080;
+  --dark-gray: #2f2e30;
+  --dark-light-gray: #3f3e40;
+  --gray: #545356;
+  --light-gray: #8f8e91;
+  --white: #ffffff;
+  --wgs-main: #0d21a1;
+  --stop: #ef2424;
+  --run: #00fd28;
+  --chart-x: #9a9ae5;
+  --chart-y: #00ff00;
+  --chart-z: #ff00ff;
+}
+
+#basicRoundedBtn,
+.winBtn {
+  cursor: pointer;
+  -webkit-app-region: no-drag;
+  background-color: var(--gray);
+  border-radius: 0.88rem;
+  border: none;
+  color: var(--white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 7.5rem;
+  gap: 6px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.88rem;
+  text-align: center;
+  letter-spacing: 0.02em;
+  user-select: none;
+}
+.winBtns {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 0;
+  padding: 0;
+  width: 20%;
+  overflow: visible;
+  z-index: 900;
+}
+
+.winBtn {
+  background-color: transparent;
+  border-radius: 0;
+  width: auto;
+  height: auto;
+  padding: 0.63rem 1.25rem;
+  margin: 0;
+}
+#basicRoundedBtn:hover,
+.winBtn:hover {
+  background-color: var(--light-gray);
+}
+
+.winBtn:nth-child(4):hover {
+  background-color: red;
+}
+.settingBtn {
+  cursor: pointer;
+ display: flex;
+ padding-top: 0.25rem;
+ padding-bottom: 0.25rem;
+ border-radius: 0.38rem;
+ margin-right: 0.38rem;
+  background-color: #000000;
+  -webkit-app-region: no-drag;
+  color: white;
+  background-color: transparent;
+  border: none;
+  justify-content: center;
+  align-items: center;
+}
+.settingBtn:hover {
+  background-color: var(--light-gray);
+}
+
+html{
+  width: 100%;
+  height: 100%;
+  font-size: 16px;
+}

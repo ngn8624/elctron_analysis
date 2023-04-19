@@ -1,0 +1,45 @@
+.inputArea {
+  display: flex;
+  padding: 5px 10px;
+  background-color: var(--dark-light-gray);
+  flex-direction: row;
+}
+
+.input {
+  width: 60%;
+  background-color: var(--dark-gray);
+  color: var(--white);
+  text-align: center;
+}
+
+.input:focus {
+  outline: 2px solid var(--light-gray);
+}
+
+.input::placeholder {
+  color: var(--white);
+}
+
+.readOnly {
+  width: 60%;
+  cursor: default;
+  background-color: var(--dark-gray);
+  color: var(--white);
+}
+
+.readOnly:focus {
+  outline: none;
+}
+
+.inputBundle {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.title {
+  width: 40%;
+  user-select: none;
+}

@@ -1,0 +1,58 @@
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+[type='checkbox'] {
+  appearance: none;
+  position: relative;
+  border: max(2px, 0.1em) solid var(--white);
+  background-color: var(--white);
+  border-radius: 20px;
+  width: 2.25em;
+  height: 1.25em;
+  cursor: pointer;
+}
+
+[type='checkbox']::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  background-color: var(--gray);
+  transition: left 250ms linear;
+}
+
+[type='checkbox']:checked {
+  background-color: var(--black);
+  border-color: transparent;
+}
+
+[type='checkbox']:checked::before {
+  background-color: var(--white);
+  left: 1em;
+}
+
+[type='checkbox']:disabled {
+  border-color: var(--white);
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+[type='checkbox']:disabled:before {
+  background-color: lightgray;
+}
+
+[type='checkbox']:disabled + span {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+[type='checkbox']:focus-visible {
+  outline-offset: max(2px, 0.1em);
+  outline: max(2px, 0.1em) solid tomato;
+}

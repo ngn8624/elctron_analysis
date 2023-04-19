@@ -1,0 +1,17 @@
+{
+  "savePath": "",
+  "srcCnt": 3,
+  "fftCnt": 4096,
+  "rawDataType": "Line",
+  "fftDataType": "Surface",
+  "daqModel": "PCI-1714",
+  "couplingType": "AC",
+  "voltRange": "500mV",
+  "dcIgnore": false,
+  "sampleInterval": 1,
+  "windowsIdx": "rectangle",
+  "viewMode": "DBV",
+  "dbvRange": 100,
+  "srcDetail": [],
+  "annotationPlayInterval": 3
+}

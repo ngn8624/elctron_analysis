@@ -1,0 +1,27 @@
+.combo {
+  display: flex;
+  padding: 5px 10px;
+  background-color: var(--dark-light-gray);
+  flex-direction: row;
+}
+
+.title {
+  width: 40%;
+  user-select: none;
+}
+
+.select {
+  width: 60%;
+  background-color: var(--dark-gray);
+  color: var(--white);
+  outline: 0 none;
+  text-align: center;
+}
+
+.select:focus {
+  outline: 2px solid var(--light-gray);
+}
+
+.option {
+  background-color: var(--light-gray);
+}

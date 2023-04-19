@@ -1,0 +1,16 @@
+.buttonReset {
+    position: absolute;
+    width: 50px;
+    right: 1%;
+    top:0%
+  }
+  .box {
+    width: 100%;
+    height: 85%;
+    background-color: var(--dark-gray);
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    flex: auto;
+    flex-direction: column;
+  }

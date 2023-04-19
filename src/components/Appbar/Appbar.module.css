@@ -1,0 +1,56 @@
+.appbar {
+  width: 100%;
+  height: 3.5vh;
+  display: flex;
+  flex-direction: row;
+  font-size: 0.75rem;
+  align-items: center;
+  -webkit-app-region: drag;
+  user-select: none;
+  overflow: hidden;
+}
+
+.appbarLeft {
+  overflow: hidden;
+  width: 80%;
+  height: 100%;
+  display: flex;
+  gap: 1.25rem;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  padding: 0 0.63rem;
+  -webkit-app-region: drag;
+}
+
+.time {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.75rem;
+  /* line-height: 15px; */
+  /* identical to box height */
+  text-align: center;
+  color: var(--white);
+  flex-shrink: 0;
+}
+
+.inputfile {
+  display: none;
+}
+.log {
+  flex-grow: 1;
+  width: 3rem;
+  display: flex;
+  align-items: center;
+  background-color: #29282b;
+  padding: 0.13rem 0.38rem;
+  gap: 0.38rem;
+  border-radius: 0.13rem;
+}
+.logTxt {
+  width: 47.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -1,0 +1,67 @@
+.roundedBox {
+  background-color: var(--light-black);
+  border-radius: 14px;
+  flex-direction: column;
+  display: flex;
+  align-content: center;
+  width: 100%;
+height: 98.2%;
+  overflow: hidden;
+  transition: none;
+}
+.fftRoundedBox {
+  background-color: var(--light-black);
+  border-radius: 14px;
+  flex-direction: column;
+  display: flex;
+  align-content: center;
+  height: 100%;
+  overflow: hidden;
+  transition: none;
+  padding-left: 0.63rem;
+  padding-right: 0.63rem;
+}
+
+.box {
+  flex-grow: 1;
+  height: 100%;
+  background-color: var(--dark-gray);
+  align-items: center;
+  position: relative;
+  margin: 0 0.63rem 0.63rem   0.63rem ;
+}
+.fftBox {
+  height: 100%;
+  background-color: var(--dark-gray);
+  align-items: center;
+  position: relative;
+  margin: 0 0.63rem 0.63rem   0.63rem ;
+  padding: 20px;
+}
+.boxHeader {
+  margin : 0.63rem ;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 1rem;
+  flex-direction: row;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.zoomBox {
+  background-color: var(--dark-gray);
+  display: flex;
+  padding: 12px;
+  align-items: center;
+  flex: auto;
+  flex-direction: column;
+  position: relative;
+}
+
+.expandIcon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  scale: 1.2;
+}

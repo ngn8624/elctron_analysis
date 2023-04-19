@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DAQNavi Profile="2.0.0.0" Version="4.0.0.0">
+    <DaqDevice ModuleIndex="0">
+        <Property ID="8">
+            <Description>Product ID:</Description>
+            <Attribute>0</Attribute>
+            <Type>2</Type>
+            <EnumType>ProductId</EnumType>
+            <Tip>Product ID is used to represent a DAQ Device model and distinguish devices of different models. Each device model owns an unique Product ID.</Tip>
+            <Value>152</Value>
+        </Property>
+    </DaqDevice>
+    <DaqAi ModuleIndex="0">
+        <Property ID="51">
+            <Description>Connection Type:</Description>
+            <Attribute>1</Attribute>
+            <Type>65538</Type>
+            <EnumType>AiSignalType</EnumType>
+            <Tip>Gets or sets the connection type of each channel.</Tip>
+            <Value>0,0,0,0</Value>
+        </Property>
+        <Property ID="52">
+            <Description>Value Range Type:</Description>
+            <Attribute>1</Attribute>
+            <Type>65538</Type>
+            <EnumType>ValueRange</EnumType>
+            <Tip>Gets or sets the ValueRange for the selected channel.</Tip>
+            <Value>2,2,2,2</Value>
+        </Property>
+        <Property ID="63">
+            <Description>Scan Channel Start:</Description>
+            <Attribute>3</Attribute>
+            <Type>2</Type>
+            <EnumType></EnumType>
+            <Tip>Gets or sets the physical channel number of the start channel to be scanned by buffered AI or buffered AO.</Tip>
+            <Value>2</Value>
+        </Property>
+        <Property ID="64">
+            <Description>Scan Channel Count:</Description>
+            <Attribute>3</Attribute>
+            <Type>2</Type>
+            <EnumType></EnumType>
+            <Tip>Gets or sets the workable channel count to be scanned by buffered AI or buffered AO. The maximum available workable channel count depends on the connection type of channels.</Tip>
+            <Value>4</Value>
+        </Property>
+        <Property ID="61">
+            <Description>Convert Clock Source:</Description>
+            <Attribute>1</Attribute>
+            <Type>2</Type>
+            <EnumType>SignalDrop</EnumType>
+            <Tip>Gets or sets the conversion clock source used by Buffered AI or Buffered AO. The value should be a type of SignalDrop.</Tip>
+            <Value>1</Value>
+        </Property>
+        <Property ID="62">
+            <Description>Convert Clock Rate:</Description>
+            <Attribute>3</Attribute>
+            <Type>5</Type>
+            <EnumType></EnumType>
+            <Tip>Gets or sets the convert clock rate of each channel used for Buffered AI or Buffered AO.</Tip>
+            <Value>300000</Value>
+        </Property>
+        <Property ID="50">
+            <Description>Channel Count:</Description>
+            <Attribute>2</Attribute>
+            <Type>2</Type>
+            <EnumType></EnumType>
+            <Tip>The count of logical channels which can be used to acquire AI samples. This value depends on the channel connection type of the device.</Tip>
+            <Value>4</Value>
+        </Property>
+        <Property ID="68">
+            <Description>Trigger Source:</Description>
+            <Attribute>1</Attribute>
+            <Type>2</Type>
+            <EnumType>SignalDrop</EnumType>
+            <Tip>Gets or sets the signal source of trigger used by buffered AI or buffered AO sampling.</Tip>
+            <Value>0</Value>
+        </Property>
+        <Property ID="72">
+            <Description>Trigger Action:</Description>
+            <Attribute>1</Attribute>
+            <Type>2</Type>
+            <EnumType>TriggerAction</EnumType>
+            <Tip>Gets or sets the action to be executed after the trigger condition is satisfied.</Tip>
+            <Value>1</Value>
+        </Property>
+        <Property ID="69">
+            <Description>Trigger Edge:</Description>
+            <Attribute>1</Attribute>
+            <Type>2</Type>
+            <EnumType>ActiveSignal</EnumType>
+            <Tip>Gets or sets the signal edge of trigger source at which the signal is considered as a valid trigger signal.</Tip>
+            <Value>1</Value>
+        </Property>
+        <Property ID="70">
+            <Description>Trigger Level:</Description>
+            <Attribute>3</Attribute>
+            <Type>5</Type>
+            <EnumType></EnumType>
+            <Tip>Gets or sets the threshold value of the trigger signal. This is only for the signal which is analog type signal.</Tip>
+            <Value>0</Value>
+        </Property>
+        <Property ID="71">
+            <Description>Trigger Delay Count:</Description>
+            <Attribute>3</Attribute>
+            <Type>2</Type>
+            <EnumType></EnumType>
+            <Tip>Gets or sets the delay count in Buffered AI or Buffered AO with trigger.</Tip>
+            <Value>0</Value>
+        </Property>
+        <Property ID="60">
+            <Description>Interval Count:</Description>
+            <Attribute>3</Attribute>
+            <Type>2</Type>
+            <EnumType></EnumType>
+            <Tip>Gets or sets the interval count for buffered AI or buffered AO.In Buffered AI,The data buffer is divided into a series of section for sending DataReady events, Intervalcount set the count how many samples per channel acquired, the DataReady event will happened. When each channel samples a size of IntervalCount data, driver would sending DataReady event to notice the user application that the data is ready; In Buffered AO, the data buffer is also divided into a series of section for sending DataTransmitted events, Intervalcount set the count how many samples per channel output, the DataTransmitted event will happened. When each channel output a size of IntervalCount data, driver sending DataTransmitted event to notice the user application that the data has outputted.</Tip>
+            <Value>24576</Value>
+        </Property>
+        <Property ID="390">
+            <Description>Record Section Length:</Description>
+            <Attribute>3</Attribute>
+            <Type>2</Type>
+            <EnumType></EnumType>
+            <Tip>Gets or sets the record section length.</Tip>
+            <Value>12288</Value>
+        </Property>
+        <Property ID="391">
+            <Description>Record Section Count:</Description>
+            <Attribute>3</Attribute>
+            <Type>2</Type>
+            <EnumType></EnumType>
+            <Tip>Gets or sets the record section count.</Tip>
+            <Value>0</Value>
+        </Property>
+        <Property ID="349">
+            <Description>Record Cycle:</Description>
+            <Attribute>3</Attribute>
+            <Type>2</Type>
+            <EnumType></EnumType>
+            <Tip>Gets or sets the record cycles.</Tip>
+            <Value>1</Value>
+        </Property>
+        <Property ID="23">
+            <Description>Resolution:</Description>
+            <Attribute>2</Attribute>
+            <Type>2</Type>
+            <EnumType></EnumType>
+            <Tip>Data resolution refers to the number of the bit that is used to realize analog to digital(or digital to analog) conversion,the bigger bit number of ADC(or DAC) is, the higher the resolution will be</Tip>
+            <Value>12</Value>
+        </Property>
+        <Property ID="26">
+            <Description>Channel Number Max:</Description>
+            <Attribute>2</Attribute>
+            <Type>2</Type>
+            <EnumType></EnumType>
+            <Tip> Max number of physical channel.Physical channel refers to visible input/output terminals or pins that can connect wires on a data acquisition card.</Tip>
+            <Value>3</Value>
+        </Property>
+        <Property ID="27">
+            <Description>Channel Connection Type:</Description>
+            <Attribute>0</Attribute>
+            <Type>65538</Type>
+            <EnumType>AiChannelType</EnumType>
+            <Tip>The channel connection type.</Tip>
+            <Value>0</Value>
+        </Property>
+        <Property ID="392">
+            <Description>Connection Type:</Description>
+            <Attribute>0</Attribute>
+            <Type>65538</Type>
+            <EnumType>AiSignalType</EnumType>
+            <Tip>The device supported connection type.</Tip>
+            <Value>0</Value>
+        </Property>
+        <Property ID="31">
+            <Description>Value Range:</Description>
+            <Attribute>0</Attribute>
+            <Type>65538</Type>
+            <EnumType>ValueRange</EnumType>
+            <Tip>The device supported Value Range type.</Tip>
+            <Value>2,3,5,13</Value>
+        </Property>
+        <Property ID="30">
+            <Description>Overall ValueRange type:</Description>
+            <Attribute>0</Attribute>
+            <Type>2</Type>
+            <EnumType>ValueRange</EnumType>
+            <Tip>Whether all the channels can only set the same Value Range type, 1 means yes and 0 means no.</Tip>
+            <Value>0</Value>
+        </Property>
+        <Property ID="35">
+            <Description>Scan Method:</Description>
+            <Attribute>0</Attribute>
+            <Type>2</Type>
+            <EnumType>SamplingMethod</EnumType>
+            <Tip>The device channel scan method,it would be Simultaneous or EqualIntervalSwitch.</Tip>
+            <Value>1</Value>
+        </Property>
+        <Property ID="38">
+            <Description>Convert Clock Sources:</Description>
+            <Attribute>0</Attribute>
+            <Type>65538</Type>
+            <EnumType>SignalDrop</EnumType>
+            <Tip>The device supported convert clock source list.</Tip>
+            <Value>1,14,17</Value>
+        </Property>
+        <Property ID="39">
+            <Description>Convert Clock Rate Range:</Description>
+            <Attribute>2</Attribute>
+            <Type>7</Type>
+            <EnumType></EnumType>
+            <Tip>The supported convert clock rate range.</Tip>
+            <Value>9,234375,30000000</Value>
+        </Property>
+        <Property ID="43">
+            <Description>Trigger Count:</Description>
+            <Attribute>0</Attribute>
+            <Type>2</Type>
+            <EnumType></EnumType>
+            <Tip>The supported trigger count.</Tip>
+            <Value>1</Value>
+        </Property>
+        <Property ID="44">
+            <Description>Trigger Sources:</Description>
+            <Attribute>0</Attribute>
+            <Type>65538</Type>
+            <EnumType>SignalDrop</EnumType>
+            <Tip>The supported trigger sources.</Tip>
+            <Value>0,23,24,25,26,18</Value>
+        </Property>
+        <Property ID="45">
+            <Description>Trigger Action:</Description>
+            <Attribute>0</Attribute>
+            <Type>65538</Type>
+            <EnumType>TriggerAction</EnumType>
+            <Tip>The supported trigger actions.</Tip>
+            <Value>1,2</Value>
+        </Property>
+        <Property ID="46">
+            <Description>Trigger Delay Count Range:</Description>
+            <Attribute>2</Attribute>
+            <Type>7</Type>
+            <EnumType></EnumType>
+            <Tip>The supported range of the trigger delay count can be set.</Tip>
+            <Value>5,0,65535</Value>
+        </Property>
+        <Property ID="36">
+            <Description>Scan Channel Start Base:</Description>
+            <Attribute>2</Attribute>
+            <Type>2</Type>
+            <EnumType></EnumType>
+            <Tip>The base number of the start scan channel, for example, if this property value is 2, the start scan channel can be only set to 2,4,6,8 and so on.</Tip>
+            <Value>2</Value>
+        </Property>
+        <Property ID="37">
+            <Description>Scan Channel Count Base:</Description>
+            <Attribute>2</Attribute>
+            <Type>2</Type>
+            <EnumType></EnumType>
+            <Tip>The base number of the scan channel count, for example, if scan channel count is 2, the scan channel count can only be set to 2,4,6,8 and so on.</Tip>
+            <Value>2</Value>
+        </Property>
+    </DaqAi>
+</DAQNavi>

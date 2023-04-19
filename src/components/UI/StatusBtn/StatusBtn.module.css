@@ -1,0 +1,55 @@
+.HoverBtn {
+  background-color: var(--gray);
+  border-radius: 0.88rem;
+  border: none;
+  color: var(--white);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 7.5rem;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.88rem;
+  text-align: center;
+  letter-spacing: 0.02em;
+  position: relative;
+}
+
+.HoverBtn:before {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: 24px;
+  left: -20px;
+  background-color: var(--transparent-black);
+  color: var(--white);
+  padding: 10px 7px;
+  border-radius: 10px;
+  opacity: 0;
+  transition: all 0.2s linear;
+  font-size: 12px;
+  z-index: 999;
+}
+
+.HoverBtn:hover::before {
+  opacity: 1;
+}
+
+.runStatus {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--run);
+  flex-shrink: 0;
+  transition: all 0.2s linear;
+}
+
+.stopStatus {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--stop);
+  flex-shrink: 0;
+  transition: all 0.2s linear;
+}
