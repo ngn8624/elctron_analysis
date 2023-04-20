@@ -1,22 +1,25 @@
 import { useEffect, useState } from 'react';
-import { chartDatas, generateColor } from '../../constant/constant';
 import AppbarView from './AppbarView';
 import { controlWindowBtns } from '../../utils/file';
 import { FileModel } from '../../model/FileModel';
-import { DaqInitFunction, daqGetStatistics } from '../../controller/daq';
+import {
+  DaqInitFunction,
+  daqGetStatistics,
+  daqGetStatisticsStop,
+} from '../../controller/daq';
+
+let timer = 0;
 export default function AppBar({
-  rawData,
   setRawData,
   setFftData,
   setShowPopup,
-  setCbStatus,
-  cbStatus,
   selectedFile,
   setSelectedFile,
   isFileRunning,
   setIsFileRunning,
   setSettingModel,
-  contents
+  contents,
+  isTabs,
 }) {
   const [isRunning, setIsRunning] = useState(false);
 
@@ -46,7 +49,7 @@ export default function AppBar({
     if (updatedFileArray.length !== filesArray.length) {
       filesArray = updatedFileArray;
     }
-    const pathList = filesArray.map(file => file.path);
+    const pathList = filesArray.map((file) => file.path);
     const path = pathList[0];
     if (path !== undefined) {
       const selectedFiles = filesArray.map(
@@ -54,24 +57,73 @@ export default function AppBar({
       );
       setSelectedFile(selectedFiles);
       setIsFileRunning(true);
-      setSettingModel(prevModel => ({...prevModel, paths: pathList}));
+      setSettingModel((prevModel) => ({ ...prevModel, paths: pathList }));
     }
 
     clearFileInput(e.target);
   };
 
-  const handleRun = async () => {
-    // 날리기
-   console.log("Calc", contents);
-   const ret = await daqGetStatistics(contents);
-   console.log("ret", ret);
+  // test용 
+  const Start = async () => {
+    console.log('Start탔냐');
+    timer = setInterval(() => {
+      const dataCnt = isTabs.length;
+      const srcCnt = 3;
+      setRawData((prevData) => {
+        const newRawData = [...prevData];
+        for (let i = 0; i < dataCnt; i++) {
+          for (let j = 0; j < srcCnt; j++) {
+            newRawData[i][j].push(Math.floor(Math.random() * 100));
+          }
+        }
+        return newRawData;
+      });
+      setFftData((prevData) => {
+        const newRawData = [...prevData];
+        for (let i = 0; i < dataCnt; i++) {
+          for (let j = 0; j < srcCnt; j++) {
+            newRawData[i][j].push(Math.floor(Math.random() * 100));
+          }
+        }
+        return newRawData;
+      });
+    }, 1000);
+  };
+
+  // test용 
+  const end = () => {
+    console.log('end 탔냐');
+    clearInterval(timer);
+  };
+
+  const handleRun = () => {
+    setIsRunning((prev) => {
+      if (prev) {
+        daqGetStatisticsStop();
+        // end(); // test용
+      } else {
+        setRawData(
+          Array.from({ length: isTabs.length }, () =>
+            Array.from({ length: 3 }, () => [])
+          )
+        );
+        setFftData(
+          Array.from({ length: isTabs.length }, () =>
+            Array.from({ length: 3 }, () => [])
+          )
+        );
+        // Start(); // test용
+        daqGetStatistics(contents);
+      }
+      return !prev;
+    });
   };
 
   const handleFileLoad = () => {
     if (isFileRunning) {
       setIsFileRunning(false);
       setSelectedFile([]);
-      setSettingModel(prevModel => ({...prevModel, paths: []}));
+      setSettingModel((prevModel) => ({ ...prevModel, paths: [] }));
       return;
     }
     document.getElementById('importAttachment').click();

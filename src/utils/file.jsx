@@ -27,14 +27,13 @@ export const writeConfig = async ({ contents, setIsSavedSuccess }) => {
     getCalcPath(),
     contents
   );
-  console.log("writeConfig", isSuccess);
   setIsSavedSuccess(isSuccess);
   return isSuccess;
 };
 
 export const readConfig = async () => {
   if (!window.wgsFunction) return '';
-  return await window.wgsFunction.readFile(getConfigPath());
+  return await window.wgsFunction.readFile(getCalcPath());
 };
 
 export const existFile = async (path) => {

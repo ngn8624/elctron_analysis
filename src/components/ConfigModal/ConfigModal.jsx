@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { daqInit, DaqInitFunction } from '../../controller/daq';
-
-import { ConfigModel, SettingModel } from '../../model/SettingModel';
-import { getConfigPath, writeConfig } from '../../utils/file';
+import { DaqInitFunction } from '../../controller/daq';
+import { writeConfig, readConfig } from '../../utils/file';
 import ConfigModalView from './ConfigModalView';
 
 export default function ConfigModal({
@@ -15,7 +13,6 @@ export default function ConfigModal({
   contents,
   setContents
 }) {
-
   const [isSavedSuccess, setIsSavedSuccess] = useState(false);
   const [isShowIcon, setIsShowIcon] = useState(false);
   const modalRef = useRef();
@@ -33,6 +30,7 @@ export default function ConfigModal({
     };
   }, [modalRef]);
 
+  // String to json용, contents로 보낼 json데이터 변환용
   useEffect(() => {
     const newSet = {
       paths: settingModel.paths,
@@ -71,11 +69,41 @@ export default function ConfigModal({
     setShowPopup(false);
   };
 
+  // setting창 조작후 settingModel에 넣기
   const onChangeInput = (e) => {
     const { name, value } = e.target;
     setSettingModel((prev) => ({...prev, [name]: value}));
   };
 
+  // json to string용, config파일에서 불러서 settingModel에 넣을때 변환용
+  function convertToStrings(obj) {
+    if (Array.isArray(obj)) {
+      return obj.map((item) => convertToStrings(item));
+    } else if (typeof obj === "object" && obj !== null) {
+      return Object.entries(obj).reduce((acc, [key, value]) => {
+        acc[key] = convertToStrings(value);
+        return acc;
+      }, {});
+    } else if (typeof obj === "boolean") {
+      return obj ? "TRUE" : "FALSE";
+    } else {
+      return String(obj);
+    }
+  }
+
+
+  // Load
+  const handleLoad = async () => {
+    await readConfig().then((data) => {
+      const json = data ? JSON.parse(data) : {};
+      if (json === JSON.stringify(settingModel)) return;
+      const strObj = convertToStrings(json);
+      setSettingModel(strObj);
+      DaqInitFunction({ setRawData, setFftData });
+    });
+  };
+
+  // save
   const handleSave = async () => {
     await writeConfig({ contents, setIsSavedSuccess }).then((res) => {
       if (!res) return;
@@ -98,6 +126,7 @@ export default function ConfigModal({
       isSavedSuccess={isSavedSuccess}
       modalRef={modalRef}
       handleSave={handleSave}
+      handleLoad={handleLoad}
     />
   );
 }

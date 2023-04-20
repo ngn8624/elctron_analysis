@@ -1,6 +1,5 @@
 import StatusBtn from '../UI/StatusBtn/StatusBtn';
 import WGSLogo from '../WGSLogo/WGSLogo';
-import { BsBellFill } from 'react-icons/bs';
 import styles from './Appbar.module.css';
 import CurrentTimeDisplay from '../UI/CurrentTime';
 import { IoMdSettings } from 'react-icons/io';

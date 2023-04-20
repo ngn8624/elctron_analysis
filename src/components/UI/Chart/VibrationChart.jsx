@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,11 +10,11 @@ import {
   Legend,
 } from 'chart.js/auto';
 import zoomPlugin from 'chartjs-plugin-zoom';
-import { Line } from 'react-chartjs-2';
+import { Chart } from 'react-chartjs-2';
 import annotationPlugin from 'chartjs-plugin-annotation';
 import styles from './VibrationChart.module.css';
 import Container from '../Container/Container';
-import { enTitle, defaultOptions } from '../../../constant/constant';
+import { defaultOptions } from '../../../constant/constant';
 
 ChartJS.register(
   CategoryScale,
@@ -28,75 +28,29 @@ ChartJS.register(
   annotationPlugin
 );
 
-export default memo(function VibrationChart({ title, rawData, anno }) {
+export default function VibrationChart({ rawData }) {
   const chartRef = React.useRef(null);
   const chartData = {
     type: 'Line',
-    datasets: title === enTitle ? rawData : [rawData],
+    datasets: rawData,
   };
-  // min, max 값 계산
-  const calculateXMinAndMax = (title, enTitle, rawData) => {
-    let xMin, xMax;
 
-    if (title === enTitle) {
-      xMin = rawData[0].data.length === 0 ? 0 : rawData[0].data[0].x;
-      xMax =
-        rawData[0].data.length === 0
-          ? 1
-          : rawData[0].data[rawData[0].data.length - 1].x;
-    } else {
-      xMin = rawData.data.length === 0 ? 0 : rawData.data[0].x;
-      xMax =
-        rawData.data.length === 0 ? 1 : rawData.data[rawData.data.length - 1].x;
-    }
+  // min, max 값 계산
+  const calculateXMinAndMax = (rawData) => {
+    let xMin, xMax;
+    if (rawData === undefined || rawData[0] === undefined ||rawData[0].data === undefined) return { xMin: 0, xMax: 1 };
+    xMin = rawData[0].data.length === 0 ? 0 : rawData[0].data[0].x;
+    xMax =
+      rawData[0].data.length === 0
+        ? 1
+        : rawData[0].data[rawData[0].data.length - 1].x;
 
     return { xMin, xMax };
   };
 
-  // annotation 계산
-  const createAnnotationObject = (timeSlot, borderColor) => ({
-    display: true,
-    type: 'line',
-    ScaleID: 'x',
-    xMin: timeSlot,
-    xMax: timeSlot,
-    borderColor: borderColor,
-    borderWidth: 5,
-    textAlign: 'start',
-    label: {
-      position: 'right',
-      enabled: true,
-      color: 'orange',
-      font: {
-        weight: 'bold',
-      },
-    },
-  });
-
   // chart option 적용
   const options = useMemo(() => {
-    const { xMin, xMax } = calculateXMinAndMax(title, enTitle, rawData);
-
-    const updatedAnnotations = {};
-    if (
-      (title === enTitle && rawData[0].data.length !== 0) ||
-      (title !== enTitle && rawData.data.length !== 0)
-    ) {
-      anno
-        .filter(
-          (a, i) =>
-            (title !== enTitle && a.timeSlot >= rawData.data[0].x) ||
-            (title === enTitle && a.timeSlot >= rawData[0].data[0].x)
-        )
-        .forEach((a, i) => {
-          const propertyName = `line${i}`;
-          updatedAnnotations[propertyName] = createAnnotationObject(
-            a.timeSlot,
-            a.borderColor
-          );
-        });
-    }
-
+    const { xMin, xMax } = calculateXMinAndMax(rawData);
     return {
       ...defaultOptions,
       scales: {
@@ -120,13 +74,9 @@ export default memo(function VibrationChart({ title, rawData, anno }) {
             },
           },
         },
-        annotation: {
-          ...defaultOptions.plugins.annotation,
-          annotations: updatedAnnotations,
-        },
       },
     };
-  }, [title, rawData, anno]);
+  }, [rawData]);
 
   const handleResetZoom = () => {
     if (chartRef && chartRef.current) {
@@ -143,7 +93,7 @@ export default memo(function VibrationChart({ title, rawData, anno }) {
       >
         Reset
       </button>
-      <Line ref={chartRef} type='Line' options={options} data={chartData} />
+      <Chart ref={chartRef} type='line' options={options} data={chartData} />
     </Container>
   );
-});
+};

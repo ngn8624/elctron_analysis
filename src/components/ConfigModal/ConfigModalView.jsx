@@ -1,6 +1,7 @@
 import styles from './ConfigModal.module.css';
 import { MdClose } from 'react-icons/md';
 import SaveBtn from './SaveBtn';
+import LoadBtn from './LoadBtn';
 import Input from '../UI/Input/Input';
 import Expandable from '../UI/Expandable/Expandable';
 import {
@@ -21,6 +22,7 @@ export default function ConfigModalView({
   isSavedSuccess,
   modalRef,
   handleSave,
+  handleLoad,
 }) {
   return (
     <div className={styles.modal} ref={modalRef}>
@@ -30,6 +32,9 @@ export default function ConfigModalView({
             <header className={styles.modalHeader}>
               Settings
               <div className={styles.toRight} style={{ padding: 0 }}>
+                <LoadBtn
+                  handleLoad={handleLoad}
+                />
                 <SaveBtn
                   handleSave={handleSave}
                   isShowIcon={isShowIcon}
@@ -57,9 +62,12 @@ export default function ConfigModalView({
 function ConfigBody({ settingModel, onChangeInput }) {
   return (
     <>
-      <FileConfig settingModel={settingModel}/>
+      <FileConfig settingModel={settingModel} />
       <FftConfig settingModel={settingModel} onChangeInput={onChangeInput} />
-      <StatisticsConfig settingModel={settingModel} onChangeInput={onChangeInput} />
+      <StatisticsConfig
+        settingModel={settingModel}
+        onChangeInput={onChangeInput}
+      />
     </>
   );
 }
@@ -114,17 +122,21 @@ function FftConfig({ settingModel, onChangeInput }) {
 }
 
 function FileConfig({ settingModel }) {
-  // console.log("asd", settingModel.paths);
-  return (<Expandable title={'FILE PATH'}>
-        <div className={styles.fileName}>
-      <div className={styles.title}>{settingModel.paths.length > 0 ? settingModel.paths : '[]'}</div>
+  return (
+    <Expandable title={'FILE PATH'}>
+      <div className={styles.fileName}>
+        <div className={styles.title}>
+          {settingModel.paths.length > 0 ? settingModel.paths : '[]'}
+        </div>
       </div>
-    </Expandable>);
+    </Expandable>
+  );
 }
 
-function StatisticsConfig({ settingModel,onChangeInput }) {
-  return (<Expandable title={'STATISTICS'}>
-    <ComboBox
+function StatisticsConfig({ settingModel, onChangeInput }) {
+  return (
+    <Expandable title={'STATISTICS'}>
+      <ComboBox
         title={'RMS'}
         options={Object.values(ENUM_STATISTICS_IGNORE)}
         name={'RMS'}
@@ -208,5 +220,6 @@ function StatisticsConfig({ settingModel,onChangeInput }) {
         onChangeInput={onChangeInput}
         value={settingModel.IQR ?? ENUM_STATISTICS_IGNORE.FALSE}
       />
-    </Expandable>);
+    </Expandable>
+  );
 }

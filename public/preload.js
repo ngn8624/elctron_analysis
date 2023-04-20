@@ -14,10 +14,6 @@ contextBridge.exposeInMainWorld('wgsFunction', {
   mkdir: async (path) => {
     return await ipcRenderer.invoke('mkdir', path);
   },
-  // loadFile: async (path) => {
-  //   const dll = require('../src/controller/load-file');
-  //   return await dll.loadFile(path);
-  // },
   init: async (path) => {
     const dll = require('../src/controller/load-file');
     return await dll.init(path);
@@ -26,38 +22,10 @@ contextBridge.exposeInMainWorld('wgsFunction', {
     const dll = require('../src/controller/load-file');
     return await dll.getStatistics(path);
   },
-  // start: async (path) => {
-  //   const dll = require('../src/controller/load-file');
-  //   return await dll.start(path);
-  // },
-  // stop: async () => {
-  //   const dll = require('../src/controller/load-file');
-  //   return await dll.stop();
-  // },
-  setCallback: async (cbData) => {
+  setWaveStatCallback: async (cbData) => {
     const dll = require('../src/controller/load-file');
-    return await dll.setCallback(cbData);
+    return await dll.setWaveStatCallback(cbData);
   },
-  // setCallbackStatus: async (cbData) => {
-  //   const dll = require('../src/controller/load-file');
-  //   return await dll.setCallbackStatus(cbData);
-  // },
-  // setCallbackLog: async (cbData) => {
-  //   const dll = require('../src/controller/load-file');
-  //   return await dll.setCallbackLog(cbData);
-  // },
-  // saveStart: async (time) => {
-  //   const dll = require('../src/controller/load-file');
-  //   return await dll.saveStart(time);
-  // },
-  // saveStop: async () => {
-  //   const dll = require('../src/controller/load-file');
-  //   return await dll.saveStop();
-  // },
-  // addCheck: async (time) => {
-  //   const dll = require('../src/controller/load-file');
-  //   return await dll.addCheck(time);
-  // },
   handleCounter: (callback) => ipcRenderer.on('update-counter', callback),
   receive: (channel, func) => {
     let validChannels = ['fromMain']; // IPC채널들 추가
@@ -72,28 +40,4 @@ contextBridge.exposeInMainWorld('wgsFunction', {
   controlWindow: async (controlMsg) => {
     ipcRenderer.invoke(controlMsg, []);
   },
-  // binLoadFile: async (path) => {
-  //   const dll = require('../src/controller/load-file');
-  //   return await dll.binLoadFile(path);
-  // },
-  // checkFilePath: async (path, length) => {
-  //   const dll = require('../src/controller/load-file');
-  //   return await dll.checkFilePath(path, length);
-  // },
-  // setCallbackCheck: async (cbData) => {
-  //   const dll = require('../src/controller/load-file');
-  //   return await dll.setCallbackCheck(cbData);
-  // },
-  // checkListStart: async (path, selectedTime) => {
-  //   const dll = require('../src/controller/load-file');
-  //   return await dll.checkListStart(path, selectedTime);
-  // },
-  // checkPlayStop: async () => {
-  //   const dll = require('../src/controller/load-file');
-  //   return await dll.checkPlayStop();
-  // },
-  // setCallbackCheckData: async (cbCheckData) => {
-  //   const dll = require('../src/controller/load-file');
-  //   return await dll.setCallbackCheckData(cbCheckData);
-  // },
 });

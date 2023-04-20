@@ -26,6 +26,79 @@ export const generateColor = () => {
   return `#${randomColor}`;
 };
 
+export const labels = ['X', 'Y', 'Z'];
+export const initSettingModels = {
+  paths: [],
+  fftCnt: '2048',
+  dcIgnore: 'TRUE',
+  sampleInterval: '1',
+  windowsIdx: 'rectangle',
+  viewMode: 'DBV',
+  dbvRange: '100',
+  RMS: 'TRUE',
+  Mean: 'TRUE',
+  MeanH: 'TRUE',
+  MeanG: 'TRUE',
+  StDev: 'TRUE',
+  Skew: 'TRUE',
+  Kurt: 'TRUE',
+  Mode: 'TRUE',
+  Median: 'TRUE',
+  Q1: 'TRUE',
+  Q3: 'TRUE',
+  IQR: 'TRUE',
+};
+export const initTabs = [
+  {
+    label: 'RMS',
+    color:[generateColor(), generateColor(), generateColor()],
+  },
+  {
+    label: 'Mean',
+    color:[generateColor(), generateColor(), generateColor()],
+  },
+  {
+    label: 'MeanH',
+    color:[generateColor(), generateColor(), generateColor()],
+  },
+  {
+    label: 'MeanG',
+    color:[generateColor(), generateColor(), generateColor()],
+  },
+  {
+    label: 'StDev',
+    color:[generateColor(), generateColor(), generateColor()],
+  },
+  {
+    label: 'Skew',
+    color:[generateColor(), generateColor(), generateColor()],
+  },
+  {
+    label: 'Kurt',
+    color:[generateColor(), generateColor(), generateColor()],
+  },
+  {
+    label: 'Mode',
+    color:[generateColor(), generateColor(), generateColor()],
+  },
+  {
+    label: 'Median',
+    color:[generateColor(), generateColor(), generateColor()],
+  },
+  {
+    label: 'Q1',
+    color:[generateColor(), generateColor(), generateColor()],
+  },
+  {
+    label: 'Q3',
+    color:[generateColor(), generateColor(), generateColor()],
+  },
+  {
+    label: 'IQR',
+    color:[generateColor(), generateColor(), generateColor()],
+  },
+];
+
 //나중에 json으로부터 불러올 예정
 export const chartDatas = [
   {
@@ -82,14 +155,14 @@ export const defaultOptions = {
   plugins: {
     autocolors: true,
     legend: {
-      display: false,
+      display: true,
       position: 'top',
       labels: {
         usePointStyle: false,
         padding: 10,
       },
       title: {
-        display: false,
+        display: true,
       },
     },
     annotation: {
@@ -131,10 +204,10 @@ export const defaultOptions = {
   },
   layout: {
     padding: {
-      top: 0,
-      bottom: 0,
-      left: 0,
-      right: 0,
+      top: 10,
+      bottom: 10,
+      left: 10,
+      right: 10,
     },
   },
   scales: {
@@ -143,7 +216,7 @@ export const defaultOptions = {
       min: 0,
       max: 1,
       title: {
-        display: false,
+        display: true,
         text: 'Time (s)',
       },
     },

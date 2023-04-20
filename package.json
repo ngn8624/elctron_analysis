@@ -42,7 +42,7 @@
   },
   "build": {
     "appId": "com.example.wave-sense",
-    "productName": "Wave Sense",
+    "productName": "Wave Sense Analysis",
     "files": [
       "build/**/*",
       "node_modules/**/*",

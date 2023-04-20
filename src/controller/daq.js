@@ -1,11 +1,11 @@
 import { generateColor } from '../constant/constant';
 import { getConfigPath } from '../utils/file';
 
-export const daqSetCallBack = async (cbData) => {
+export const daqSetWaveStatCallback = async (cbData) => {
   if (!window.wgsFunction) return -1;
-  return window.wgsFunction.setCallback(cbData).then((res) => {
-    if (res === 0) console.log('daqSetCallBack');
-    else console.log('daqSetCallBack fail');
+  return window.wgsFunction.setWaveStatCallback(cbData).then((res) => {
+    if (res === 0) console.log('setWaveStatCallback');
+    else console.log('setWaveStatCallback fail');
     return res;
   });
 };
@@ -28,9 +28,13 @@ export const daqGetStatistics = async (json) => {
   });
 };
 
+export const daqGetStatisticsStop = async (json) => {
+  console.log("daqGetStatisticsStop 있어야해용");
+};
+
 export function DaqInitFunction({ setRawData, setFftData }) {
   daqInit(getConfigPath());
-  daqSetCallBack((data) => {
+  daqSetWaveStatCallback((data) => {
     cbData({
       data: data,
       setRawData: setRawData,
@@ -40,41 +44,24 @@ export function DaqInitFunction({ setRawData, setFftData }) {
 }
 
 export function cbData({ data, setRawData, setFftData }) {
-  const { srcCnt, staticsCnt, rawData, fftData } = data;
-  console.log("asdasd'");
-//   const tempRawData = Array.from({ length: srcCnt }, () => []);
-//   const tempX = Array.from({ length: dataCnt }, () => []);
-//   for (let j = 0; j < dataCnt; j++) {
-//     tempX[j] = parseFloat(((j + 1) / dataCnt).toFixed(6)) + rowIdx;
-//   }
-//   for (let i = 0; i < srcCnt; i++) {
-//     for (let j = 0; j < dataCnt; j++) {
-//       tempRawData[i].push({ x: tempX[j], y: rawData[i][j] });
-//     }
-//   }
-//   const tempFftData = Array.from({ length: srcCnt }, () => []);
-//   for (let i = 0; i < srcCnt; i++) {
-//     for (let j = 0; j < fftCnt; j++) {
-//       tempFftData[i].push({ x: fftData[0][j], y: fftData[i][j] });
-//     }
-//   }
-//   setRawData((prev) => {
-//     const newData = prev.map((d, index) => {
-//       return {
-//         ...d,
-//         data: tempRawData[index],
-//       };
-//     });
-//     return newData;
-//   });
+  const { rowindex, srcCnt, dataCnt, rawData, fftData } = data;
+  setRawData((prevData) => {
+    const newRawData = [...prevData];
+    for (let i = 0; i < dataCnt; i++) {
+      for (let j = 0; j < srcCnt; j++) {
+        newRawData[i][j].push(rawData[i][j]);
+      }
+    }
+    return newRawData;
+  });
 
-//   setFftData((prev) => {
-//     const newData = prev.map((d, index) => {
-//       return {
-//         ...d,
-//         data: tempFftData[index],
-//       };
-//     });
-//     return newData;
-//   });
+  setFftData((prevData) => {
+    const newFftData = [...prevData];
+    for (let i = 0; i < dataCnt; i++) {
+      for (let j = 0; j < srcCnt; j++) {
+        newFftData[i][j].push(fftData[i][j]);
+      }
+    }
+    return newFftData;
+  });
 }
