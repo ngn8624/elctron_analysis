@@ -25,7 +25,11 @@ export default function WaveSenseAnalysis() {
     return initTabs;
   }); // tab List
   const [activeIndex, setActiveIndex] = useState(0); // tab real index
-
+  // setting창 조작후 settingModel에 넣기
+  const onChangeInput = (e) => {
+    const { name, value } = e.target;
+    setSettingModel((prev) => ({ ...prev, [name]: value }));
+  };
   // tab 클릭 시 activeIndex 업데이트
   function handleTabClick(index) {
     setActiveIndex(index);
@@ -117,6 +121,8 @@ export default function WaveSenseAnalysis() {
         fftData={fftData}
         rawData={rawData}
         activeIndex={activeIndex}
+        settingModel={settingModel}
+        onChangeInput={onChangeInput}
       />
     </div>
   );

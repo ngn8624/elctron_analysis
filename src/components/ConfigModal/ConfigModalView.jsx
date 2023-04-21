@@ -131,93 +131,93 @@ function FileConfig({ settingModel }) {
   );
 }
 
-function StatisticsConfig({ settingModel, onChangeInput }) {
-  return (
-    <Expandable title={'STATISTICS'}>
-      <ComboBox
-        title={'RMS'}
-        options={Object.values(ENUM_STATISTICS_IGNORE)}
-        name={'RMS'}
-        onChangeInput={onChangeInput}
-        value={settingModel.RMS ?? ENUM_STATISTICS_IGNORE.FALSE}
-      />
-      <ComboBox
-        title={'Mean'}
-        options={Object.values(ENUM_STATISTICS_IGNORE)}
-        name={'Mean'}
-        onChangeInput={onChangeInput}
-        value={settingModel.Mean ?? ENUM_STATISTICS_IGNORE.FALSE}
-      />
-      <ComboBox
-        title={'MeanH'}
-        options={Object.values(ENUM_STATISTICS_IGNORE)}
-        name={'MeanH'}
-        onChangeInput={onChangeInput}
-        value={settingModel.MeanH ?? ENUM_STATISTICS_IGNORE.FALSE}
-      />
-      <ComboBox
-        title={'MeanG'}
-        options={Object.values(ENUM_STATISTICS_IGNORE)}
-        name={'MeanG'}
-        onChangeInput={onChangeInput}
-        value={settingModel.MeanG ?? ENUM_STATISTICS_IGNORE.FALSE}
-      />
-      <ComboBox
-        title={'StDev'}
-        options={Object.values(ENUM_STATISTICS_IGNORE)}
-        name={'StDev'}
-        onChangeInput={onChangeInput}
-        value={settingModel.StDev ?? ENUM_STATISTICS_IGNORE.FALSE}
-      />
-      <ComboBox
-        title={'Skew'}
-        options={Object.values(ENUM_STATISTICS_IGNORE)}
-        name={'Skew'}
-        onChangeInput={onChangeInput}
-        value={settingModel.Skew ?? ENUM_STATISTICS_IGNORE.FALSE}
-      />
-      <ComboBox
-        title={'Kurt'}
-        options={Object.values(ENUM_STATISTICS_IGNORE)}
-        name={'Kurt'}
-        onChangeInput={onChangeInput}
-        value={settingModel.Kurt ?? ENUM_STATISTICS_IGNORE.FALSE}
-      />
-      <ComboBox
-        title={'Mode'}
-        options={Object.values(ENUM_STATISTICS_IGNORE)}
-        name={'Mode'}
-        onChangeInput={onChangeInput}
-        value={settingModel.Mode ?? ENUM_STATISTICS_IGNORE.FALSE}
-      />
-      <ComboBox
-        title={'Median'}
-        options={Object.values(ENUM_STATISTICS_IGNORE)}
-        name={'Median'}
-        onChangeInput={onChangeInput}
-        value={settingModel.Median ?? ENUM_STATISTICS_IGNORE.FALSE}
-      />
-      <ComboBox
-        title={'Q1'}
-        options={Object.values(ENUM_STATISTICS_IGNORE)}
-        name={'Q1'}
-        onChangeInput={onChangeInput}
-        value={settingModel.Q1 ?? ENUM_STATISTICS_IGNORE.FALSE}
-      />
-      <ComboBox
-        title={'Q3'}
-        options={Object.values(ENUM_STATISTICS_IGNORE)}
-        name={'Q3'}
-        onChangeInput={onChangeInput}
-        value={settingModel.Q3 ?? ENUM_STATISTICS_IGNORE.FALSE}
-      />
-      <ComboBox
-        title={'IQR'}
-        options={Object.values(ENUM_STATISTICS_IGNORE)}
-        name={'IQR'}
-        onChangeInput={onChangeInput}
-        value={settingModel.IQR ?? ENUM_STATISTICS_IGNORE.FALSE}
-      />
-    </Expandable>
-  );
-}
+// function StatisticsConfig({ settingModel, onChangeInput }) {
+//   return (
+//     <Expandable title={'STATISTICS'}>
+//       <ComboBox
+//         title={'RMS'}
+//         options={Object.values(ENUM_STATISTICS_IGNORE)}
+//         name={'RMS'}
+//         onChangeInput={onChangeInput}
+//         value={settingModel.RMS ?? ENUM_STATISTICS_IGNORE.FALSE}
+//       />
+//       <ComboBox
+//         title={'Mean'}
+//         options={Object.values(ENUM_STATISTICS_IGNORE)}
+//         name={'Mean'}
+//         onChangeInput={onChangeInput}
+//         value={settingModel.Mean ?? ENUM_STATISTICS_IGNORE.FALSE}
+//       />
+//       <ComboBox
+//         title={'MeanH'}
+//         options={Object.values(ENUM_STATISTICS_IGNORE)}
+//         name={'MeanH'}
+//         onChangeInput={onChangeInput}
+//         value={settingModel.MeanH ?? ENUM_STATISTICS_IGNORE.FALSE}
+//       />
+//       <ComboBox
+//         title={'MeanG'}
+//         options={Object.values(ENUM_STATISTICS_IGNORE)}
+//         name={'MeanG'}
+//         onChangeInput={onChangeInput}
+//         value={settingModel.MeanG ?? ENUM_STATISTICS_IGNORE.FALSE}
+//       />
+//       <ComboBox
+//         title={'StDev'}
+//         options={Object.values(ENUM_STATISTICS_IGNORE)}
+//         name={'StDev'}
+//         onChangeInput={onChangeInput}
+//         value={settingModel.StDev ?? ENUM_STATISTICS_IGNORE.FALSE}
+//       />
+//       <ComboBox
+//         title={'Skew'}
+//         options={Object.values(ENUM_STATISTICS_IGNORE)}
+//         name={'Skew'}
+//         onChangeInput={onChangeInput}
+//         value={settingModel.Skew ?? ENUM_STATISTICS_IGNORE.FALSE}
+//       />
+//       <ComboBox
+//         title={'Kurt'}
+//         options={Object.values(ENUM_STATISTICS_IGNORE)}
+//         name={'Kurt'}
+//         onChangeInput={onChangeInput}
+//         value={settingModel.Kurt ?? ENUM_STATISTICS_IGNORE.FALSE}
+//       />
+//       <ComboBox
+//         title={'Mode'}
+//         options={Object.values(ENUM_STATISTICS_IGNORE)}
+//         name={'Mode'}
+//         onChangeInput={onChangeInput}
+//         value={settingModel.Mode ?? ENUM_STATISTICS_IGNORE.FALSE}
+//       />
+//       <ComboBox
+//         title={'Median'}
+//         options={Object.values(ENUM_STATISTICS_IGNORE)}
+//         name={'Median'}
+//         onChangeInput={onChangeInput}
+//         value={settingModel.Median ?? ENUM_STATISTICS_IGNORE.FALSE}
+//       />
+//       <ComboBox
+//         title={'Q1'}
+//         options={Object.values(ENUM_STATISTICS_IGNORE)}
+//         name={'Q1'}
+//         onChangeInput={onChangeInput}
+//         value={settingModel.Q1 ?? ENUM_STATISTICS_IGNORE.FALSE}
+//       />
+//       <ComboBox
+//         title={'Q3'}
+//         options={Object.values(ENUM_STATISTICS_IGNORE)}
+//         name={'Q3'}
+//         onChangeInput={onChangeInput}
+//         value={settingModel.Q3 ?? ENUM_STATISTICS_IGNORE.FALSE}
+//       />
+//       <ComboBox
+//         title={'IQR'}
+//         options={Object.values(ENUM_STATISTICS_IGNORE)}
+//         name={'IQR'}
+//         onChangeInput={onChangeInput}
+//         value={settingModel.IQR ?? ENUM_STATISTICS_IGNORE.FALSE}
+//       />
+//     </Expandable>
+//   );
+// }

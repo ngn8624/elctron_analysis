@@ -1,8 +1,13 @@
-.combo {
+.combo,
+.statisticsCombo {
   display: flex;
   padding: 5px 10px;
   background-color: var(--dark-light-gray);
   flex-direction: row;
+}
+.statisticsCombo {
+  background-color: transparent;
+  justify-content: space-between;
 }
 
 .title {
@@ -24,4 +29,18 @@
 
 .option {
   background-color: var(--light-gray);
+}
+.true,
+.false {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: green;
+  border-radius: 50%;
+  color: var(--white);
+}
+.false {
+  background-color: red;
 }

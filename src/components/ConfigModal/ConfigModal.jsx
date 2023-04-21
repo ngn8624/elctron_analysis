@@ -69,11 +69,11 @@ export default function ConfigModal({
     setShowPopup(false);
   };
 
-  // setting창 조작후 settingModel에 넣기
-  const onChangeInput = (e) => {
-    const { name, value } = e.target;
-    setSettingModel((prev) => ({ ...prev, [name]: value }));
-  };
+  // // setting창 조작후 settingModel에 넣기
+  // const onChangeInput = (e) => {
+  //   const { name, value } = e.target;
+  //   setSettingModel((prev) => ({ ...prev, [name]: value }));
+  // };
 
   // json to string용, config파일에서 불러서 settingModel에 넣을때 변환용
   function convertToStrings(obj) {
@@ -120,7 +120,7 @@ export default function ConfigModal({
     <ConfigModalView
       closePopup={closePopup}
       settingModel={settingModel}
-      onChangeInput={onChangeInput}
+      // onChangeInput={onChangeInput}
       isShowIcon={isShowIcon}
       isSavedSuccess={isSavedSuccess}
       modalRef={modalRef}

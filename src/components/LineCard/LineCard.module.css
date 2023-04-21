@@ -1,15 +1,39 @@
-.surface{
+.surface {
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .lineChartCard {
-  gap: 0.60rem;
-  width: 100%;
+  gap: 0.6rem;
+  width: 96%;
   height: 47vh;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+.lineChartCardHover {
+  gap: 0.6rem;
+  width: 60%;
+  height: 47vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.hoverCard,
+.hoverSmallCard {
+  background-color: var(--dark-gray);
+  width: 40%;
+  display: flex;
+  margin-bottom: 0.63rem;
+  display: flex;
+  justify-content: start;
+  flex-direction: column;
+  border-radius: 14px;
+}
+.hoverSmallCard {
+  width: 6%;
 }
 
 .ulCol {
@@ -21,4 +45,9 @@
   padding: 0;
   overflow-x: hidden;
   overflow-y: hidden;
+}
+.twoCards {
+  gap: 10px;
+  display: flex;
+  flex-direction: row;
 }
