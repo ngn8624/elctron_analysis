@@ -47,55 +47,70 @@ export const initSettingModels = {
   Q1: 'TRUE',
   Q3: 'TRUE',
   IQR: 'TRUE',
+  IQR1: 'TRUE',
+  IQR2: 'TRUE',
+  IQR3: 'TRUE',
 };
 export const initTabs = [
   {
     label: 'RMS',
-    color:[generateColor(), generateColor(), generateColor()],
+    color: [generateColor(), generateColor(), generateColor()],
   },
   {
     label: 'Mean',
-    color:[generateColor(), generateColor(), generateColor()],
+    color: [generateColor(), generateColor(), generateColor()],
   },
   {
     label: 'MeanH',
-    color:[generateColor(), generateColor(), generateColor()],
+    color: [generateColor(), generateColor(), generateColor()],
   },
   {
     label: 'MeanG',
-    color:[generateColor(), generateColor(), generateColor()],
+    color: [generateColor(), generateColor(), generateColor()],
   },
   {
     label: 'StDev',
-    color:[generateColor(), generateColor(), generateColor()],
+    color: [generateColor(), generateColor(), generateColor()],
   },
   {
     label: 'Skew',
-    color:[generateColor(), generateColor(), generateColor()],
+    color: [generateColor(), generateColor(), generateColor()],
   },
   {
     label: 'Kurt',
-    color:[generateColor(), generateColor(), generateColor()],
+    color: [generateColor(), generateColor(), generateColor()],
   },
   {
     label: 'Mode',
-    color:[generateColor(), generateColor(), generateColor()],
+    color: [generateColor(), generateColor(), generateColor()],
   },
   {
     label: 'Median',
-    color:[generateColor(), generateColor(), generateColor()],
+    color: [generateColor(), generateColor(), generateColor()],
   },
   {
     label: 'Q1',
-    color:[generateColor(), generateColor(), generateColor()],
+    color: [generateColor(), generateColor(), generateColor()],
   },
   {
     label: 'Q3',
-    color:[generateColor(), generateColor(), generateColor()],
+    color: [generateColor(), generateColor(), generateColor()],
   },
   {
     label: 'IQR',
-    color:[generateColor(), generateColor(), generateColor()],
+    color: [generateColor(), generateColor(), generateColor()],
+  },
+  {
+    label: 'IQR1',
+    color: [generateColor(), generateColor(), generateColor()],
+  },
+  {
+    label: 'IQR2',
+    color: [generateColor(), generateColor(), generateColor()],
+  },
+  {
+    label: 'IQR3',
+    color: [generateColor(), generateColor(), generateColor()],
   },
 ];
 

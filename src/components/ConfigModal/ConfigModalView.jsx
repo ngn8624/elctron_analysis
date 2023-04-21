@@ -32,9 +32,7 @@ export default function ConfigModalView({
             <header className={styles.modalHeader}>
               Settings
               <div className={styles.toRight} style={{ padding: 0 }}>
-                <LoadBtn
-                  handleLoad={handleLoad}
-                />
+                <LoadBtn handleLoad={handleLoad} />
                 <SaveBtn
                   handleSave={handleSave}
                   isShowIcon={isShowIcon}
@@ -64,10 +62,10 @@ function ConfigBody({ settingModel, onChangeInput }) {
     <>
       <FileConfig settingModel={settingModel} />
       <FftConfig settingModel={settingModel} onChangeInput={onChangeInput} />
-      <StatisticsConfig
+      {/* <StatisticsConfig
         settingModel={settingModel}
         onChangeInput={onChangeInput}
-      />
+      /> */}
     </>
   );
 }

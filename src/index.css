@@ -88,11 +88,11 @@ code {
 }
 .settingBtn {
   cursor: pointer;
- display: flex;
- padding-top: 0.25rem;
- padding-bottom: 0.25rem;
- border-radius: 0.38rem;
- margin-right: 0.38rem;
+  display: flex;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  border-radius: 0.38rem;
+  margin-right: 0.38rem;
   background-color: #000000;
   -webkit-app-region: no-drag;
   color: white;
@@ -104,8 +104,34 @@ code {
 .settingBtn:hover {
   background-color: var(--light-gray);
 }
+.tab-container {
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: flex-end;
+  margin-left: 0.75rem;
+  /* max-width: 100px; */
 
-html{
+  overflow: hidden;
+}
+/* .tab-container {
+  display: flex;
+
+  width: 98%;
+} */
+.tab-container > ul {
+  list-style: none;
+  display: flex;
+  justify-content: start;
+  align-items: flex-end;
+  margin: 0;
+  padding: 0;
+  width: 98.6%;
+  overflow: hidden;
+  background-color: red;
+}
+
+html {
   width: 100%;
   height: 100%;
   font-size: 16px;

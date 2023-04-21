@@ -11,7 +11,7 @@ export default function ConfigModal({
   setRawData,
   setFftData,
   contents,
-  setContents
+  setContents,
 }) {
   const [isSavedSuccess, setIsSavedSuccess] = useState(false);
   const [isShowIcon, setIsShowIcon] = useState(false);
@@ -40,15 +40,15 @@ export default function ConfigModal({
           : settingModel.fftCnt,
       dcIgnore: settingModel.dcIgnore == 'TRUE' ? true : false,
       sampleInterval:
-      typeof settingModel.sampleInterval == 'string'
-        ? parseInt(settingModel.sampleInterval)
-        : settingModel.sampleInterval,
+        typeof settingModel.sampleInterval == 'string'
+          ? parseInt(settingModel.sampleInterval)
+          : settingModel.sampleInterval,
       windowsIdx: settingModel.windowsIdx,
       viewMode: settingModel.viewMode,
       dbvRange:
-      typeof settingModel.dbvRange == 'string'
-        ? parseInt(settingModel.dbvRange)
-        : settingModel.dbvRange,
+        typeof settingModel.dbvRange == 'string'
+          ? parseInt(settingModel.dbvRange)
+          : settingModel.dbvRange,
       RMS: settingModel.RMS == 'TRUE' ? true : false,
       Mean: settingModel.Mean == 'TRUE' ? true : false,
       MeanH: settingModel.MeanH == 'TRUE' ? true : false,
@@ -72,25 +72,24 @@ export default function ConfigModal({
   // setting창 조작후 settingModel에 넣기
   const onChangeInput = (e) => {
     const { name, value } = e.target;
-    setSettingModel((prev) => ({...prev, [name]: value}));
+    setSettingModel((prev) => ({ ...prev, [name]: value }));
   };
 
   // json to string용, config파일에서 불러서 settingModel에 넣을때 변환용
   function convertToStrings(obj) {
     if (Array.isArray(obj)) {
       return obj.map((item) => convertToStrings(item));
-    } else if (typeof obj === "object" && obj !== null) {
+    } else if (typeof obj === 'object' && obj !== null) {
       return Object.entries(obj).reduce((acc, [key, value]) => {
         acc[key] = convertToStrings(value);
         return acc;
       }, {});
-    } else if (typeof obj === "boolean") {
-      return obj ? "TRUE" : "FALSE";
+    } else if (typeof obj === 'boolean') {
+      return obj ? 'TRUE' : 'FALSE';
     } else {
       return String(obj);
     }
   }
-
 
   // Load
   const handleLoad = async () => {
