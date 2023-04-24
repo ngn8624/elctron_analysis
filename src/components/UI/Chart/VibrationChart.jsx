@@ -51,21 +51,21 @@ export default function VibrationChart({ rawData, selectedFile }) {
       autocolors: true,
       tooltip: {
         intersect: false, // 툴팁 영역 확장 설정
-        callbacks: {
-          title: (items,data) => {
-            // 첫 번째 툴팁 아이템의 레이블만 사용하여 툴팁 제목으로 설정
-            console.log("items",data);
-            return items[0].dataset.label;
-          },
-          label: (item, data) => {
-            // 툴팁 값의 출력 형식 변경
-            console.log("item",item);
-            // const dataset = dataset.data[item.datasetIndex]; // 수정된 부분
-            const valueX = item.dataset.data[item.datasetIndex].x;
-            const valueY = item.dataset.data[item.datasetIndex].y.toFixed(2);
-            return `X : ${valueX} Y : ${valueY}`;
-          }
-        }
+        // callbacks: {
+        //   title: (items,data) => {
+        //     // 첫 번째 툴팁 아이템의 레이블만 사용하여 툴팁 제목으로 설정
+        //     // console.log("items",data);
+        //     return items[0].dataset.label;
+        //   },
+        //   label: (item, data) => {
+        //     // 툴팁 값의 출력 형식 변경
+        //     // console.log("item",item);
+        //     // const dataset = dataset.data[item.datasetIndex]; // 수정된 부분
+        //     const valueX = item.dataset.data[item.datasetIndex].x;
+        //     const valueY = item.dataset.data[item.datasetIndex].y.toFixed(2);
+        //     return `X : ${valueX} Y : ${valueY}`;
+        //   }
+        // }
       },  
       legend: {
         display: true,
@@ -129,27 +129,27 @@ export default function VibrationChart({ rawData, selectedFile }) {
         min: 0,
         max: 1,
         ticks: {
-          callback: function (value, index, values) {
-            // value 중간 없애기
-            // console.log("values", value);
-            const intValue = Math.floor(value);
-            const fileItem= selectedFile.filter((file) => file.checked === true);
-            const itemY = 5;
-            const fileItemIndex = Math.floor(index / itemY);
-            if (fileItemIndex < fileItem.length) {
-              if (value % 1 === 0) { // x 값이 정수
-                return fileItem[fileItemIndex].name + '_' + intValue;
-              }
-              // return fileItem[fileItemIndex].name + '_' + intValue;z
-            }
-          },
+          // callback: function (value, index, values) {
+          //   // value 중간 없애기
+          //   // console.log("values", value);
+          //   const intValue = Math.floor(value);
+          //   const fileItem= selectedFile.filter((file) => file.checked === true);
+          //   const itemY = 5;
+          //   const fileItemIndex = Math.floor(index / itemY);
+          //   if (fileItemIndex < fileItem.length) {
+          //     if (value % 1 === 0) { // x 값이 정수
+          //       return fileItem[fileItemIndex].name + '_' + intValue;
+          //     }
+          //     // return fileItem[fileItemIndex].name + '_' + intValue;z
+          //   }
+          // },
         },
-        grid: {
-          display: true,
-          drawBorder: true,
-          drawTicks: true,
-          ticksLength: 5,
-        },
+        // grid: {
+        //   display: true,
+        //   drawBorder: true,
+        //   drawTicks: true,
+        //   ticksLength: 5,
+        // },
         title: {
           display: true,
           text: 'File && Time (s)',

@@ -105,63 +105,63 @@ export default function AppBar({
   };
 
   // console.log('selectedFile', selectedFile);
-  const handleRun = async () => {
-    setIsRunning((prev) => {
-      if (prev) {
-        // daqGetStatisticsStop();
-        end(); // test용
-      } else {
-        setRawData(
-          Array.from({ length: isTabs.length }, () =>
-            Array.from({ length: 3 }, () => [])
-          )
-        );
-        setFftData(
-          Array.from({ length: isTabs.length }, () =>
-            Array.from({ length: 3 }, () => [])
-          )
-        );
-        Start(); // test용
-        // selectedFile중에서 check된것만 filter하는 code있어야함
-        // const contentsTemp = JSON.parse(contents); // JSON 형식의 문자열을 JavaScript 객체로 변환
-        // for (let i = 0; i < selectedFile.length; i++) {
-        //   const newSet = {
-        //     ...contentsTemp,
-        //     paths: [selectedFile[i].path],
-        //   };
-        //   const contentsValue = JSON.stringify(newSet, null, 2); // JavaScript 객체를 JSON 형식의 문자열로 변환
-        //   daqGetStatistics(contentsValue);
-        // }
-      }
-      return !prev;
-    });
-  };
+  // const handleRun = async () => {
+  //   setIsRunning((prev) => {
+  //     if (prev) {
+  //       // daqGetStatisticsStop();
+  //       end(); // test용
+  //     } else {
+  //       setRawData(
+  //         Array.from({ length: isTabs.length }, () =>
+  //           Array.from({ length: 3 }, () => [])
+  //         )
+  //       );
+  //       setFftData(
+  //         Array.from({ length: isTabs.length }, () =>
+  //           Array.from({ length: 3 }, () => [])
+  //         )
+  //       );
+  //       Start(); // test용
+  //       // selectedFile중에서 check된것만 filter하는 code있어야함
+  //       // const contentsTemp = JSON.parse(contents); // JSON 형식의 문자열을 JavaScript 객체로 변환
+  //       // for (let i = 0; i < selectedFile.length; i++) {
+  //       //   const newSet = {
+  //       //     ...contentsTemp,
+  //       //     paths: [selectedFile[i].path],
+  //       //   };
+  //       //   const contentsValue = JSON.stringify(newSet, null, 2); // JavaScript 객체를 JSON 형식의 문자열로 변환
+  //       //   daqGetStatistics(contentsValue);
+  //       // }
+  //     }
+  //     return !prev;
+  //   });
+  // };
 
   // setIsRunning 제외버전
-  // const handleRun = async () => {
-  //   setRawData(
-  //     Array.from({ length: isTabs.length }, () =>
-  //       Array.from({ length: 3 }, () => [])
-  //     )
-  //   );
-  //   setFftData(
-  //     Array.from({ length: isTabs.length }, () =>
-  //       Array.from({ length: 3 }, () => [])
-  //     )
-  //   );
-  //   // getCycleCountStart();
-  //   // Start(); // test용
-  //   // selectedFile중에서 check된것만 filter하는 code있어야함
-  //   const contentsTemp = JSON.parse(contents); // JSON 형식의 문자열을 JavaScript 객체로 변환
-  //   for (let i = 0; i < selectedFile.length; i++) {
-  //     const newSet = {
-  //       ...contentsTemp,
-  //       paths: [selectedFile[i].path],
-  //     };
-  //     const contentsValue = JSON.stringify(newSet, null, 2); // JavaScript 객체를 JSON 형식의 문자열로 변환
-  //     daqGetStatistics(contentsValue);
-  //   }
-  // };
+  const handleRun = async () => {
+    // setRawData(
+    //   Array.from({ length: isTabs.length }, () =>
+    //     Array.from({ length: 3 }, () => [])
+    //   )
+    // );
+    // setFftData(
+    //   Array.from({ length: isTabs.length }, () =>
+    //     Array.from({ length: 3 }, () => [])
+    //   )
+    // );
+    // Start(); // test용
+    // selectedFile중에서 check된것만 filter하는 code있어야함
+    const sendSelectedFile = selectedFile.filter((item) => item.checked == true);
+    const contentsTemp = JSON.parse(contents); // JSON 형식의 문자열을 JavaScript 객체로 변환
+    for (let i = 0; i < sendSelectedFile.length; i++) {
+      const newSet = {
+        ...contentsTemp,
+        paths: [sendSelectedFile[i].path],
+      };
+      const contentsValue = JSON.stringify(newSet, null, 2); // JavaScript 객체를 JSON 형식의 문자열로 변환
+      daqGetStatistics(contentsValue);
+    }
+  };
 
   const handleFileLoad = () => {
     // 삭제??? fileState how?

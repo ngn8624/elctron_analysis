@@ -24,7 +24,7 @@ export default function WaveSenseAnalysis() {
     return initTabs;
   }); // tab List
   const [activeIndex, setActiveIndex] = useState(0); // tab real index
-
+  const [defaultDataCnt, setDefaultDataCnt] = useState(1); // 각각의 src가 몇개로 받을것인지 설정
   // tab 클릭 시 activeIndex 업데이트
   function handleTabClick(index) {
     setActiveIndex(index);
