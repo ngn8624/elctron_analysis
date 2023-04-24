@@ -33,6 +33,7 @@ export default function AppbarView(props) {
           id='importAttachment'
           className={styles.inputfile}
           onChange={handleFile}
+          multiple
         />
         <StatusBtn
           handleClick={handleFileLoad}

@@ -1,5 +1,38 @@
 .tabList {
   display: flex;
+  width: 98%;
+}
+.tabList > ul {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  width: 50%;
+  overflow: hidden;
+}
+
+.left,
+.right {
+  position: absolute;
+  width: 2%;
+  cursor: pointer;
+  background-color: transparent;
+  color: var(--light-gray);
+  border: none;
+  display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+.left {
+  left: 0;
+}
+.right {
+  right: 0;
+}
+.left:hover,
+.right:hover {
+  color: white;
+  transition: 1s;
 }

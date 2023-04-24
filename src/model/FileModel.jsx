@@ -4,5 +4,7 @@ export class FileModel {
     this.id = uuidv4();
     this.name = name;
     this.path = path;
+    this.checked = false;
+    this.cycle = 0;
   }
 }

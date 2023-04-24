@@ -1,0 +1,127 @@
+.fileWindowTitle {
+  display: flex;
+  align-items: center;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+  overflow: hidden;
+  padding: 10px;
+  background-color: #5a6065;
+}
+.fileWindowTitleUl {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+}
+.fileWindowTitleLi {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  margin-left: 10px;
+  margin-Right: 10px;
+}
+.fileWindowTitleButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  clear: both;
+  float: left;
+  height: 16px;
+  cursor: pointer;
+  padding: 4px 4px;
+  background-color: #323232;
+  border: none;
+  color: black;
+  border-radius: 10px;
+  margin-left: 10px;
+  margin-top: 5px;
+}
+.fileWindowTitleButton:hover{
+  color: white;
+}
+
+.fileWindowContents{
+  list-style: none;
+  margin: 0;
+  padding: 10px;
+  flex-grow: 1;
+  /* overflow: scroll; */
+  overflow-x: hidden;
+}
+.fileWindowContentsUl{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.fileWindowContentsLi{
+  display: flex;
+  background-color: #6d6d6d;
+  width: 440px;
+  height: 20px;
+  padding: 10px;
+  border-radius: 14px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+.fileWindowContentsCheckbox{
+  color: white;
+  width: 40px;
+  padding: 4px;
+  border-radius: 14px;
+  background-color: #454647;
+  border: none;
+  float: left;
+  margin-left: 0px;
+}
+.fileWindowContentsIndex{
+  color: white;
+  padding: 4px;
+  border: none;
+  margin-left: 5px;
+  display: flex;
+  align-items: center;
+}
+.fileWindowContentsName{
+  color: white;
+  padding: 4px;
+  border: none;
+  margin-left: 25px;
+  margin-right: 25px;
+  width: 250px;
+  float: left;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.fileWindowContentsButton{
+  align-items: center;
+  width: 20px;
+  padding: 4px;
+  background-color:var(--mark-btn) ;
+  float: right;
+  height: 23px;
+  border-radius: 50%;
+  cursor: pointer;
+  color: white;
+  border: none;
+}
+.fileWindowContentsInput{
+  color: white;
+  width: 40px;
+  height: 20px;
+  border-radius: var(--primary-radius);
+  margin-left: 6px;
+  background-color: #2a2a2b;
+  border: none;
+  float: right;
+  text-align: center;
+  margin-right: 6px;
+}
+.fileWindowContentsInput:focus{
+  outline: none !important; border-color: white; box-shadow: 0 0 5px white; 
+}

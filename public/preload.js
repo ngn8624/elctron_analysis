@@ -22,6 +22,10 @@ contextBridge.exposeInMainWorld('wgsFunction', {
     const dll = require('../src/controller/load-file');
     return await dll.getStatistics(path);
   },
+  getCycleCount: async (path) => {
+    const dll = require('../src/controller/load-file');
+    return await dll.getCycleCount(path);
+  },
   setWaveStatCallback: async (cbData) => {
     const dll = require('../src/controller/load-file');
     return await dll.setWaveStatCallback(cbData);

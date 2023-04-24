@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { generateColor,initSettingModels,initTabs  } from '../../constant/constant';
+import {
+  generateColor,
+  initSettingModels,
+  initTabs,
+} from '../../constant/constant';
 import AppBar from '../Appbar/Appbar';
 import ConfigModal from '../ConfigModal/ConfigModal';
 import styles from './WaveSenseAnalysis.module.css';
@@ -10,11 +14,15 @@ export default function WaveSenseAnalysis() {
   const [rawData, setRawData] = useState([]); // chart의 y 값 data 모음
   const [fftData, setFftData] = useState([]); // chart의 y 값 fftData 모음
   const [showPopup, setShowPopup] = useState(false);
-  const [settingModel, setSettingModel] = useState(() => {return initSettingModels }); // ui 용 config, settingModel이 있으나, {}일반객체 아닌 settingModel{} 객체로 사용할경우 주의 필요 
+  const [settingModel, setSettingModel] = useState(() => {
+    return initSettingModels;
+  }); // ui 용 config, settingModel이 있으나, {}일반객체 아닌 settingModel{} 객체로 사용할경우 주의 필요
   const [selectedFile, setSelectedFile] = useState([]); // 파일 선택된 리스르
   const [isFileRunning, setIsFileRunning] = useState(false);
   const [contents, setContents] = useState({}); // .dll 보낼 config Json
-  const [isTabs, setIsTabs] = useState(() => {return initTabs}); // tab List
+  const [isTabs, setIsTabs] = useState(() => {
+    return initTabs;
+  }); // tab List
   const [activeIndex, setActiveIndex] = useState(0); // tab real index
 
   // tab 클릭 시 activeIndex 업데이트
@@ -31,7 +39,10 @@ export default function WaveSenseAnalysis() {
           settingModel[key] === 'TRUE' &&
           initTabs.some((tab) => tab.label === key)
         ) {
-          newTabs.push({ label: key, color: [generateColor(), generateColor(), generateColor()] });
+          newTabs.push({
+            label: key,
+            color: [generateColor(), generateColor(), generateColor()],
+          });
         }
       }
       return newTabs;
@@ -58,6 +69,12 @@ export default function WaveSenseAnalysis() {
     });
   }, [isTabs]);
 
+  // setting창 조작후 settingModel에 넣기
+  const onChangeInput = (e) => {
+    const { name, value } = e.target;
+    setSettingModel((prev) => ({ ...prev, [name]: value }));
+  };
+
   return (
     <div className={styles.waveSense}>
       <ConfigModal
@@ -69,6 +86,7 @@ export default function WaveSenseAnalysis() {
         setFftData={setFftData}
         contents={contents}
         setContents={setContents}
+        onChangeInput={onChangeInput}
       />
       <AppBar
         setRawData={setRawData}
@@ -82,6 +100,7 @@ export default function WaveSenseAnalysis() {
         setSettingModel={setSettingModel}
         contents={contents}
         isTabs={isTabs}
+        setContents={setContents}
       />
       <TabContainer
         isTabs={isTabs}
@@ -93,6 +112,10 @@ export default function WaveSenseAnalysis() {
         fftData={fftData}
         rawData={rawData}
         activeIndex={activeIndex}
+        settingModel={settingModel}
+        onChangeInput={onChangeInput}
+        selectedFile={selectedFile}
+        setSelectedFile={setSelectedFile}
       />
     </div>
   );

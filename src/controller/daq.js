@@ -19,6 +19,15 @@ export const daqInit = async (path) => {
   });
 };
 
+export const daqGetCycleCount = async (path) => {
+  if (!window.wgsFunction) return -1; // 0 : success , -1 : fail
+  return window.wgsFunction.getCycleCount(path).then((res) => {
+    if (res === 0) console.log('daqGetCycleCount success');
+    else console.log('daqGetCycleCount fail');
+    return res;
+  });
+};
+
 export const daqGetStatistics = async (json) => {
   if (!window.wgsFunction) return -1; // 0 : success , -1 : fail
   return window.wgsFunction.getStatistics(json).then((res) => {
@@ -44,7 +53,7 @@ export function DaqInitFunction({ setRawData, setFftData }) {
 }
 
 export function cbData({ data, setRawData, setFftData }) {
-  const { rowindex, srcCnt, dataCnt, rawData, fftData } = data;
+  const { srcCnt, dataCnt, rawData, fftData } = data;
   setRawData((prevData) => {
     const newRawData = [...prevData];
     for (let i = 0; i < dataCnt; i++) {
