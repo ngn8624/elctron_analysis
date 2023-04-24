@@ -16,7 +16,8 @@ export default function LineCard({
   settingModel,
   onChangeInput,
   selectedFile,
-  setSelectedFile
+  setSelectedFile,
+  defaultDataCnt
 }) {
   const [titleContents, setTitleContents] = useState(''); // 해당 탭의 title
   const [useChartData, setUseChartData] = useState([]); // 해당 탭의 chartRawData
@@ -54,14 +55,14 @@ export default function LineCard({
       }))
     );
   }, [activeIndex, rawData, fftData]);
-  console.log("useChartData", useChartData);
+
   return (
     <div className={styles.surface}>
       <div className={styles.twoCards}>
         <div className={styles.lineChartCard}>
           <Container title={titleContents + ' Statistics'}>
             <ul className={styles.ulCol}>
-              <VibrationChart rawData={useChartData} selectedFile={selectedFile} />
+              <VibrationChart rawData={useChartData} selectedFile={selectedFile} defaultDataCnt={defaultDataCnt} />
             </ul>
           </Container>
         </div>
@@ -73,7 +74,7 @@ export default function LineCard({
         <div className={styles.lineChartCard}>
           <Container title={titleContents + ' FFT'}>
             <ul className={styles.ulCol}>
-              <VibrationChart rawData={useChartFFTData} selectedFile={selectedFile}/>
+              <VibrationChart rawData={useChartFFTData} selectedFile={selectedFile} defaultDataCnt={defaultDataCnt}/>
             </ul>
           </Container>
         </div>

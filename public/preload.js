@@ -14,9 +14,13 @@ contextBridge.exposeInMainWorld('wgsFunction', {
   mkdir: async (path) => {
     return await ipcRenderer.invoke('mkdir', path);
   },
-  init: async (path) => {
+  analysisInit: async (path) => {
     const dll = require('../src/controller/load-file');
-    return await dll.init(path);
+    return await dll.analysisInit(path);
+  },
+  analysisClose: async (path) => {
+    const dll = require('../src/controller/load-file');
+    return await dll.analysisClose(path);
   },
   getStatistics: async (path) => {
     const dll = require('../src/controller/load-file');

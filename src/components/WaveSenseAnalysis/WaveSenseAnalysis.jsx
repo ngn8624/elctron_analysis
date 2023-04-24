@@ -24,11 +24,21 @@ export default function WaveSenseAnalysis() {
     return initTabs;
   }); // tab List
   const [activeIndex, setActiveIndex] = useState(0); // tab real index
-  const [defaultDataCnt, setDefaultDataCnt] = useState(1); // 각각의 src가 몇개로 받을것인지 설정
+  const [defaultDataCnt, setDefaultDataCnt] = useState(1); // 추후 각각의 src가 몇개로 받을것인지 설정 : 현재 default 1
   // tab 클릭 시 activeIndex 업데이트
   function handleTabClick(index) {
     setActiveIndex(index);
   }
+  
+  // selectedFile 변경시 setIsFileRunning 업데이트
+  useEffect(() => {
+    if(selectedFile.length === 0) {
+      setIsFileRunning(false);
+    }
+    else{
+      setIsFileRunning(true);
+    }
+  }, [selectedFile]);
 
   // settingModel 변경시 isTabs 업데이트
   useEffect(() => {
@@ -116,6 +126,7 @@ export default function WaveSenseAnalysis() {
         onChangeInput={onChangeInput}
         selectedFile={selectedFile}
         setSelectedFile={setSelectedFile}
+        defaultDataCnt={defaultDataCnt}
       />
     </div>
   );

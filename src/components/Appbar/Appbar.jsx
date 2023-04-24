@@ -51,17 +51,7 @@ export default function AppBar({
     filesArray = filesArray.filter((file) => {
       return !selectedFileNames.includes(file.name);
     });
-
-    // if (updatedFileArray.length !== filesArray.length) {
-    //   filesArray = updatedFileArray;
-    // }
-
-    // const pathList = filesArray.map((file) => file.path);
-    // const path = pathList[0];
-    // if (path !== undefined) {
     filesArray = filesArray.map((file) => new FileModel(file.name, file.path));
-    // setSettingModel((prevModel) => ({ ...prevModel, paths: pathList }));
-    // }
     if (filesArray.length !== 0) {
       setSelectedFile([...selectedFile, ...filesArray]);
       setIsFileRunning(true);
@@ -69,11 +59,8 @@ export default function AppBar({
     }
   };
 
-  // console.log("file", selectedFile);
-
-  // test용
+  // test용 지우지 말것
   const Start = async () => {
-    console.log('Start탔냐');
     timer = setInterval(() => {
       const dataCnt = isTabs.length;
       const srcCnt = 3;
@@ -100,77 +87,86 @@ export default function AppBar({
 
   // test용
   const end = () => {
-    console.log('end 탔냐');
     clearInterval(timer);
   };
 
-  // console.log('selectedFile', selectedFile);
+  const handleRun = async () => {
+    setIsRunning((prev) => {
+      if (prev) {
+        // daqGetStatisticsStop();
+        end(); // test용
+      } else {
+        setRawData(
+          Array.from({ length: isTabs.length }, () =>
+            Array.from({ length: 3 }, () => [])
+          )
+        );
+        setFftData(
+          Array.from({ length: isTabs.length }, () =>
+            Array.from({ length: 3 }, () => [])
+          )
+        );
+        // selectedFile중에서 check된것만 filter하는 code있어야함
+        const sendSelectedFile = selectedFile.filter(
+          (item) => item.checked == true
+        );
+        const contentsTemp = JSON.parse(contents); // JSON 형식의 문자열을 JavaScript 객체로 변환
+        for (let i = 0; i < sendSelectedFile.length; i++) {
+          const newSet = {
+            ...contentsTemp,
+            paths: [sendSelectedFile[i].path],
+          };
+          const contentsValue = JSON.stringify(newSet, null, 2); // JavaScript 객체를 JSON 형식의 문자열로 변환
+          // daqGetStatistics(contentsValue);
+        }
+        Start(); // test용
+      }
+      return !prev;
+    });
+  };
+
+  // promise test중
   // const handleRun = async () => {
-  //   setIsRunning((prev) => {
-  //     if (prev) {
-  //       // daqGetStatisticsStop();
-  //       end(); // test용
-  //     } else {
-  //       setRawData(
-  //         Array.from({ length: isTabs.length }, () =>
-  //           Array.from({ length: 3 }, () => [])
-  //         )
-  //       );
-  //       setFftData(
-  //         Array.from({ length: isTabs.length }, () =>
-  //           Array.from({ length: 3 }, () => [])
-  //         )
-  //       );
-  //       Start(); // test용
-  //       // selectedFile중에서 check된것만 filter하는 code있어야함
-  //       // const contentsTemp = JSON.parse(contents); // JSON 형식의 문자열을 JavaScript 객체로 변환
-  //       // for (let i = 0; i < selectedFile.length; i++) {
-  //       //   const newSet = {
-  //       //     ...contentsTemp,
-  //       //     paths: [selectedFile[i].path],
-  //       //   };
-  //       //   const contentsValue = JSON.stringify(newSet, null, 2); // JavaScript 객체를 JSON 형식의 문자열로 변환
-  //       //   daqGetStatistics(contentsValue);
-  //       // }
+  //   setRawData(
+  //     Array.from({ length: isTabs.length }, () =>
+  //       Array.from({ length: 3 }, () => [])
+  //     )
+  //   );
+  //   setFftData(
+  //     Array.from({ length: isTabs.length }, () =>
+  //       Array.from({ length: 3 }, () => [])
+  //     )
+  //   );
+  //   const sendSelectedFile = selectedFile.filter(
+  //     (item) => item.checked == true
+  //   );
+  //   const contentsTemp = JSON.parse(contents);
+
+  //   // Promise.all을 사용하여 sendSelectedFile의 모든 파일에 대해 병렬로 작업을 수행합니다.
+    // const promises = sendSelectedFile.map((item) => {
+    //   const newSet = {
+    //     ...contentsTemp,
+    //     paths: [item.path],
+    //   };
+    //   const contentsValue = JSON.stringify(newSet, null, 2);
+    //   return daqGetStatistics(contentsValue);
+    // });
+
+  //   const results = await Promise.all(promises);
+
+  //   // 결과를 처리하는 함수를 따로 분리합니다.
+  //   handleResults(results, sendSelectedFile);
+  // };
+
+  // const handleResults = (results, sendSelectedFile) => {
+  //   results.forEach((ret, index) => {
+  //     if (ret === 0) {
+  //       console.log("Failed to get statistics for file:", sendSelectedFile[index].path);
   //     }
-  //     return !prev;
   //   });
   // };
 
-  // setIsRunning 제외버전
-  const handleRun = async () => {
-    // setRawData(
-    //   Array.from({ length: isTabs.length }, () =>
-    //     Array.from({ length: 3 }, () => [])
-    //   )
-    // );
-    // setFftData(
-    //   Array.from({ length: isTabs.length }, () =>
-    //     Array.from({ length: 3 }, () => [])
-    //   )
-    // );
-    // Start(); // test용
-    // selectedFile중에서 check된것만 filter하는 code있어야함
-    const sendSelectedFile = selectedFile.filter((item) => item.checked == true);
-    const contentsTemp = JSON.parse(contents); // JSON 형식의 문자열을 JavaScript 객체로 변환
-    for (let i = 0; i < sendSelectedFile.length; i++) {
-      const newSet = {
-        ...contentsTemp,
-        paths: [sendSelectedFile[i].path],
-      };
-      const contentsValue = JSON.stringify(newSet, null, 2); // JavaScript 객체를 JSON 형식의 문자열로 변환
-      daqGetStatistics(contentsValue);
-    }
-  };
-
   const handleFileLoad = () => {
-    // 삭제??? fileState how?
-    // if (isFileRunning) {
-    //   setIsFileRunning(false);
-    //   setSelectedFile([]);
-    //   setSettingModel((prevModel) => ({ ...prevModel, paths: [] }));
-    //   return;
-    // }
     document.getElementById('importAttachment').click();
   };
 

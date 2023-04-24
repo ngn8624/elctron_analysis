@@ -57,6 +57,7 @@ export default function FileList({ selectedFile, setSelectedFile }) {
     }
   }, [selectedFile]);
 
+  // check된 파일들의 cycleCount를 가져온다.
   const getCycleCountStart = async () => {
     // selectedFile중에서 check된것만 filter하는 code있어야함
     const checkedFile = selectedFile.filter((file) => file.checked === true);
@@ -73,7 +74,7 @@ export default function FileList({ selectedFile, setSelectedFile }) {
       });
     }
   };
-
+  
   return (
     <div>
       <div className={styles.fileWindowTitle}>

@@ -1,7 +1,7 @@
 {
   "paths": [],
   "fftCnt": 2048,
-  "dcIgnore": true,
+  "dcIgnore": false,
   "sampleInterval": 1,
   "windowsIdx": "rectangle",
   "viewMode": "DBV",

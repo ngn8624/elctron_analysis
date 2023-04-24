@@ -2,7 +2,8 @@ const ffi = require('ffi-napi');
 const ref = require('ref-napi');
 const { ipcRenderer } = require('electron');
 const wgsFunction = ffi.Library('wave_sense_daq.dll', {
-  init: ['int', ['char *']],
+  analysisInit: ['int', []],
+  analysisClose : ['int', []],
   setWaveStatCallback: ['int', ['pointer']],
   getStatistics: ['int', ['char *']],
   getCycleCount: ['int', ['char *']],
@@ -49,12 +50,14 @@ const waveStatcallbackData = ffi.Callback(
 );
 
 // // 프로그램 시작시 call, return 0 이면 success
-async function init(path) {
-  const pathBuffer = Buffer.alloc(path.length + 1);
-  pathBuffer.fill(0);
-  pathBuffer.write(path, 0, 'utf-8');
-  return wgsFunction.init(pathBuffer);
+async function analysisInit() {
+  return wgsFunction.analysisInit();
 }
+
+async function analysisClose() {
+  return wgsFunction.analysisClose();
+}
+
 
 async function getStatistics(json) {
   const pathBuffer = Buffer.alloc(json.length + 1);
@@ -78,7 +81,8 @@ async function getCycleCount(path) {
 
 //loadFile 함수 export
 module.exports = {
-  init,
+  analysisInit,
+  analysisClose,
   setWaveStatCallback,
   getStatistics,
   getCycleCount,

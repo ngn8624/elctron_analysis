@@ -5,7 +5,7 @@
   border-top-right-radius: 14px;
   overflow: hidden;
   padding: 10px;
-  background-color: #5a6065;
+  background-color: hsl(207, 6%, 37%);
 }
 .fileWindowTitleUl {
   list-style: none;
@@ -48,7 +48,6 @@
   margin: 0;
   padding: 10px;
   flex-grow: 1;
-  /* overflow: scroll; */
   overflow-x: hidden;
 }
 .fileWindowContentsUl{
@@ -60,7 +59,7 @@
 .fileWindowContentsLi{
   display: flex;
   background-color: #6d6d6d;
-  width: 440px;
+  width: 500px;
   height: 20px;
   padding: 10px;
   border-radius: 14px;

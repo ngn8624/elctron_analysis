@@ -10,11 +10,20 @@ export const daqSetWaveStatCallback = async (cbData) => {
   });
 };
 
-export const daqInit = async (path) => {
+export const daqInit = async () => {
   if (!window.wgsFunction) return -1; // 0 : success , -1 : fail
-  return window.wgsFunction.init(path).then((res) => {
+  return window.wgsFunction.analysisInit().then((res) => {
     if (res === 0) console.log('daqInit success');
     else console.log('daqInit fail');
+    return res;
+  });
+};
+
+export const daqClose = async () => {
+  if (!window.wgsFunction) return -1; // 0 : success , -1 : fail
+  return window.wgsFunction.analysisClose().then((res) => {
+    if (res === 0) console.log('daqClose success');
+    else console.log('daqClose fail');
     return res;
   });
 };
@@ -28,21 +37,28 @@ export const daqGetCycleCount = async (path) => {
   });
 };
 
+// .dll 에서 thread 돌리고 리턴 받는용
+// export const daqGetStatistics = async (json) => {
+//   if (!window.wgsFunction) return -1; // 0 : success , -1 : fail
+//   return window.wgsFunction.getStatistics(json).then((res) => {
+//     if (res === 0) console.log('getStatistics fail');
+//     else console.log('getStatistics success');
+//     return res;
+//   });
+// };
+
+// promise쓰고 await 쓰기위해 만든것
 export const daqGetStatistics = async (json) => {
   if (!window.wgsFunction) return -1; // 0 : success , -1 : fail
-  return window.wgsFunction.getStatistics(json).then((res) => {
-    if (res === 0) console.log('getStatistics success');
-    else console.log('getStatistics fail');
-    return res;
-  });
+  return window.wgsFunction.getStatistics(json);
 };
 
 export const daqGetStatisticsStop = async (json) => {
-  console.log("daqGetStatisticsStop 있어야해용");
+  console.log("daqGetStatisticsStop 있어야해용????");
 };
 
 export function DaqInitFunction({ setRawData, setFftData }) {
-  daqInit(getConfigPath());
+  daqInit();
   daqSetWaveStatCallback((data) => {
     cbData({
       data: data,
