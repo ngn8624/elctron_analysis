@@ -63,7 +63,7 @@ export default function AppBar({
     clearFileInput(e.target);
   };
 
-  // test용 
+  // test용
   const Start = async () => {
     console.log('Start탔냐');
     timer = setInterval(() => {
@@ -90,7 +90,7 @@ export default function AppBar({
     }, 1000);
   };
 
-  // test용 
+  // test용
   const end = () => {
     console.log('end 탔냐');
     clearInterval(timer);
@@ -124,6 +124,7 @@ export default function AppBar({
       setIsFileRunning(false);
       setSelectedFile([]);
       setSettingModel((prevModel) => ({ ...prevModel, paths: [] }));
+      console.log('file list', selectedFile);
       return;
     }
     document.getElementById('importAttachment').click();

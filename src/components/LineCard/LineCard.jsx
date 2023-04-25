@@ -18,7 +18,8 @@ export default function LineCard({
   const [titleContents, setTitleContents] = useState(''); // 해당 탭의 title
   const [useChartData, setUseChartData] = useState([]); // 해당 탭의 chartRawData
   const [useChartFFTData, setUseChartFFTData] = useState([]); // 해당 탭의 chartFftData
-  const [isSmallHoverCard, setIsSmallHoverCard] = useState(true); // 해당 탭의 chartFftData
+  const [isSmallHoverCard, setIsSmallHoverCard] = useState(true);
+  const [isSmallHoverCard2, setIsSmallHoverCard2] = useState(true);
   function StatisticsConfig({ settingModel, onChangeInput, isSmallHoverCard }) {
     return (
       // <Expandable title={'STATISTICS'}>
@@ -173,16 +174,36 @@ export default function LineCard({
   return (
     <div className={styles.surface}>
       <div className={styles.twoCards}>
-        <div className={styles.lineChartCard}>
+        <div
+          className={
+            isSmallHoverCard2 ? styles.lineChartCard : styles.lineChartCardHover
+          }
+        >
           <Container title={titleContents + ' Statistics'}>
             <ul className={styles.ulCol}>
               <VibrationChart rawData={useChartData} />
             </ul>
           </Container>
         </div>
-        <div className={styles.hoverCard}>
+        <div
+          className={
+            isSmallHoverCard2 ? styles.hoverSmallCard : styles.hoverCard
+          }
+          onMouseEnter={() => {
+            setIsSmallHoverCard2(false);
+          }}
+          onMouseLeave={() => {
+            setIsSmallHoverCard2(true);
+          }}
+        >
           {/* <Container></Container> */}
-          파일리스트
+          <ul className={styles.fileList}>
+            <li>파일1</li>
+            <li>파일2</li>
+            <li>파일3</li>
+            <li>파일4</li>
+            <li>파일5</li>
+          </ul>
         </div>
       </div>
 
