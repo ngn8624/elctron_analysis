@@ -20,7 +20,7 @@ export default function AppbarView(props) {
     selectedFile,
     openPopup,
     isFileRunning,
-    handleRun
+    handleRun,
   } = props;
   return (
     <div className={styles.appbar}>
@@ -41,15 +41,12 @@ export default function AppbarView(props) {
           name={'FILELOAD'}
           tooltip={selectedFile}
         />
-</div>
+      </div>
       {/* 윈도우 버튼들 */}
-      <ul className='winBtns'>   
-      <button className='settingBtn'>
-        <IoMdSettings
-          size={'14px'}
-          onClick={openPopup}
-        />
-      </button >
+      <ul className='winBtns'>
+        <button className='settingBtn'>
+          <IoMdSettings size={'14px'} onClick={openPopup} />
+        </button>
         <button type='button' className='winBtn' onClick={handleMinimizeWindow}>
           <VscChromeMinimize />
         </button>

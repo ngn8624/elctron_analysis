@@ -37,20 +37,13 @@ export const daqGetCycleCount = async (path) => {
   });
 };
 
-// .dll 에서 thread 돌리고 리턴 받는용
-// export const daqGetStatistics = async (json) => {
-//   if (!window.wgsFunction) return -1; // 0 : success , -1 : fail
-//   return window.wgsFunction.getStatistics(json).then((res) => {
-//     if (res === 0) console.log('getStatistics fail');
-//     else console.log('getStatistics success');
-//     return res;
-//   });
-// };
-
-// promise쓰고 await 쓰기위해 만든것
 export const daqGetStatistics = async (json) => {
   if (!window.wgsFunction) return -1; // 0 : success , -1 : fail
-  return window.wgsFunction.getStatistics(json);
+  return window.wgsFunction.getStatistics(json).then((res) => {
+    if (res === 0) console.log('getStatistics fail');
+    else console.log('getStatistics success');
+    return res;
+  });
 };
 
 export const daqGetStatisticsStop = async (json) => {

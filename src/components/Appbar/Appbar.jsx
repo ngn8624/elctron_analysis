@@ -93,8 +93,8 @@ export default function AppBar({
   const handleRun = async () => {
     setIsRunning((prev) => {
       if (prev) {
-        // daqGetStatisticsStop();
-        end(); // test용
+        daqGetStatisticsStop();
+        // end(); // test용
       } else {
         setRawData(
           Array.from({ length: isTabs.length }, () =>
@@ -117,54 +117,13 @@ export default function AppBar({
             paths: [sendSelectedFile[i].path],
           };
           const contentsValue = JSON.stringify(newSet, null, 2); // JavaScript 객체를 JSON 형식의 문자열로 변환
-          // daqGetStatistics(contentsValue);
+          daqGetStatistics(contentsValue);
         }
-        Start(); // test용
+        // Start(); // test용
       }
       return !prev;
     });
   };
-
-  // promise test중
-  // const handleRun = async () => {
-  //   setRawData(
-  //     Array.from({ length: isTabs.length }, () =>
-  //       Array.from({ length: 3 }, () => [])
-  //     )
-  //   );
-  //   setFftData(
-  //     Array.from({ length: isTabs.length }, () =>
-  //       Array.from({ length: 3 }, () => [])
-  //     )
-  //   );
-  //   const sendSelectedFile = selectedFile.filter(
-  //     (item) => item.checked == true
-  //   );
-  //   const contentsTemp = JSON.parse(contents);
-
-  //   // Promise.all을 사용하여 sendSelectedFile의 모든 파일에 대해 병렬로 작업을 수행합니다.
-  // const promises = sendSelectedFile.map((item) => {
-  //   const newSet = {
-  //     ...contentsTemp,
-  //     paths: [item.path],
-  //   };
-  //   const contentsValue = JSON.stringify(newSet, null, 2);
-  //   return daqGetStatistics(contentsValue);
-  // });
-
-  //   const results = await Promise.all(promises);
-
-  //   // 결과를 처리하는 함수를 따로 분리합니다.
-  //   handleResults(results, sendSelectedFile);
-  // };
-
-  // const handleResults = (results, sendSelectedFile) => {
-  //   results.forEach((ret, index) => {
-  //     if (ret === 0) {
-  //       console.log("Failed to get statistics for file:", sendSelectedFile[index].path);
-  //     }
-  //   });
-  // };
 
   const handleFileLoad = () => {
     document.getElementById('importAttachment').click();
