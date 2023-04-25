@@ -1,8 +1,14 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import styles from './FileList.module.css';
 import { daqGetCycleCount } from '../../controller/daq';
+import { TiArrowMaximise, TiArrowMinimise, TiTrash } from 'react-icons/ti';
 
-export default function FileList({ selectedFile, setSelectedFile }) {
+export default function FileList({
+  selectedFile,
+  setSelectedFile,
+  isSmallHoverCard,
+  onSizing,
+}) {
   // 초기에 체크박스 전체선택이 되어있는지 확인하는 함수
   const initCheckList = (selectedFile) => {
     return selectedFile.findIndex((file) => file.checked === false) == -1
@@ -77,9 +83,10 @@ export default function FileList({ selectedFile, setSelectedFile }) {
 
   return (
     <div>
-      <div className={styles.fileWindowTitle}>
-        <ul className={styles.fileWindowTitleUl}>
-          <li className={styles.fileWindowTitleLi}>
+      {isSmallHoverCard ? (
+        // <div className={styles.fileWindowTitle}>
+        <ul className={styles.fileWindowTitleUlSmall}>
+          {/* <li>
             <input
               type={'checkbox'}
               name=''
@@ -88,48 +95,117 @@ export default function FileList({ selectedFile, setSelectedFile }) {
               onChange={(e) => onCheckedAll(e.target.checked)}
             />
           </li>
-          <li className={styles.fileWindowTitleLi}>NUM</li>
-          <li className={styles.fileWindowTitleLi}>Files</li>
+          <li>N</li>
+          <li>NAME</li>
+          <li>
+            <button
+              className={styles.fileWindowTitleButton}
+              onClick={getCycleCountStart}
+            >
+              GET CYCLE
+            </button>
+          </li>{' '}
           <li className={styles.fileWindowTitleLi}>
             <button
               className={styles.fileWindowTitleButton}
               onClick={onDeleteFile}
             >
-              Delete
+              <TiTrash size={'14px'} />
             </button>
-          </li>
-          <li className={styles.fileWindowTitleLi}>
+          </li> */}
+
+          <li>
             <button
-              className={styles.fileWindowTitleButton}
-              onClick={getCycleCountStart}
+              className={isSmallHoverCard ? styles.maxBtn2 : styles.maxBtn}
+              onClick={onSizing}
             >
-              getCycle
+              {isSmallHoverCard ? (
+                <TiArrowMaximise size={'14px'} />
+              ) : (
+                <TiArrowMinimise size={'14px'} />
+              )}{' '}
             </button>
           </li>
         </ul>
-      </div>
-      <div className={styles.fileWindowContents}>
-        <ul className={styles.fileWindowContentsUl}>
-          {FileCardMap(selectedFile, checkHandler)}
-        </ul>
-      </div>
+      ) : (
+        // </div>
+        <div className={styles.fileWindowTitle}>
+          <ul className={styles.fileWindowTitleUl}>
+            <li className={styles.fileWindowTitleLi}>
+              <input
+                type={'checkbox'}
+                name=''
+                id=''
+                checked={checkList}
+                onChange={(e) => onCheckedAll(e.target.checked)}
+              />
+            </li>
+            <li className={styles.fileWindowTitleLi}>NUM</li>
+            <li className={styles.fileWindowTitleLi}>FILE NAME</li>
+            <li className={styles.fileWindowTitleLi}>
+              <button
+                className={styles.fileWindowTitleButton}
+                onClick={getCycleCountStart}
+              >
+                GET CYCLE
+              </button>
+            </li>{' '}
+            <li className={styles.fileWindowTitleLi}>
+              <button
+                className={styles.fileWindowTitleButton}
+                onClick={onDeleteFile}
+              >
+                <TiTrash size={'14px'} />
+              </button>
+            </li>
+            <li>
+              <button
+                className={isSmallHoverCard ? styles.maxBtn2 : styles.maxBtn}
+                onClick={onSizing}
+              >
+                {isSmallHoverCard ? (
+                  <TiArrowMaximise size={'14px'} />
+                ) : (
+                  <TiArrowMinimise size={'14px'} />
+                )}{' '}
+              </button>
+            </li>
+          </ul>
+        </div>
+      )}
+      <ul
+        className={
+          isSmallHoverCard
+            ? styles.fileWindowContentsUlSmall
+            : styles.fileWindowContentsUl
+        }
+      >
+        {FileCardMap(selectedFile, checkHandler, isSmallHoverCard)}
+      </ul>
     </div>
   );
 }
 
-const FileCardMap = (selectedFiles, checkHandler) => {
+const FileCardMap = (selectedFiles, checkHandler, isSmallHoverCard) => {
   return selectedFiles.map((file, index) => (
-    <li key={file.id} className={styles.fileWindowContentsLi}>
+    <li key={file.id}>
       <input
-        className={styles.fileWindowContentsCheckbox}
+        className={isSmallHoverCard ? styles.noDisplay : ''}
+        // className={styles.fileWindowContentsCheckbox}
         type={'checkbox'}
         id={file.id}
         checked={file.checked}
         onChange={(e) => checkHandler(e)}
       />
-      <span className={styles.fileWindowContentsIndex}>{index + 1}</span>
-      <span className={styles.fileWindowContentsName}>{file.name}</span>
-      <span className={styles.fileWindowContentsName}>{file.cycle}</span>
+      <span className={isSmallHoverCard ? styles.noDisplay : ''}>
+        {index + 1}
+      </span>
+      <span className={isSmallHoverCard ? styles.smallName : ''}>
+        {file.name}
+      </span>
+      <span className={isSmallHoverCard ? styles.noDisplay : styles.cycle}>
+        {file.cycle}
+      </span>
     </li>
   ));
 };

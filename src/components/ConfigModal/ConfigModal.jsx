@@ -120,7 +120,7 @@ export default function ConfigModal({
     <ConfigModalView
       closePopup={closePopup}
       settingModel={settingModel}
-      onChangeInput={onChangeInput}
+      // onChangeInput={onChangeInput}
       isShowIcon={isShowIcon}
       isSavedSuccess={isSavedSuccess}
       modalRef={modalRef}

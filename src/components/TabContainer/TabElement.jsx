@@ -1,5 +1,4 @@
 import styles from './TabElement.module.css';
-
 export default function TabElement({
   label,
   tabIndex,

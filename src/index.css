@@ -30,6 +30,7 @@ code {
   --light-gray: #8f8e91;
   --white: #ffffff;
   --wgs-main: #0d21a1;
+  --accent-color: #73fbd3;
   --stop: #ef2424;
   --run: #00fd28;
   --chart-x: #9a9ae5;
@@ -88,11 +89,11 @@ code {
 }
 .settingBtn {
   cursor: pointer;
- display: flex;
- padding-top: 0.25rem;
- padding-bottom: 0.25rem;
- border-radius: 0.38rem;
- margin-right: 0.38rem;
+  display: flex;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  border-radius: 0.38rem;
+  margin-right: 0.38rem;
   background-color: #000000;
   -webkit-app-region: no-drag;
   color: white;
@@ -104,15 +105,29 @@ code {
 .settingBtn:hover {
   background-color: var(--light-gray);
 }
-
 .tab-container {
   width: 100%;
   display: flex;
   justify-content: start;
   align-items: flex-end;
   margin-left: 0.75rem;
+  /* max-width: 100px; */
+
   overflow: hidden;
 }
+/* .tab-container {
+  display: flex;
+
+  width: 98%;
+} */
+/* .tab-container {
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: flex-end;
+  margin-left: 0.75rem;
+  overflow: hidden;
+} */
 
 .tab-container > ul {
   list-style: none;
@@ -125,7 +140,7 @@ code {
   overflow: hidden;
 }
 
-html{
+html {
   width: 100%;
   height: 100%;
   font-size: 16px;

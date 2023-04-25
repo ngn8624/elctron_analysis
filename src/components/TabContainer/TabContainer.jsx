@@ -32,7 +32,7 @@ export default function TabContainer({ isTabs, activeIndex, handleTabClick }) {
         }}
       >
         {isLeftHover ? <AiOutlineArrowLeft /> : <AiOutlineLeft />}
-      </button>{' '}
+      </button>
       <ul ref={horizontalScrollRef}>
         {isTabs.map((tab, index) => (
           <li key={index} className={`li` + (index + 1)}>

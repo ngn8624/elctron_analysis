@@ -4,104 +4,204 @@
   border-top-left-radius: 14px;
   border-top-right-radius: 14px;
   overflow: hidden;
-  padding: 10px;
-  background-color: hsl(207, 6%, 37%);
+  padding: 6px 10px;
+  /* background-color: hsl(207, 6%, 37%); */
+  border-bottom: 1px solid var(--dark-light-gray);
 }
+
 .fileWindowTitleUl {
+  width: 100%;
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
-  justify-content: space-between;
+  /* justify-content: center;
+  align-items: center; */
+  align-items: center;
+  font-size: 12px;
 }
-.fileWindowTitleLi {
+.fileWindowTitleUlSmall {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
-  margin-left: 10px;
-  margin-Right: 10px;
+  justify-content: end;
+}
+.fileWindowTitleUlSmall > li {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: end;
+  margin: 6px 10px;
+}
+.fileWindowTitleUlSmall > li > button {
+  padding: 2px;
+}
+.fileWindowTitleUl > li:first-child {
+  margin-left: 0px;
+  margin-right: 60px;
+  accent-color: var(--accent-color);
+}
+.fileWindowTitleUl > li:nth-child(2) {
+  margin-right: 70px;
+}
+
+.fileWindowTitleUl > li:nth-child(3) {
+  margin-right: 100px;
+}
+.fileWindowTitleUl > li:nth-child(4) {
+  margin-right: 20px;
+}
+.fileWindowTitleUl > li:nth-child(5) {
+  margin-left: 160px;
+  margin-right: 20px;
+}
+.fileWindowTitleUl > li > button {
+  font-size: 12px;
+}
+.fileWindowContentsUlSmall {
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  font-size: 12px;
+}
+.fileWindowContentsUlSmall > li {
+  display: flex;
+  /* background-color: blue; */
+  /* padding: 10px; */
+  align-items: center;
+  border-bottom: 1px solid var(--dark-light-gray);
+  /* justify-content: space-between; */
+}
+.fileWindowContentsUl > li {
+  display: flex;
+  /* background-color: blue; */
+  padding: 10px;
+  align-items: center;
+  border-bottom: 1px solid var(--dark-light-gray);
+  /* justify-content: space-between; */
+}
+
+.fileWindowContentsUl > li:hover {
+  background-color: black;
+}
+.fileWindowContentsUl > li > input {
+  display: flex;
+  /* background-color: red; */
+  align-items: start;
+  justify-content: flex-start;
+  /* width: 100px; */
+  margin-right: 60px;
+  accent-color: var(--accent-color);
+}
+.fileWindowContentsUl > li > span {
+  width: 100px;
+  /* background-color: red; */
+  /* overflow: hidden;
+  white-space: nowrap; */
+  /* margin-left: 50px; */
+}
+.fileWindowContentsUl > li > input {
+  margin-left: 4px;
+  /* background-color: violet; */
+}
+.fileWindowContentsCycle {
+  margin-left: 60px;
 }
 .fileWindowTitleButton {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 50px;
-  clear: both;
-  float: left;
-  height: 16px;
+  /* width: 50px; */
+  padding: 4px 10px;
+
   cursor: pointer;
-  padding: 4px 4px;
-  background-color: #323232;
+  background-color: black;
   border: none;
-  color: black;
-  border-radius: 10px;
-  margin-left: 10px;
-  margin-top: 5px;
+  color: white;
+  border-radius: 0.875rem;
 }
-.fileWindowTitleButton:hover{
+.fileWindowTitleButton:hover {
   color: white;
 }
 
-.fileWindowContents{
+.fileWindowContents {
   list-style: none;
   margin: 0;
-  padding: 10px;
+  /* padding: 10px; */
   flex-grow: 1;
   overflow-x: hidden;
 }
-.fileWindowContentsUl{
+.fileWindowContentsUl {
   list-style: none;
   margin: 0;
   padding: 0;
 }
-
-.fileWindowContentsLi{
+.maxBtn2,
+.maxBtn {
+  color: white;
+  padding: 4px 10px;
+  width: 50px;
+  /* height: 100px; */
+  background-color: black;
+  /* margin: 6px 10px; */
+  cursor: pointer;
+  border-radius: 0.875rem;
+  /* float: left; */
   display: flex;
-  background-color: #6d6d6d;
-  width: 500px;
-  height: 20px;
-  padding: 10px;
-  border-radius: 14px;
-  margin-bottom: 10px;
+  justify-content: center;
   align-items: center;
-}
-.fileWindowContentsCheckbox{
-  color: white;
-  width: 40px;
-  padding: 4px;
-  border-radius: 14px;
-  background-color: #454647;
+  font-size: 0.75rem;
   border: none;
-  float: left;
-  margin-left: 0px;
+  /* gap: 4px; */
 }
-.fileWindowContentsIndex{
-  color: white;
-  padding: 4px;
-  border: none;
-  margin-left: 5px;
-  display: flex;
-  align-items: center;
+.maxBtn {
+  width: 62px;
+  color: black;
+  background-color: white;
 }
-.fileWindowContentsName{
+.maxBtn2:hover,
+.maxBtn:hover {
   color: white;
-  padding: 4px;
+  background-color: var(--light-gray);
+}
+.maxBtn2:active {
+  /* width: 74px; */
+  transition: 0.2s linear;
+  background-color: white;
+  color: black;
+}
+.maxBtn:active {
+  /* background-color: var(--light-gray); */
+  /* width: 62px; */
+  transition: 0.2s linear;
+  background-color: white;
+  color: black;
+}
+.maxBtn2:active {
+  width: 74px;
+  transition: 0.2s linear;
+  background-color: white;
+  color: black;
+}
+.fileWindowContentsName {
+  color: white;
+  /* padding: 4px;
   border: none;
   margin-left: 25px;
   margin-right: 25px;
   width: 250px;
   float: left;
   display: flex;
-  align-items: center;
-  overflow: hidden;
-  white-space: nowrap;
+  align-items: center; */
+  /* margin-left: 60px; */
 }
-.fileWindowContentsButton{
+.fileWindowContentsButton {
   align-items: center;
   width: 20px;
   padding: 4px;
-  background-color:var(--mark-btn) ;
+  background-color: var(--mark-btn);
   float: right;
   height: 23px;
   border-radius: 50%;
@@ -109,7 +209,7 @@
   color: white;
   border: none;
 }
-.fileWindowContentsInput{
+.fileWindowContentsInput {
   color: white;
   width: 40px;
   height: 20px;
@@ -121,6 +221,25 @@
   text-align: center;
   margin-right: 6px;
 }
-.fileWindowContentsInput:focus{
-  outline: none !important; border-color: white; box-shadow: 0 0 5px white; 
+.fileWindowContentsInput:focus {
+  outline: none !important;
+  border-color: white;
+  box-shadow: 0 0 5px white;
+}
+.noDisplay {
+  display: none;
+  border: none;
+}
+.smallName {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 0;
+}
+.smallName:hover {
+  background-color: black;
+}
+.cycle {
+  margin-left: 70px;
 }

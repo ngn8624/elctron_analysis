@@ -20,15 +20,28 @@ export default function WaveSenseAnalysis() {
   const [selectedFile, setSelectedFile] = useState([]); // 파일 선택된 리스르
   const [isFileRunning, setIsFileRunning] = useState(false);
   const [contents, setContents] = useState({}); // .dll 보낼 config Json
+  const [startIdx, setStartIdx] = useState(0); // chart의 x 값 시작점
   const [isTabs, setIsTabs] = useState(() => {
     return initTabs;
   }); // tab List
   const [activeIndex, setActiveIndex] = useState(0); // tab real index
+  // setting창 조작후 settingModel에 넣기
   const [defaultDataCnt, setDefaultDataCnt] = useState(1); // 추후 각각의 src가 몇개로 받을것인지 설정 : 현재 default 1
+
   // tab 클릭 시 activeIndex 업데이트
   function handleTabClick(index) {
     setActiveIndex(index);
   }
+  const handleLeftArrowClick = () => {
+    if (startIdx > 0) {
+      setStartIdx((prevIdx) => prevIdx - 1);
+    }
+  };
+  const handleRightArrowClick = () => {
+    // if (startIdx < rawData[0][0].length - 1) {
+    setStartIdx((prevIdx) => prevIdx + 1);
+    // }
+  };
 
   // selectedFile 변경시 setIsFileRunning 업데이트
   useEffect(() => {
@@ -43,6 +56,7 @@ export default function WaveSenseAnalysis() {
   useEffect(() => {
     setIsTabs((prevTabs) => {
       const newTabs = [];
+
       for (const key in settingModel) {
         if (
           settingModel[key] === 'TRUE' &&
@@ -126,6 +140,8 @@ export default function WaveSenseAnalysis() {
         isTabs={isTabs}
         activeIndex={activeIndex}
         handleTabClick={handleTabClick}
+        handleRightArrowClick={handleRightArrowClick}
+        handleLeftArrowClick={handleLeftArrowClick}
       />
       <LineCard
         isTabs={isTabs}
