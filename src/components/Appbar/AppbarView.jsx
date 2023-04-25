@@ -42,7 +42,6 @@ export default function AppbarView(props) {
           tooltip={selectedFile}
         />
       </div>
-      {/* 윈도우 버튼들 */}
       <ul className='winBtns'>
         <button className='settingBtn'>
           <IoMdSettings size={'14px'} onClick={openPopup} />

@@ -47,9 +47,6 @@ export const initSettingModels = {
   Q1: 'TRUE',
   Q3: 'TRUE',
   IQR: 'TRUE',
-  IQR1: 'TRUE',
-  IQR2: 'TRUE',
-  IQR3: 'TRUE',
 };
 export const initTabs = [
   {
@@ -98,18 +95,6 @@ export const initTabs = [
   },
   {
     label: 'IQR',
-    color: [generateColor(), generateColor(), generateColor()],
-  },
-  {
-    label: 'IQR1',
-    color: [generateColor(), generateColor(), generateColor()],
-  },
-  {
-    label: 'IQR2',
-    color: [generateColor(), generateColor(), generateColor()],
-  },
-  {
-    label: 'IQR3',
     color: [generateColor(), generateColor(), generateColor()],
   },
 ];

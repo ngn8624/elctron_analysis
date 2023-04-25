@@ -9,7 +9,6 @@ export default function ComboBox({
   isStatistics,
   isSmallHoverCard,
 }) {
-  console.log('ComboBox', value);
   return (
     <div className={isStatistics ? styles.statisticsCombo : styles.combo}>
       <div className={styles.title}>{title}</div>

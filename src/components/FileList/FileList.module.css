@@ -5,7 +5,6 @@
   border-top-right-radius: 14px;
   overflow: hidden;
   padding: 6px 10px;
-  /* background-color: hsl(207, 6%, 37%); */
   border-bottom: 1px solid var(--dark-light-gray);
 }
 
@@ -15,8 +14,6 @@
   margin: 0;
   padding: 0;
   display: flex;
-  /* justify-content: center;
-  align-items: center; */
   align-items: center;
   font-size: 12px;
 }
@@ -68,19 +65,14 @@
 }
 .fileWindowContentsUlSmall > li {
   display: flex;
-  /* background-color: blue; */
-  /* padding: 10px; */
   align-items: center;
   border-bottom: 1px solid var(--dark-light-gray);
-  /* justify-content: space-between; */
 }
 .fileWindowContentsUl > li {
   display: flex;
-  /* background-color: blue; */
   padding: 10px;
   align-items: center;
   border-bottom: 1px solid var(--dark-light-gray);
-  /* justify-content: space-between; */
 }
 
 .fileWindowContentsUl > li:hover {
@@ -88,23 +80,16 @@
 }
 .fileWindowContentsUl > li > input {
   display: flex;
-  /* background-color: red; */
   align-items: start;
   justify-content: flex-start;
-  /* width: 100px; */
   margin-right: 60px;
   accent-color: var(--accent-color);
 }
 .fileWindowContentsUl > li > span {
   width: 100px;
-  /* background-color: red; */
-  /* overflow: hidden;
-  white-space: nowrap; */
-  /* margin-left: 50px; */
 }
 .fileWindowContentsUl > li > input {
   margin-left: 4px;
-  /* background-color: violet; */
 }
 .fileWindowContentsCycle {
   margin-left: 60px;
@@ -113,7 +98,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  /* width: 50px; */
   padding: 4px 10px;
 
   cursor: pointer;
@@ -129,7 +113,6 @@
 .fileWindowContents {
   list-style: none;
   margin: 0;
-  /* padding: 10px; */
   flex-grow: 1;
   overflow-x: hidden;
 }
@@ -143,18 +126,14 @@
   color: white;
   padding: 4px 10px;
   width: 50px;
-  /* height: 100px; */
   background-color: black;
-  /* margin: 6px 10px; */
   cursor: pointer;
   border-radius: 0.875rem;
-  /* float: left; */
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 0.75rem;
   border: none;
-  /* gap: 4px; */
 }
 .maxBtn {
   width: 62px;
@@ -167,14 +146,11 @@
   background-color: var(--light-gray);
 }
 .maxBtn2:active {
-  /* width: 74px; */
   transition: 0.2s linear;
   background-color: white;
   color: black;
 }
 .maxBtn:active {
-  /* background-color: var(--light-gray); */
-  /* width: 62px; */
   transition: 0.2s linear;
   background-color: white;
   color: black;
@@ -187,15 +163,6 @@
 }
 .fileWindowContentsName {
   color: white;
-  /* padding: 4px;
-  border: none;
-  margin-left: 25px;
-  margin-right: 25px;
-  width: 250px;
-  float: left;
-  display: flex;
-  align-items: center; */
-  /* margin-left: 60px; */
 }
 .fileWindowContentsButton {
   align-items: center;

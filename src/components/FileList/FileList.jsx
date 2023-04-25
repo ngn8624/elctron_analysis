@@ -84,36 +84,7 @@ export default function FileList({
   return (
     <div>
       {isSmallHoverCard ? (
-        // <div className={styles.fileWindowTitle}>
         <ul className={styles.fileWindowTitleUlSmall}>
-          {/* <li>
-            <input
-              type={'checkbox'}
-              name=''
-              id=''
-              checked={checkList}
-              onChange={(e) => onCheckedAll(e.target.checked)}
-            />
-          </li>
-          <li>N</li>
-          <li>NAME</li>
-          <li>
-            <button
-              className={styles.fileWindowTitleButton}
-              onClick={getCycleCountStart}
-            >
-              GET CYCLE
-            </button>
-          </li>{' '}
-          <li className={styles.fileWindowTitleLi}>
-            <button
-              className={styles.fileWindowTitleButton}
-              onClick={onDeleteFile}
-            >
-              <TiTrash size={'14px'} />
-            </button>
-          </li> */}
-
           <li>
             <button
               className={isSmallHoverCard ? styles.maxBtn2 : styles.maxBtn}
@@ -128,7 +99,6 @@ export default function FileList({
           </li>
         </ul>
       ) : (
-        // </div>
         <div className={styles.fileWindowTitle}>
           <ul className={styles.fileWindowTitleUl}>
             <li className={styles.fileWindowTitleLi}>
@@ -191,7 +161,6 @@ const FileCardMap = (selectedFiles, checkHandler, isSmallHoverCard) => {
     <li key={file.id}>
       <input
         className={isSmallHoverCard ? styles.noDisplay : ''}
-        // className={styles.fileWindowContentsCheckbox}
         type={'checkbox'}
         id={file.id}
         checked={file.checked}
