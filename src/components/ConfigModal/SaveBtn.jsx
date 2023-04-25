@@ -17,7 +17,11 @@ function BtnIcon({ isShowIcon, isSavedSuccess }) {
 
 export default function SaveBtn({ handleSave, isShowIcon, isSavedSuccess }) {
   return (
-    <button id='basicRoundedBtn' className={styles.smallBtn} onClick={handleSave}>
+    <button
+      id='basicRoundedBtn'
+      className={styles.smallBtn}
+      onClick={handleSave}
+    >
       Save
       <BtnIcon isShowIcon={isShowIcon} isSavedSuccess={isSavedSuccess} />
     </button>

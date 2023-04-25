@@ -29,13 +29,12 @@ export default function WaveSenseAnalysis() {
   function handleTabClick(index) {
     setActiveIndex(index);
   }
-  
+
   // selectedFile 변경시 setIsFileRunning 업데이트
   useEffect(() => {
-    if(selectedFile.length === 0) {
+    if (selectedFile.length === 0) {
       setIsFileRunning(false);
-    }
-    else{
+    } else {
       setIsFileRunning(true);
     }
   }, [selectedFile]);
@@ -82,7 +81,19 @@ export default function WaveSenseAnalysis() {
   // setting창 조작후 settingModel에 넣기
   const onChangeInput = (e) => {
     const { name, value } = e.target;
-    setSettingModel((prev) => ({ ...prev, [name]: value }));
+    const trueCount = Object.keys(settingModel)
+      .slice(
+        Object.keys(settingModel).indexOf('RMS'),
+        Object.keys(settingModel).indexOf('IQR') + 1
+      )
+      .reduce((count, key) => {
+        return count + (settingModel[key] === 'TRUE' ? 1 : 0);
+      }, 0);
+    if (value === 'TRUE' || trueCount > 1) {
+      setSettingModel((prev) => ({ ...prev, [name]: value }));
+    } else {
+      alert('At least one property must be TRUE.');
+    }
   };
 
   return (
@@ -96,7 +107,6 @@ export default function WaveSenseAnalysis() {
         setFftData={setFftData}
         contents={contents}
         setContents={setContents}
-        onChangeInput={onChangeInput}
       />
       <AppBar
         setRawData={setRawData}

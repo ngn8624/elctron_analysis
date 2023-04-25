@@ -36,7 +36,7 @@ export default function VibrationChart({
   const chartData = {
     datasets: rawData,
   };
-  
+
   const defaultOptions = {
     maintainAspectRatio: false,
     spanGaps: true,

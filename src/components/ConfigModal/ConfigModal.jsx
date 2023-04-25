@@ -12,7 +12,6 @@ export default function ConfigModal({
   setFftData,
   contents,
   setContents,
-  onChangeInput,
 }) {
   const [isSavedSuccess, setIsSavedSuccess] = useState(false);
   const [isShowIcon, setIsShowIcon] = useState(false);
@@ -107,6 +106,12 @@ export default function ConfigModal({
     setTimeout(() => {
       setIsShowIcon((prev) => !prev);
     }, 1000);
+  };
+
+  // FFT 변경 함수
+  const onChangeInput = (e) => {
+    const { name, value } = e.target;
+    setSettingModel((prev) => ({ ...prev, [name]: value }));
   };
 
   if (!showPopup) return null;

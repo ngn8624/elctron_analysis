@@ -3,7 +3,7 @@ const ref = require('ref-napi');
 const { ipcRenderer } = require('electron');
 const wgsFunction = ffi.Library('wave_sense_daq.dll', {
   analysisInit: ['int', []],
-  analysisClose : ['int', []],
+  analysisClose: ['int', []],
   setWaveStatCallback: ['int', ['pointer']],
   getStatistics: ['int', ['char *']],
   getCycleCount: ['int', ['char *']],
@@ -57,7 +57,6 @@ async function analysisInit() {
 async function analysisClose() {
   return wgsFunction.analysisClose();
 }
-
 
 async function getStatistics(json) {
   const pathBuffer = Buffer.alloc(json.length + 1);

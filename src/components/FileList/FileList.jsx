@@ -74,7 +74,7 @@ export default function FileList({ selectedFile, setSelectedFile }) {
       });
     }
   };
-  
+
   return (
     <div>
       <div className={styles.fileWindowTitle}>
