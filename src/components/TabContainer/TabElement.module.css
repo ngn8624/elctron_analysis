@@ -3,7 +3,6 @@
   position: relative;
   cursor: pointer;
   width: 9.7rem;
-  /* height: 100%; */
   background-color: #000000;
   display: flex;
   align-items: center;
@@ -22,10 +21,7 @@
   background-color: white;
   color: black;
   font-weight: 600;
-  /* padding-top: 4px; */
   font-size: 1rem;
-
-  /* background-color: var(); */
 }
 .inactive {
   background-color: black;

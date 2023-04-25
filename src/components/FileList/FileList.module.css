@@ -1,0 +1,245 @@
+.fileWindowTitle {
+  display: flex;
+  align-items: center;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+  overflow: hidden;
+  padding: 6px 10px;
+  /* background-color: hsl(207, 6%, 37%); */
+  border-bottom: 1px solid var(--dark-light-gray);
+}
+
+.fileWindowTitleUl {
+  width: 100%;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  /* justify-content: center;
+  align-items: center; */
+  align-items: center;
+  font-size: 12px;
+}
+.fileWindowTitleUlSmall {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: end;
+}
+.fileWindowTitleUlSmall > li {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: end;
+  margin: 6px 10px;
+}
+.fileWindowTitleUlSmall > li > button {
+  padding: 2px;
+}
+.fileWindowTitleUl > li:first-child {
+  margin-left: 0px;
+  margin-right: 60px;
+  accent-color: var(--accent-color);
+}
+.fileWindowTitleUl > li:nth-child(2) {
+  margin-right: 70px;
+}
+
+.fileWindowTitleUl > li:nth-child(3) {
+  margin-right: 100px;
+}
+.fileWindowTitleUl > li:nth-child(4) {
+  margin-right: 20px;
+}
+.fileWindowTitleUl > li:nth-child(5) {
+  margin-left: 160px;
+  margin-right: 20px;
+}
+.fileWindowTitleUl > li > button {
+  font-size: 12px;
+}
+.fileWindowContentsUlSmall {
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  font-size: 12px;
+}
+.fileWindowContentsUlSmall > li {
+  display: flex;
+  /* background-color: blue; */
+  /* padding: 10px; */
+  align-items: center;
+  border-bottom: 1px solid var(--dark-light-gray);
+  /* justify-content: space-between; */
+}
+.fileWindowContentsUl > li {
+  display: flex;
+  /* background-color: blue; */
+  padding: 10px;
+  align-items: center;
+  border-bottom: 1px solid var(--dark-light-gray);
+  /* justify-content: space-between; */
+}
+
+.fileWindowContentsUl > li:hover {
+  background-color: black;
+}
+.fileWindowContentsUl > li > input {
+  display: flex;
+  /* background-color: red; */
+  align-items: start;
+  justify-content: flex-start;
+  /* width: 100px; */
+  margin-right: 60px;
+  accent-color: var(--accent-color);
+}
+.fileWindowContentsUl > li > span {
+  width: 100px;
+  /* background-color: red; */
+  /* overflow: hidden;
+  white-space: nowrap; */
+  /* margin-left: 50px; */
+}
+.fileWindowContentsUl > li > input {
+  margin-left: 4px;
+  /* background-color: violet; */
+}
+.fileWindowContentsCycle {
+  margin-left: 60px;
+}
+.fileWindowTitleButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* width: 50px; */
+  padding: 4px 10px;
+
+  cursor: pointer;
+  background-color: black;
+  border: none;
+  color: white;
+  border-radius: 0.875rem;
+}
+.fileWindowTitleButton:hover {
+  color: white;
+}
+
+.fileWindowContents {
+  list-style: none;
+  margin: 0;
+  /* padding: 10px; */
+  flex-grow: 1;
+  overflow-x: hidden;
+}
+.fileWindowContentsUl {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.maxBtn2,
+.maxBtn {
+  color: white;
+  padding: 4px 10px;
+  width: 50px;
+  /* height: 100px; */
+  background-color: black;
+  /* margin: 6px 10px; */
+  cursor: pointer;
+  border-radius: 0.875rem;
+  /* float: left; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.75rem;
+  border: none;
+  /* gap: 4px; */
+}
+.maxBtn {
+  width: 62px;
+  color: black;
+  background-color: white;
+}
+.maxBtn2:hover,
+.maxBtn:hover {
+  color: white;
+  background-color: var(--light-gray);
+}
+.maxBtn2:active {
+  /* width: 74px; */
+  transition: 0.2s linear;
+  background-color: white;
+  color: black;
+}
+.maxBtn:active {
+  /* background-color: var(--light-gray); */
+  /* width: 62px; */
+  transition: 0.2s linear;
+  background-color: white;
+  color: black;
+}
+.maxBtn2:active {
+  width: 74px;
+  transition: 0.2s linear;
+  background-color: white;
+  color: black;
+}
+.fileWindowContentsName {
+  color: white;
+  /* padding: 4px;
+  border: none;
+  margin-left: 25px;
+  margin-right: 25px;
+  width: 250px;
+  float: left;
+  display: flex;
+  align-items: center; */
+  /* margin-left: 60px; */
+}
+.fileWindowContentsButton {
+  align-items: center;
+  width: 20px;
+  padding: 4px;
+  background-color: var(--mark-btn);
+  float: right;
+  height: 23px;
+  border-radius: 50%;
+  cursor: pointer;
+  color: white;
+  border: none;
+}
+.fileWindowContentsInput {
+  color: white;
+  width: 40px;
+  height: 20px;
+  border-radius: var(--primary-radius);
+  margin-left: 6px;
+  background-color: #2a2a2b;
+  border: none;
+  float: right;
+  text-align: center;
+  margin-right: 6px;
+}
+.fileWindowContentsInput:focus {
+  outline: none !important;
+  border-color: white;
+  box-shadow: 0 0 5px white;
+}
+.noDisplay {
+  display: none;
+  border: none;
+}
+.smallName {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 0;
+}
+.smallName:hover {
+  background-color: black;
+}
+.cycle {
+  margin-left: 70px;
+}

@@ -26,10 +26,8 @@ export default function WaveSenseAnalysis() {
   }); // tab List
   const [activeIndex, setActiveIndex] = useState(0); // tab real index
   // setting창 조작후 settingModel에 넣기
-  const onChangeInput = (e) => {
-    const { name, value } = e.target;
-    setSettingModel((prev) => ({ ...prev, [name]: value }));
-  };
+  const [defaultDataCnt, setDefaultDataCnt] = useState(1); // 추후 각각의 src가 몇개로 받을것인지 설정 : 현재 default 1
+
   // tab 클릭 시 activeIndex 업데이트
   function handleTabClick(index) {
     setActiveIndex(index);
@@ -44,6 +42,16 @@ export default function WaveSenseAnalysis() {
     setStartIdx((prevIdx) => prevIdx + 1);
     // }
   };
+
+  // selectedFile 변경시 setIsFileRunning 업데이트
+  useEffect(() => {
+    if (selectedFile.length === 0) {
+      setIsFileRunning(false);
+    } else {
+      setIsFileRunning(true);
+    }
+  }, [selectedFile]);
+
   // settingModel 변경시 isTabs 업데이트
   useEffect(() => {
     setIsTabs((prevTabs) => {
@@ -84,6 +92,12 @@ export default function WaveSenseAnalysis() {
     });
   }, [isTabs]);
 
+  // setting창 조작후 settingModel에 넣기
+  const onChangeInput = (e) => {
+    const { name, value } = e.target;
+    setSettingModel((prev) => ({ ...prev, [name]: value }));
+  };
+
   return (
     <div className={styles.waveSense}>
       <ConfigModal
@@ -95,6 +109,7 @@ export default function WaveSenseAnalysis() {
         setFftData={setFftData}
         contents={contents}
         setContents={setContents}
+        onChangeInput={onChangeInput}
       />
       <AppBar
         setRawData={setRawData}
@@ -108,6 +123,7 @@ export default function WaveSenseAnalysis() {
         setSettingModel={setSettingModel}
         contents={contents}
         isTabs={isTabs}
+        setContents={setContents}
       />
       <TabContainer
         isTabs={isTabs}
@@ -123,6 +139,9 @@ export default function WaveSenseAnalysis() {
         activeIndex={activeIndex}
         settingModel={settingModel}
         onChangeInput={onChangeInput}
+        selectedFile={selectedFile}
+        setSelectedFile={setSelectedFile}
+        defaultDataCnt={defaultDataCnt}
       />
     </div>
   );

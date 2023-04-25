@@ -30,6 +30,7 @@ code {
   --light-gray: #8f8e91;
   --white: #ffffff;
   --wgs-main: #0d21a1;
+  --accent-color: #73fbd3;
   --stop: #ef2424;
   --run: #00fd28;
   --chart-x: #9a9ae5;
@@ -119,6 +120,15 @@ code {
 
   width: 98%;
 } */
+/* .tab-container {
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: flex-end;
+  margin-left: 0.75rem;
+  overflow: hidden;
+} */
+
 .tab-container > ul {
   list-style: none;
   display: flex;

@@ -5,22 +5,21 @@
   flex-direction: column;
 }
 
+.twoCards {
+  gap: 10px;
+  display: flex;
+  flex-direction: row;
+}
+
 .lineChartCard {
   gap: 0.6rem;
-  width: 96%;
+  width: 94%;
   height: 47vh;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
-.lineChartCardHover {
-  gap: 0.6rem;
-  width: 60%;
-  height: 47vh;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
+
 .hoverCard,
 .hoverSmallCard {
   background-color: var(--dark-gray);
@@ -32,6 +31,25 @@
   flex-direction: column;
   border-radius: 14px;
 }
+
+.lineChartCardHover {
+  gap: 0.6rem;
+  width: 60%;
+  height: 47vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.hoverCard {
+  background-color: var(--dark-gray);
+  width: 40%;
+  display: flex;
+  margin-bottom: 0.63rem;
+  justify-content: start;
+  flex-direction: column;
+  border-radius: 14px;
+}
+
 .hoverSmallCard {
   width: 6%;
 }
@@ -55,4 +73,52 @@
   list-style: none;
   margin: 0;
   padding: 0;
+}
+.maxZone {
+  /* background-color: red; */
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: end;
+}
+.maxBtn2,
+.maxBtn {
+  color: white;
+  padding: 2px;
+  width: 50px;
+  background-color: black;
+  margin: 6px 10px;
+  cursor: pointer;
+  border-radius: 0.875rem;
+  float: left;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.75rem;
+  border: none;
+  gap: 4px;
+}
+.maxBtn {
+  width: 62px;
+  color: black;
+  background-color: white;
+}
+.maxBtn2:hover,
+.maxBtn:hover {
+  color: white;
+  background-color: var(--light-gray);
+}
+.maxBtn2:active {
+  width: 74px;
+  transition: 0.2s linear;
+  background-color: white;
+  color: black;
+}
+.maxBtn:active {
+  /* background-color: var(--light-gray); */
+  width: 62px;
+  transition: 0.2s linear;
+  background-color: white;
+  color: black;
 }

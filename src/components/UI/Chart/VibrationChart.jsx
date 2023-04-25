@@ -14,7 +14,6 @@ import { Chart } from 'react-chartjs-2';
 import annotationPlugin from 'chartjs-plugin-annotation';
 import styles from './VibrationChart.module.css';
 import Container from '../Container/Container';
-import { defaultOptions } from '../../../constant/constant';
 
 ChartJS.register(
   CategoryScale,
@@ -28,23 +27,179 @@ ChartJS.register(
   annotationPlugin
 );
 
-export default function VibrationChart({ rawData }) {
+export default function VibrationChart({
+  rawData,
+  selectedFile,
+  defaultDataCnt,
+}) {
   const chartRef = React.useRef(null);
   const chartData = {
-    type: 'Line',
     datasets: rawData,
   };
+  
+  const defaultOptions = {
+    maintainAspectRatio: false,
+    spanGaps: true,
+    responsive: true,
+    parsing: false,
+    normalized: true,
+    animation: false,
+    interaction: {
+      enabled: true,
+      mode: 'point',
+      axis: 'r',
+      includeInvisible: false,
+    },
+    plugins: {
+      autocolors: true,
+      tooltip: {
+        intersect: false, // 툴팁 영역 확장 설정
+        callbacks: {
+          title: (items) => {
+            const fileItem = selectedFile.filter(
+              (file) => file.checked === true
+            );
+            // 첫 번째 툴팁 아이템의 레이블만 사용하여 툴팁 제목으로 설정
+            if (fileItem) {
+              const dataIndexTemp = Math.floor(
+                items[0].dataIndex / defaultDataCnt
+              );
+              if (dataIndexTemp < fileItem.length) {
+                return (
+                  fileItem[dataIndexTemp].name + ' ' + items[0].dataset.label
+                );
+              } else {
+                return '';
+              }
+            } else {
+              return '';
+            }
+          },
+          label: (item) => {
+            // 툴팁 값의 출력 형식 변경
+            let itemIndex =
+              item.dataIndex < defaultDataCnt
+                ? item.dataIndex
+                : item.dataIndex % defaultDataCnt;
+            const valueX = item.dataset.data[itemIndex].x.toFixed(2);
+            const valueY = item.dataset.data[item.dataIndex].y.toFixed(2);
+            return `X : ${valueX} Y : ${valueY}`;
+          },
+        },
+      },
+      legend: {
+        display: true,
+        position: 'top',
+        labels: {
+          usePointStyle: false,
+          padding: 10,
+        },
+        title: {
+          display: true,
+        },
+      },
+      annotation: {
+        annotations: {},
+      },
+      decimation: {
+        enabled: true,
+        samples: 500,
+        threshold: 1000,
+        algorithm: 'lttb',
+      },
+      zoom: {
+        //zoom 기능
+        pan: {
+          enabled: true,
+          mode: 'x',
+        },
+        zoom: {
+          minScaleLimit: 0.5,
+          wheel: {
+            enabled: true,
+          },
+          drag: {
+            modifierKey: 'ctrl',
+            enabled: true,
+          },
+          pinch: {
+            enabled: false,
+          },
+          mode: 'x',
+        },
+        limits: {
+          x: {
+            min: 0,
+            max: 1,
+          },
+        },
+      },
+    },
+    layout: {
+      padding: {
+        top: 10,
+        bottom: 50,
+        left: 10,
+        right: 10,
+      },
+    },
+    scales: {
+      x: {
+        type: 'linear',
+        min: 0,
+        max: 1,
+        ticks: {
+          maxRotation: 45,
+          minRotation: 45,
+          stepSize: defaultDataCnt,
+          callback: function (value, index, values) {
+            const fileItem = selectedFile.filter(
+              (file) => file.checked === true
+            );
+            const currentFileItem = fileItem[index];
+            if (currentFileItem) {
+              const fileName = currentFileItem.name;
+              return `${fileName}`;
+            } else {
+              return '';
+            }
+          },
+        },
+        grid: {
+          display: true, // 그리드 라인 표시 여부
+          drawBorder: true, // 축 경계선 표시 여부
+          drawTicks: true, // 눈금선 표시 여부
+          color: 'black',
+          lineWidth: 2,
+        },
+        title: {
+          display: true,
+          text: 'File && Time (s)',
+        },
+      },
+      y: {
+        title: {
+          display: false,
+          text: 'Amplitude',
+        },
+      },
+    },
+  };
 
-  // min, max 값 계산
+  // // min, max 값 계산
   const calculateXMinAndMax = (rawData) => {
     let xMin, xMax;
-    if (rawData === undefined || rawData[0] === undefined ||rawData[0].data === undefined) return { xMin: 0, xMax: 1 };
+    if (
+      rawData === undefined ||
+      rawData[0] === undefined ||
+      rawData[0].data === undefined
+    )
+      return { xMin: 0, xMax: 1 };
     xMin = rawData[0].data.length === 0 ? 0 : rawData[0].data[0].x;
     xMax =
-      rawData[0].data.length === 0
+      rawData[0].data.length === 0 || rawData[0].data.length === 1
         ? 1
         : rawData[0].data[rawData[0].data.length - 1].x;
-
     return { xMin, xMax };
   };
 
@@ -96,4 +251,4 @@ export default function VibrationChart({ rawData }) {
       <Chart ref={chartRef} type='line' options={options} data={chartData} />
     </Container>
   );
-};
+}

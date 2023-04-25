@@ -17,9 +17,11 @@ export default function AppBar({
   setSelectedFile,
   isFileRunning,
   setIsFileRunning,
+  settingModel,
   setSettingModel,
   contents,
   isTabs,
+  setContents,
 }) {
   const [isRunning, setIsRunning] = useState(false);
 
@@ -40,32 +42,25 @@ export default function AppBar({
     const file = e.target.files;
     let filesArray = Array.from(file);
     // fileArray중에 bin이 아닌거 제외
-    const updatedFileArray = filesArray.filter((file) => {
+    filesArray = filesArray.filter((file) => {
       const fileExtension = file.name.split('.').pop().toLowerCase();
       return fileExtension === 'bin';
     });
-    if (updatedFileArray.length === 0) return;
-    // bin으로만 정렬
-    if (updatedFileArray.length !== filesArray.length) {
-      filesArray = updatedFileArray;
-    }
-    const pathList = filesArray.map((file) => file.path);
-    const path = pathList[0];
-    if (path !== undefined) {
-      const selectedFiles = filesArray.map(
-        (file) => new FileModel(file.name, file.path)
-      );
-      setSelectedFile(selectedFiles);
+    // 중복 제거
+    const selectedFileNames = selectedFile.map((file) => file.name);
+    filesArray = filesArray.filter((file) => {
+      return !selectedFileNames.includes(file.name);
+    });
+    filesArray = filesArray.map((file) => new FileModel(file.name, file.path));
+    if (filesArray.length !== 0) {
+      setSelectedFile([...selectedFile, ...filesArray]);
       setIsFileRunning(true);
-      setSettingModel((prevModel) => ({ ...prevModel, paths: pathList }));
+      clearFileInput(e.target);
     }
-
-    clearFileInput(e.target);
   };
 
-  // test용
+  // test용 지우지 말것
   const Start = async () => {
-    console.log('Start탔냐');
     timer = setInterval(() => {
       const dataCnt = isTabs.length;
       const srcCnt = 3;
@@ -92,15 +87,14 @@ export default function AppBar({
 
   // test용
   const end = () => {
-    console.log('end 탔냐');
     clearInterval(timer);
   };
 
-  const handleRun = () => {
+  const handleRun = async () => {
     setIsRunning((prev) => {
       if (prev) {
-        daqGetStatisticsStop();
-        // end(); // test용
+        // daqGetStatisticsStop();
+        end(); // test용
       } else {
         setRawData(
           Array.from({ length: isTabs.length }, () =>
@@ -112,21 +106,67 @@ export default function AppBar({
             Array.from({ length: 3 }, () => [])
           )
         );
-        // Start(); // test용
-        daqGetStatistics(contents);
+        // selectedFile중에서 check된것만 filter하는 code있어야함
+        const sendSelectedFile = selectedFile.filter(
+          (item) => item.checked == true
+        );
+        const contentsTemp = JSON.parse(contents); // JSON 형식의 문자열을 JavaScript 객체로 변환
+        for (let i = 0; i < sendSelectedFile.length; i++) {
+          const newSet = {
+            ...contentsTemp,
+            paths: [sendSelectedFile[i].path],
+          };
+          const contentsValue = JSON.stringify(newSet, null, 2); // JavaScript 객체를 JSON 형식의 문자열로 변환
+          // daqGetStatistics(contentsValue);
+        }
+        Start(); // test용
       }
       return !prev;
     });
   };
 
+  // promise test중
+  // const handleRun = async () => {
+  //   setRawData(
+  //     Array.from({ length: isTabs.length }, () =>
+  //       Array.from({ length: 3 }, () => [])
+  //     )
+  //   );
+  //   setFftData(
+  //     Array.from({ length: isTabs.length }, () =>
+  //       Array.from({ length: 3 }, () => [])
+  //     )
+  //   );
+  //   const sendSelectedFile = selectedFile.filter(
+  //     (item) => item.checked == true
+  //   );
+  //   const contentsTemp = JSON.parse(contents);
+
+  //   // Promise.all을 사용하여 sendSelectedFile의 모든 파일에 대해 병렬로 작업을 수행합니다.
+  // const promises = sendSelectedFile.map((item) => {
+  //   const newSet = {
+  //     ...contentsTemp,
+  //     paths: [item.path],
+  //   };
+  //   const contentsValue = JSON.stringify(newSet, null, 2);
+  //   return daqGetStatistics(contentsValue);
+  // });
+
+  //   const results = await Promise.all(promises);
+
+  //   // 결과를 처리하는 함수를 따로 분리합니다.
+  //   handleResults(results, sendSelectedFile);
+  // };
+
+  // const handleResults = (results, sendSelectedFile) => {
+  //   results.forEach((ret, index) => {
+  //     if (ret === 0) {
+  //       console.log("Failed to get statistics for file:", sendSelectedFile[index].path);
+  //     }
+  //   });
+  // };
+
   const handleFileLoad = () => {
-    if (isFileRunning) {
-      setIsFileRunning(false);
-      setSelectedFile([]);
-      setSettingModel((prevModel) => ({ ...prevModel, paths: [] }));
-      console.log('file list', selectedFile);
-      return;
-    }
     document.getElementById('importAttachment').click();
   };
 
