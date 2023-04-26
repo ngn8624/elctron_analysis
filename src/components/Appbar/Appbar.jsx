@@ -22,6 +22,8 @@ export default function AppBar({
   contents,
   isTabs,
   setContents,
+  startCalc,
+  setStartCalc,
 }) {
   const [isRunning, setIsRunning] = useState(false);
 
@@ -93,9 +95,11 @@ export default function AppBar({
   const handleRun = async () => {
     setIsRunning((prev) => {
       if (prev) {
+        setStartCalc(false);
         daqGetStatisticsStop();
         // end(); // test용
       } else {
+        setStartCalc(true);
         setRawData(
           Array.from({ length: isTabs.length }, () =>
             Array.from({ length: 3 }, () => [])
