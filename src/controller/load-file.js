@@ -12,33 +12,47 @@ let waveStatCallback = null;
 
 const waveStatcallbackData = ffi.Callback(
   'void',
-  ['int', 'int', 'pointer', 'pointer'],
-  (srcCnt, dataCnt, ss, ssfft) => {
+  ['int', 'int', 'int', 'pointer', 'pointer'],
+  (srcCnt, cycleCnt, dataCnt, ss, ssfft) => {
     const float64 = 8;
-    //ss를 double[srcCnt]로 변환
-    const srcData = Array.from(
-      { length: srcCnt },
+    const cycleData = Array.from(
+      { length: cycleCnt },
       (_, i) =>
         new Float64Array(
-          ss.buffer.slice(i * float64 * dataCnt, (i + 1) * float64 * dataCnt)
+          ss.buffer.slice(
+            i * float64 * dataCnt * srcCnt,
+            (i + 1) * float64 * dataCnt * srcCnt
+          )
         )
     );
-    // UI 탭 통계 DATA 형식으로 위치만 정렬
-    const rawData = Array.from({ length: dataCnt }, (_, i) =>
-      Array.from({ length: srcCnt }, (_, j) => srcData[j][i])
-    );
-    //ssfft를 double[srcCnt]로 변환
-    const srcFFTData = Array.from(
-      { length: srcCnt },
+    const cyclefftData = Array.from(
+      { length: cycleCnt },
       (_, i) =>
         new Float64Array(
-          ssfft.buffer.slice(i * float64 * dataCnt, (i + 1) * float64 * dataCnt)
+          ssfft.buffer.slice(
+            i * float64 * dataCnt * srcCnt,
+            (i + 1) * float64 * dataCnt * srcCnt
+          )
         )
     );
-    // UI 탭 통계 DATA 형식으로 위치만 정렬
-    const fftData = Array.from({ length: dataCnt }, (_, i) =>
-      Array.from({ length: srcCnt }, (_, j) => srcFFTData[j][i])
-    );
+    const rawData = [];
+    const fftData = [];
+    for (let i = 0; i < dataCnt; i++) {
+      const rawDataRow = [];
+      const fftDataRow = [];
+      for (let j = 0; j < srcCnt; j++) {
+        const srcData = [];
+        const srcFFTData = [];
+        for (let k = 0; k < cycleCnt; k++) {
+          srcData.push(cycleData[k][i][j]);
+          srcFFTData.push(cyclefftData[k][i][j]);
+        }
+        rawDataRow.push(srcData);
+        fftDataRow.push(srcFFTData);
+      }
+      rawData.push(rawDataRow);
+      fftData.push(fftDataRow);
+    }
     const dataset = {
       srcCnt,
       dataCnt,

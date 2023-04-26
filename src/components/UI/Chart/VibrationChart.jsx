@@ -54,38 +54,6 @@ export default function VibrationChart({
       autocolors: true,
       tooltip: {
         intersect: false, // 툴팁 영역 확장 설정
-        callbacks: {
-          title: (items) => {
-            const fileItem = selectedFile.filter(
-              (file) => file.checked === true
-            );
-            // 첫 번째 툴팁 아이템의 레이블만 사용하여 툴팁 제목으로 설정
-            if (fileItem) {
-              const dataIndexTemp = Math.floor(
-                items[0].dataIndex / defaultDataCnt
-              );
-              if (dataIndexTemp < fileItem.length) {
-                return (
-                  fileItem[dataIndexTemp].name + ' ' + items[0].dataset.label
-                );
-              } else {
-                return '';
-              }
-            } else {
-              return '';
-            }
-          },
-          label: (item) => {
-            // 툴팁 값의 출력 형식 변경
-            let itemIndex =
-              item.dataIndex < defaultDataCnt
-                ? item.dataIndex
-                : item.dataIndex % defaultDataCnt;
-            const valueX = item.dataset.data[itemIndex].x.toFixed(2);
-            const valueY = item.dataset.data[item.dataIndex].y.toFixed(2);
-            return `X : ${valueX} Y : ${valueY}`;
-          },
-        },
       },
       legend: {
         display: true,
@@ -148,30 +116,6 @@ export default function VibrationChart({
         type: 'linear',
         min: 0,
         max: 1,
-        ticks: {
-          maxRotation: 45,
-          minRotation: 45,
-          stepSize: defaultDataCnt,
-          callback: function (value, index, values) {
-            const fileItem = selectedFile.filter(
-              (file) => file.checked === true
-            );
-            const currentFileItem = fileItem[index];
-            if (currentFileItem) {
-              const fileName = currentFileItem.name;
-              return `${fileName}`;
-            } else {
-              return '';
-            }
-          },
-        },
-        grid: {
-          display: true, // 그리드 라인 표시 여부
-          drawBorder: true, // 축 경계선 표시 여부
-          drawTicks: true, // 눈금선 표시 여부
-          color: 'black',
-          lineWidth: 2,
-        },
         title: {
           display: true,
           text: 'File && Time (s)',

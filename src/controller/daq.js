@@ -63,21 +63,32 @@ export function DaqInitFunction({ setRawData, setFftData }) {
 
 export function cbData({ data, setRawData, setFftData }) {
   const { srcCnt, dataCnt, rawData, fftData } = data;
+
   setRawData((prevData) => {
     const newRawData = [...prevData];
     for (let i = 0; i < dataCnt; i++) {
       for (let j = 0; j < srcCnt; j++) {
-        newRawData[i][j].push(rawData[i][j]);
+        if (!newRawData[i][j]) {
+          newRawData[i][j] = [];
+        }
+        const k = newRawData[i][j].length;
+        newRawData[i][j].length = k + 1;
+        newRawData[i][j][k] = [];
+        newRawData[i][j][k].push(rawData[i][j]);
       }
     }
     return newRawData;
   });
-
   setFftData((prevData) => {
     const newFftData = [...prevData];
     for (let i = 0; i < dataCnt; i++) {
       for (let j = 0; j < srcCnt; j++) {
-        newFftData[i][j].push(fftData[i][j]);
+        if (!newFftData[i][j]) {
+          newFftData[i][j] = [];
+        }
+        const k = newFftData[i][j].length;
+        newFftData[i][j].length = k + 1;
+        newFftData[i][j][k].push(fftData[i][j]);
       }
     }
     return newFftData;

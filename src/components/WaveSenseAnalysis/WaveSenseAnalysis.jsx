@@ -77,12 +77,12 @@ export default function WaveSenseAnalysis() {
   useEffect(() => {
     setRawData(
       Array.from({ length: isTabs.length }, () =>
-        Array.from({ length: 3 }, () => [])
+        []
       )
     );
     setFftData(
       Array.from({ length: isTabs.length }, () =>
-        Array.from({ length: 3 }, () => [])
+        []
       )
     );
     setActiveIndex((prevIndex) => {

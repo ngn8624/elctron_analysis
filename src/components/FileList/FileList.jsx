@@ -172,6 +172,7 @@ const FileCardMap = (selectedFiles, checkHandler, isSmallHoverCard) => {
       <span className={isSmallHoverCard ? styles.smallName : ''}>
         {file.name}
       </span>
+      <span></span>
       <span className={isSmallHoverCard ? styles.noDisplay : styles.cycle}>
         {file.cycle}
       </span>

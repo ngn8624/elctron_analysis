@@ -53,7 +53,7 @@ export default function AppBar({
     filesArray = filesArray.filter((file) => {
       return !selectedFileNames.includes(file.name);
     });
-    filesArray = filesArray.map((file) => new FileModel(file.name, file.path));
+    filesArray = filesArray.map((file,index) => new FileModel(file.name, file.path, index+1));
     if (filesArray.length !== 0) {
       setSelectedFile([...selectedFile, ...filesArray]);
       setIsFileRunning(true);
@@ -66,11 +66,20 @@ export default function AppBar({
     timer = setInterval(() => {
       const dataCnt = isTabs.length;
       const srcCnt = 3;
+
       setRawData((prevData) => {
         const newRawData = [...prevData];
         for (let i = 0; i < dataCnt; i++) {
           for (let j = 0; j < srcCnt; j++) {
-            newRawData[i][j].push(Math.floor(Math.random() * 100));
+            if (!newRawData[i][j]) {
+              newRawData[i][j] = [];
+            }
+            const k = newRawData[i][j].length;
+            newRawData[i][j].length = k + 1;
+            newRawData[i][j][k] = [];
+            for (let l = 0; l < 50; l++) {
+              newRawData[i][j][k].push(Math.floor(Math.random() * 100));
+            }
           }
         }
         return newRawData;
@@ -79,7 +88,15 @@ export default function AppBar({
         const newRawData = [...prevData];
         for (let i = 0; i < dataCnt; i++) {
           for (let j = 0; j < srcCnt; j++) {
-            newRawData[i][j].push(Math.floor(Math.random() * 100));
+            if (!newRawData[i][j]) {
+              newRawData[i][j] = [];
+            }
+            const k = newRawData[i][j].length;
+            newRawData[i][j].length = k + 1;
+            newRawData[i][j][k] = [];
+            for (let l = 0; l < 50; l++) {
+              newRawData[i][j][k].push(Math.floor(Math.random() * 100));
+            }
           }
         }
         return newRawData;
@@ -102,12 +119,12 @@ export default function AppBar({
         setStartCalc(true);
         setRawData(
           Array.from({ length: isTabs.length }, () =>
-            Array.from({ length: 3 }, () => [])
+            []
           )
         );
         setFftData(
           Array.from({ length: isTabs.length }, () =>
-            Array.from({ length: 3 }, () => [])
+            []
           )
         );
         // selectedFile중에서 check된것만 filter하는 code있어야함
