@@ -47,7 +47,7 @@ export const daqGetStatistics = async (json) => {
 };
 
 export const daqGetStatisticsStop = async (json) => {
-  console.log("daqGetStatisticsStop 있어야해용????");
+  console.log('daqGetStatisticsStop 있어야해용????');
 };
 
 export function DaqInitFunction({ setRawData, setFftData }) {
@@ -62,8 +62,7 @@ export function DaqInitFunction({ setRawData, setFftData }) {
 }
 
 export function cbData({ data, setRawData, setFftData }) {
-  const { srcCnt, dataCnt, rawData, fftData } = data;
-
+  const { srcCnt, cycleCnt, dataCnt, rawData, fftData } = data;
   setRawData((prevData) => {
     const newRawData = [...prevData];
     for (let i = 0; i < dataCnt; i++) {
@@ -73,12 +72,17 @@ export function cbData({ data, setRawData, setFftData }) {
         }
         const k = newRawData[i][j].length;
         newRawData[i][j].length = k + 1;
-        newRawData[i][j][k] = [];
-        newRawData[i][j][k].push(rawData[i][j]);
+        if (!newRawData[i][j][k]) {
+          newRawData[i][j][k] = [];
+        }
+        for (let l = 0; l < cycleCnt; l++) {
+          newRawData[i][j][k].push(rawData[i][j][l]);
+        }
       }
     }
     return newRawData;
   });
+
   setFftData((prevData) => {
     const newFftData = [...prevData];
     for (let i = 0; i < dataCnt; i++) {
@@ -88,7 +92,12 @@ export function cbData({ data, setRawData, setFftData }) {
         }
         const k = newFftData[i][j].length;
         newFftData[i][j].length = k + 1;
-        newFftData[i][j][k].push(fftData[i][j]);
+        if (!newFftData[i][j][k]) {
+          newFftData[i][j][k] = [];
+        }
+        for (let l = 0; l < cycleCnt; l++) {
+          newFftData[i][j][k].push(fftData[i][j][l]);
+        }
       }
     }
     return newFftData;

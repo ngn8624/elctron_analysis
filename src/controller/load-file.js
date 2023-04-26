@@ -15,26 +15,29 @@ const waveStatcallbackData = ffi.Callback(
   ['int', 'int', 'int', 'pointer', 'pointer'],
   (srcCnt, cycleCnt, dataCnt, ss, ssfft) => {
     const float64 = 8;
-    const cycleData = Array.from(
-      { length: cycleCnt },
-      (_, i) =>
-        new Float64Array(
-          ss.buffer.slice(
-            i * float64 * dataCnt * srcCnt,
-            (i + 1) * float64 * dataCnt * srcCnt
-          )
-        )
-    );
-    const cyclefftData = Array.from(
-      { length: cycleCnt },
-      (_, i) =>
-        new Float64Array(
-          ssfft.buffer.slice(
-            i * float64 * dataCnt * srcCnt,
-            (i + 1) * float64 * dataCnt * srcCnt
-          )
-        )
-    );
+    const cycleData3d = [];
+    const cycleData3dFft = [];
+
+    for (let i = 0; i < cycleCnt; i++) {
+      const dataData = [];
+      const dataDataFft = [];
+      for (let j = 0; j < dataCnt; j++) {
+        const srcData = [];
+        const srcDataFft = [];
+        for (let k = 0; k < srcCnt; k++) {
+          const start = (i * dataCnt * srcCnt + j * srcCnt + k) * float64;
+          const end = start + float64;
+          const data = new Float64Array(ss.buffer.slice(start, end));
+          const datafft = new Float64Array(ssfft.buffer.slice(start, end));
+          srcData.push(data[0]); // 0번째 인덱스만 사용
+          srcDataFft.push(datafft[0]); // 0번째 인덱스만 사용
+        }
+        dataData.push(srcData);
+        dataDataFft.push(srcDataFft);
+      }
+      cycleData3d.push(dataData);
+      cycleData3dFft.push(dataDataFft);
+    }
     const rawData = [];
     const fftData = [];
     for (let i = 0; i < dataCnt; i++) {
@@ -44,8 +47,8 @@ const waveStatcallbackData = ffi.Callback(
         const srcData = [];
         const srcFFTData = [];
         for (let k = 0; k < cycleCnt; k++) {
-          srcData.push(cycleData[k][i][j]);
-          srcFFTData.push(cyclefftData[k][i][j]);
+          srcData.push(cycleData3d[k][i][j]);
+          srcFFTData.push(cycleData3dFft[k][i][j]);
         }
         rawDataRow.push(srcData);
         fftDataRow.push(srcFFTData);
@@ -55,6 +58,7 @@ const waveStatcallbackData = ffi.Callback(
     }
     const dataset = {
       srcCnt,
+      cycleCnt,
       dataCnt,
       rawData,
       fftData,
