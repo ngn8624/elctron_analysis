@@ -9,6 +9,7 @@ import ConfigModal from '../ConfigModal/ConfigModal';
 import styles from './WaveSenseAnalysis.module.css';
 import TabContainer from '../TabContainer/TabContainer';
 import LineCard from '../LineCard/LineCard';
+import { ColorRing } from 'react-loader-spinner';
 
 export default function WaveSenseAnalysis() {
   const [rawData, setRawData] = useState([]); // chart의 y 값 data 모음
@@ -27,7 +28,7 @@ export default function WaveSenseAnalysis() {
   const [activeIndex, setActiveIndex] = useState(0); // tab real index
   // setting창 조작후 settingModel에 넣기
   const [defaultDataCnt, setDefaultDataCnt] = useState(1); // 추후 각각의 src가 몇개로 받을것인지 설정 : 현재 default 1
-
+  const [startCalc, setStartCalc] = useState(false); // loading
   // tab 클릭 시 activeIndex 업데이트
   function handleTabClick(index) {
     setActiveIndex(index);
@@ -109,9 +110,30 @@ export default function WaveSenseAnalysis() {
       alert('At least one property must be TRUE.');
     }
   };
-
+  const isEmptyArr = (arr) => {
+    if (Array.isArray(arr) && arr.length === 0) {
+      return true;
+    }
+    return false;
+  };
   return (
     <div className={styles.waveSense}>
+      <div className='loading'>
+        <ColorRing
+          visible={
+            startCalc &&
+            isEmptyArr(rawData.flat(Infinity)) &&
+            isEmptyArr(fftData.flat(Infinity))
+          }
+          height='160'
+          width='160'
+          ariaLabel='blocks-loading'
+          wrapperStyle={{}}
+          wrapperClass='blocks-wrapper'
+          colors={['#ffffff', '#357dbb', '#2468a8', '#0d21a1', ' #73fbd3']}
+        />
+      </div>
+
       <ConfigModal
         showPopup={showPopup}
         setShowPopup={setShowPopup}
@@ -135,6 +157,8 @@ export default function WaveSenseAnalysis() {
         contents={contents}
         isTabs={isTabs}
         setContents={setContents}
+        startCalc={startCalc}
+        setStartCalc={setStartCalc}
       />
       <TabContainer
         isTabs={isTabs}

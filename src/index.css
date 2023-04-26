@@ -139,7 +139,12 @@ code {
   width: 98.6%;
   overflow: hidden;
 }
-
+.loading {
+  position: absolute;
+  z-index: 999;
+  top: 47%;
+  left: 47%;
+}
 html {
   width: 100%;
   height: 100%;
