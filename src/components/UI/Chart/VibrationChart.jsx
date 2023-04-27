@@ -57,7 +57,7 @@ export default function VibrationChart({
     onClick: (evt, item) => {
       if (type !== 'Statistics') return;
       onChartPopup(evt, item);
-      daqGetDatasByIndex(calcedFiles[0], spotData[0].index);
+      // daqGetDatasByIndex(calcedFiles[0], spotData[0].index);
     },
     plugins: {
       autocolors: true,

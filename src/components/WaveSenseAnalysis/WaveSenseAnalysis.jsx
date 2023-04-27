@@ -11,6 +11,7 @@ import TabContainer from '../TabContainer/TabContainer';
 import LineCard from '../LineCard/LineCard';
 import { ColorRing } from 'react-loader-spinner';
 import ChartPopup from '../ChartPopup/ChartPopup';
+import { daqGetDatasByIndex } from '../../controller/daq';
 
 export default function WaveSenseAnalysis() {
   const [rawData, setRawData] = useState([]); // chart의 y 값 data 모음
@@ -133,6 +134,11 @@ export default function WaveSenseAnalysis() {
       setCalcedFiles(newCalcedFiles);
     }
   }, [startCalc]);
+  useEffect(() => {
+    if (spotData === null) return;
+    console.log('res', calcedFiles[0], spotData[0].index);
+    daqGetDatasByIndex(calcedFiles[0], spotData[0].index);
+  }, [spotData]);
   return (
     <div className={styles.waveSense}>
       <div className='loading'>
