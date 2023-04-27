@@ -1,12 +1,12 @@
 .popup {
   position: absolute;
-  top: 1%;
+  top: 2%;
   left: 10%;
   z-index: 999;
   background-color: var(--light-black);
   opacity: 1;
   width: 1500px;
-  height: 980px;
+  height: 960px;
 }
 .popupTitle {
   display: flex;

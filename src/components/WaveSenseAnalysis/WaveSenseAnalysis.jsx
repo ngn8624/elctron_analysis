@@ -116,7 +116,6 @@ export default function WaveSenseAnalysis() {
     setspotData(item);
   };
   useEffect(() => {
-    console.log('datas', spotData);
     if (spotData !== null && spotData.length > 0) {
       setChartPopup((p) => !p);
     }
@@ -125,7 +124,6 @@ export default function WaveSenseAnalysis() {
   const closeChartPopup = () => {
     setChartPopup(false);
   };
-  console.log('selFile', selectedFile);
   useEffect(() => {
     if (startCalc) {
       const newCalcedFiles = selectedFile
