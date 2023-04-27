@@ -22,6 +22,7 @@ export default function LineCard({
   selectedFile,
   setSelectedFile,
   defaultDataCnt,
+  onChartPopup,
 }) {
   const [titleContents, setTitleContents] = useState(''); // 해당 탭의 title
   const [useChartData, setUseChartData] = useState([]); // 해당 탭의 chartRawData
@@ -49,7 +50,7 @@ export default function LineCard({
         const colors = generateColor();
         let label = isTabs[activeIndex].label + '-' + labels[i];
         if (sendSelectedFile.length > j) {
-          const fileName = sendSelectedFile[j].num +'-'+ 'File';
+          const fileName = sendSelectedFile[j].num + '-' + 'File';
           label = label + '-' + fileName;
         }
         const chartData = {
@@ -82,7 +83,7 @@ export default function LineCard({
         const colorss = generateColor();
         let label = isTabs[activeIndex].label + '-' + labels[i];
         if (sendSelectedFile.length > j) {
-          const fileName = sendSelectedFile[j].num +'-'+ 'File';
+          const fileName = sendSelectedFile[j].num + '-' + 'File';
           label = label + '-' + fileName;
         }
         const chartDatafft = {
@@ -117,9 +118,11 @@ export default function LineCard({
           <Container title={titleContents + ' Statistics'}>
             <ul className={styles.ulCol}>
               <VibrationChart
+                type={'Statistics'}
                 rawData={useChartData}
                 selectedFile={selectedFile}
                 defaultDataCnt={defaultDataCnt}
+                onChartPopup={onChartPopup}
               />
             </ul>
           </Container>
@@ -146,6 +149,7 @@ export default function LineCard({
           <Container title={titleContents + ' FFT'}>
             <ul className={styles.ulCol}>
               <VibrationChart
+                type={'FFT'}
                 rawData={useChartFFTData}
                 selectedFile={selectedFile}
                 defaultDataCnt={defaultDataCnt}

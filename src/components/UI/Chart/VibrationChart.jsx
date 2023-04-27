@@ -31,12 +31,13 @@ export default function VibrationChart({
   rawData,
   selectedFile,
   defaultDataCnt,
+  onChartPopup,
+  type,
 }) {
   const chartRef = React.useRef(null);
   const chartData = {
     datasets: rawData,
   };
-
   const defaultOptions = {
     maintainAspectRatio: false,
     spanGaps: true,
@@ -49,6 +50,10 @@ export default function VibrationChart({
       mode: 'point',
       axis: 'r',
       includeInvisible: false,
+    },
+    onClick: (evt, item, fileName) => {
+      if (type !== 'Statistics') return;
+      onChartPopup(evt, item, fileName);
     },
     plugins: {
       autocolors: true,
@@ -176,7 +181,6 @@ export default function VibrationChart({
       },
     };
   }, [rawData]);
-
   const handleResetZoom = () => {
     if (chartRef && chartRef.current) {
       chartRef.current.resetZoom();
