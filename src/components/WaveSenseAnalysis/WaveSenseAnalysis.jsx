@@ -126,9 +126,10 @@ export default function WaveSenseAnalysis() {
   };
   useEffect(() => {
     if (startCalc) {
+      console.log('sel', selectedFile);
       const newCalcedFiles = selectedFile
         .filter((file) => file.checked)
-        .map((file) => file.name);
+        .map((file) => file.path);
       setCalcedFiles(newCalcedFiles);
     }
   }, [startCalc]);
@@ -154,7 +155,7 @@ export default function WaveSenseAnalysis() {
           <ChartPopup
             spotData={spotData}
             closeChartPopup={closeChartPopup}
-            fileNames={calcedFiles}
+            filePaths={calcedFiles}
           />
         </div>
       )}
