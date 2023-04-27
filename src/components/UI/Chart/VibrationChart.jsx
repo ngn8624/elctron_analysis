@@ -31,6 +31,7 @@ export default function VibrationChart({
   rawData,
   selectedFile,
   defaultDataCnt,
+  onChartPopup,
 }) {
   const chartRef = React.useRef(null);
   const chartData = {
@@ -50,6 +51,7 @@ export default function VibrationChart({
       axis: 'r',
       includeInvisible: false,
     },
+    onClick: onChartPopup,
     plugins: {
       autocolors: true,
       tooltip: {

@@ -9,6 +9,7 @@ import ConfigModal from '../ConfigModal/ConfigModal';
 import styles from './WaveSenseAnalysis.module.css';
 import TabContainer from '../TabContainer/TabContainer';
 import LineCard from '../LineCard/LineCard';
+import ChartPopup from '../ChartPopup/ChartPopup';
 
 export default function WaveSenseAnalysis() {
   const [rawData, setRawData] = useState([]); // chart의 y 값 data 모음
@@ -27,7 +28,7 @@ export default function WaveSenseAnalysis() {
   const [activeIndex, setActiveIndex] = useState(0); // tab real index
   // setting창 조작후 settingModel에 넣기
   const [defaultDataCnt, setDefaultDataCnt] = useState(1); // 추후 각각의 src가 몇개로 받을것인지 설정 : 현재 default 1
-
+  const [chartPopup, setChartPopup] = useState(false);
   // tab 클릭 시 activeIndex 업데이트
   function handleTabClick(index) {
     setActiveIndex(index);
@@ -109,9 +110,13 @@ export default function WaveSenseAnalysis() {
       alert('At least one property must be TRUE.');
     }
   };
-
+  const onChartPopup = (evt, item) => {
+    console.log('onChartPopup');
+    setChartPopup((p) => !p);
+  };
   return (
     <div className={styles.waveSense}>
+      {chartPopup && <ChartPopup />}
       <ConfigModal
         showPopup={showPopup}
         setShowPopup={setShowPopup}
@@ -153,6 +158,7 @@ export default function WaveSenseAnalysis() {
         selectedFile={selectedFile}
         setSelectedFile={setSelectedFile}
         defaultDataCnt={defaultDataCnt}
+        onChartPopup={onChartPopup}
       />
     </div>
   );

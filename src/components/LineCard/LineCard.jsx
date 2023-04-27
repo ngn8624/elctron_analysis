@@ -18,6 +18,7 @@ export default function LineCard({
   selectedFile,
   setSelectedFile,
   defaultDataCnt,
+  onChartPopup,
 }) {
   const [titleContents, setTitleContents] = useState(''); // 해당 탭의 title
   const [useChartData, setUseChartData] = useState([]); // 해당 탭의 chartRawData
@@ -75,6 +76,7 @@ export default function LineCard({
                 rawData={useChartData}
                 selectedFile={selectedFile}
                 defaultDataCnt={defaultDataCnt}
+                onChartPopup={onChartPopup}
               />
             </ul>
           </Container>
