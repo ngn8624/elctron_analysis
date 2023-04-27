@@ -1,6 +1,15 @@
 import { generateColor } from '../constant/constant';
 import { getConfigPath } from '../utils/file';
 
+export const daqSetFFTCallback = async (cbData) => {
+  if (!window.wgsFunction) return -1;
+  return window.wgsFunction.setFFTCallback(cbData).then((res) => {
+    if (res === 0) console.log('daqSetFFTCallback');
+    else console.log('daqSetFFTCallback fail');
+    return res;
+  });
+};
+
 export const daqSetWaveStatCallback = async (cbData) => {
   if (!window.wgsFunction) return -1;
   return window.wgsFunction.setWaveStatCallback(cbData).then((res) => {
@@ -56,13 +65,18 @@ export function DaqInitFunction({ setRawData, setFftData }) {
     cbData({
       data: data,
       setRawData: setRawData,
+    });
+  });
+  daqSetFFTCallback((data) => {
+    cbFftData({
+      data: data,
       setFftData: setFftData,
     });
   });
 }
 
-export function cbData({ data, setRawData, setFftData }) {
-  const { srcCnt, cycleCnt, dataCnt, rawData, fftData } = data;
+export function cbData({ data, setRawData }) {
+  const { srcCnt, cycleCnt, dataCnt, rawData } = data;
   setRawData((prevData) => {
     const newRawData = [...prevData];
     for (let i = 0; i < dataCnt; i++) {
@@ -82,24 +96,28 @@ export function cbData({ data, setRawData, setFftData }) {
     }
     return newRawData;
   });
+}
 
-  setFftData((prevData) => {
-    const newFftData = [...prevData];
-    for (let i = 0; i < dataCnt; i++) {
-      for (let j = 0; j < srcCnt; j++) {
-        if (!newFftData[i][j]) {
-          newFftData[i][j] = [];
-        }
-        const k = newFftData[i][j].length;
-        newFftData[i][j].length = k + 1;
-        if (!newFftData[i][j][k]) {
-          newFftData[i][j][k] = [];
-        }
-        for (let l = 0; l < cycleCnt; l++) {
-          newFftData[i][j][k].push(fftData[i][j][l]);
-        }
-      }
-    }
-    return newFftData;
-  });
+export function cbFftData({ data, setFftData }) {
+  const { srcCnt, cycleCnt, fftData, fftDataFreq } = data;
+  console.log("srcCnt",srcCnt, "cycleCnt", cycleCnt, "fftData", fftData, "fftDataFreq", fftDataFreq);
+  // setFftData((prevData) => {
+  //   const newFftData = [...prevData];
+  //   for (let i = 0; i < dataCnt; i++) {
+  //     for (let j = 0; j < srcCnt; j++) {
+  //       if (!newFftData[i][j]) {
+  //         newFftData[i][j] = [];
+  //       }
+  //       const k = newFftData[i][j].length;
+  //       newFftData[i][j].length = k + 1;
+  //       if (!newFftData[i][j][k]) {
+  //         newFftData[i][j][k] = [];
+  //       }
+  //       for (let l = 0; l < cycleCnt; l++) {
+  //         newFftData[i][j][k].push(fftData[i][j][l]);
+  //       }
+  //     }
+  //   }
+  //   return newFftData;
+  // });
 }
