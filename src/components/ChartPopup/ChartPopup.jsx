@@ -110,7 +110,7 @@ function ChartPopup({ spotData, closeChartPopup, fileNames }) {
           className='winBtn'
           onClick={closeChartPopup}
         >
-          <VscChromeClose />
+          <VscChromeClose onClick={closeChartPopup} />
         </button>
       </div>
       인덱스 : {idx} , 파일명 : {fileNames}
