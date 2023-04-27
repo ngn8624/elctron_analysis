@@ -101,6 +101,7 @@ function ChartPopup({ spotData, closeChartPopup, filePaths }) {
     },
   };
   const idx = spotData[0].index;
+  console.log('paths', filePaths);
   return (
     <div className={styles.popup}>
       <div className={styles.popupTitle}>

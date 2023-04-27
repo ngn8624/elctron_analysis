@@ -112,7 +112,7 @@ export default function WaveSenseAnalysis() {
     }
     return false;
   };
-  const onChartPopup = (evt, item, fileName) => {
+  const onChartPopup = (evt, item) => {
     setspotData(item);
   };
   useEffect(() => {

@@ -51,9 +51,9 @@ export default function VibrationChart({
       axis: 'r',
       includeInvisible: false,
     },
-    onClick: (evt, item, filePaths) => {
+    onClick: (evt, item) => {
       if (type !== 'Statistics') return;
-      onChartPopup(evt, item, filePaths);
+      onChartPopup(evt, item);
     },
     plugins: {
       autocolors: true,
