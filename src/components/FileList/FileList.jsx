@@ -63,24 +63,6 @@ export default function FileList({
     }
   }, [selectedFile]);
 
-  // check된 파일들의 cycleCount를 가져온다.
-  const getCycleCountStart = async () => {
-    // selectedFile중에서 check된것만 filter하는 code있어야함
-    const checkedFile = selectedFile.filter((file) => file.checked === true);
-    for (let i = 0; i < checkedFile.length; i++) {
-      let ret = await daqGetCycleCount(checkedFile[i].path);
-      // ret을 이용해서 selectedFile에 cycleCount를 넣어줘야함
-      setSelectedFile((prev) => {
-        return prev.map((item) => {
-          if (item.id === checkedFile[i].id) {
-            item.cycle = ret;
-          }
-          return item;
-        });
-      });
-    }
-  };
-
   return (
     <div>
       {isSmallHoverCard ? (
@@ -101,7 +83,7 @@ export default function FileList({
       ) : (
         <div className={styles.fileWindowTitle}>
           <ul className={styles.fileWindowTitleUl}>
-            <li className={styles.fileWindowTitleLi}>
+            <li>
               <input
                 type={'checkbox'}
                 name=''
@@ -110,17 +92,9 @@ export default function FileList({
                 onChange={(e) => onCheckedAll(e.target.checked)}
               />
             </li>
-            <li className={styles.fileWindowTitleLi}>NUM</li>
-            <li className={styles.fileWindowTitleLi}>FILE NAME</li>
-            <li className={styles.fileWindowTitleLi}>
-              <button
-                className={styles.fileWindowTitleButton}
-                onClick={getCycleCountStart}
-              >
-                GET CYCLE
-              </button>
-            </li>{' '}
-            <li className={styles.fileWindowTitleLi}>
+            <li>NUM</li>
+            <li>FILE </li>
+            <li>
               <button
                 className={styles.fileWindowTitleButton}
                 onClick={onDeleteFile}
@@ -160,22 +134,19 @@ const FileCardMap = (selectedFiles, checkHandler, isSmallHoverCard) => {
   return selectedFiles.map((file, index) => (
     <li key={file.id}>
       <input
-        className={isSmallHoverCard ? styles.noDisplay : ''}
+        className={isSmallHoverCard ? styles.noDisplay : styles.fileFirst}
         type={'checkbox'}
         id={file.id}
         checked={file.checked}
         onChange={(e) => checkHandler(e)}
       />
-      <span className={isSmallHoverCard ? styles.noDisplay : ''}>
+      <span className={isSmallHoverCard ? styles.noDisplay : styles.fileSecond}>
         {index + 1}
       </span>
-      <span className={isSmallHoverCard ? styles.smallName : ''}>
+      <span className={isSmallHoverCard ? styles.smallName : styles.fileThird}>
         {file.name}
       </span>
       <span></span>
-      <span className={isSmallHoverCard ? styles.noDisplay : styles.cycle}>
-        {file.cycle}
-      </span>
     </li>
   ));
 };

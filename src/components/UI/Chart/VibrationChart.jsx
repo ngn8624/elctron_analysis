@@ -130,7 +130,7 @@ export default function VibrationChart({
     },
   };
 
-  // // min, max 값 계산
+  // min, max 값 계산
   const calculateXMinAndMax = (rawData) => {
     let xMin, xMax;
     if (

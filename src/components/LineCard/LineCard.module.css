@@ -34,7 +34,7 @@
 
 .lineChartCardHover {
   gap: 0.6rem;
-  width: 60%;
+  width: 85%;
   height: 47vh;
   display: flex;
   flex-direction: row;
@@ -42,7 +42,7 @@
 }
 .hoverCard {
   background-color: var(--dark-gray);
-  width: 40%;
+  width: 15%;
   display: flex;
   margin-bottom: 0.63rem;
   justify-content: start;
@@ -85,7 +85,7 @@
 .maxBtn {
   color: white;
   padding: 2px;
-  width: 50px;
+  width: 20px;
   background-color: black;
   margin: 6px 10px;
   cursor: pointer;

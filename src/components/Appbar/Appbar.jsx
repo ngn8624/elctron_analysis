@@ -6,6 +6,7 @@ import {
   DaqInitFunction,
   daqGetStatistics,
   daqGetStatisticsStop,
+  daqGetCycleCount,
 } from '../../controller/daq';
 
 let timer = 0;
@@ -48,12 +49,30 @@ export default function AppBar({
       const fileExtension = file.name.split('.').pop().toLowerCase();
       return fileExtension === 'bin';
     });
-    // 중복 제거
+    // 이름 중복 제거
     const selectedFileNames = selectedFile.map((file) => file.name);
     filesArray = filesArray.filter((file) => {
       return !selectedFileNames.includes(file.name);
     });
-    filesArray = filesArray.map((file,index) => new FileModel(file.name, file.path, index+1));
+    // 이름순으로 오름차순정렬
+    if (filesArray.length !== 0) {
+      filesArray.sort((a, b) => {
+        if (a.name < b.name) return -1;
+        if (a.name > b.name) return 1;
+        return 0;
+      });
+    }
+    filesArray = await Promise.all(
+      filesArray.map(async (file, index) =>{
+        let ret = await daqGetCycleCount(file.path);
+        return new FileModel(
+          file.name,
+          file.path,
+          selectedFile.length + index + 1,
+          ret
+        );
+      })
+    );
     if (filesArray.length !== 0) {
       setSelectedFile([...selectedFile, ...filesArray]);
       setIsFileRunning(true);
@@ -117,16 +136,8 @@ export default function AppBar({
         // end(); // test용
       } else {
         setStartCalc(true);
-        setRawData(
-          Array.from({ length: isTabs.length }, () =>
-            []
-          )
-        );
-        setFftData(
-          Array.from({ length: isTabs.length }, () =>
-            []
-          )
-        );
+        setRawData(Array.from({ length: isTabs.length }, () => []));
+        setFftData(Array.from({ length: isTabs.length }, () => []));
         // selectedFile중에서 check된것만 filter하는 code있어야함
         const sendSelectedFile = selectedFile.filter(
           (item) => item.checked == true

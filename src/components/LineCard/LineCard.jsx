@@ -65,7 +65,7 @@ export default function LineCard({
         };
 
         for (let k = 0; k < arr[j].length; k++) {
-          chartData.data.push({ x: k, y: arr[j][k] });
+          chartData.data.push({ x: k+1, y: arr[j][k] });
         }
         useChartData.push(chartData);
       }
@@ -114,7 +114,7 @@ export default function LineCard({
             isSmallHoverCard ? styles.lineChartCard : styles.lineChartCardHover
           }
         >
-          <Container title={titleContents + ' Statistics'}>
+          <Container title={titleContents}>
             <ul className={styles.ulCol}>
               <VibrationChart
                 rawData={useChartData}
@@ -143,7 +143,7 @@ export default function LineCard({
             isSmallHoverCard2 ? styles.lineChartCard : styles.lineChartCardHover
           }
         >
-          <Container title={titleContents + ' FFT'}>
+          <Container title={'FFT '}>
             <ul className={styles.ulCol}>
               <VibrationChart
                 rawData={useChartFFTData}
