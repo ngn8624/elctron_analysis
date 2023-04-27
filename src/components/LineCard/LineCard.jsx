@@ -22,6 +22,7 @@ export default function LineCard({
   selectedFile,
   setSelectedFile,
   defaultDataCnt,
+  freq
 }) {
   const [titleContents, setTitleContents] = useState(''); // 해당 탭의 title
   const [useChartData, setUseChartData] = useState([]); // 해당 탭의 chartRawData
@@ -31,7 +32,6 @@ export default function LineCard({
   const onSizing = () => {
     setIsSmallHoverCard(!isSmallHoverCard);
   };
-
   // chart에 넣을 data로 {x: , y: }로 변환
   useEffect(() => {
     setTitleContents(isTabs[activeIndex].label);
@@ -49,7 +49,7 @@ export default function LineCard({
         const colors = generateColor();
         let label = isTabs[activeIndex].label + '-' + labels[i];
         if (sendSelectedFile.length > j) {
-          const fileName = sendSelectedFile[j].num +'-'+ 'File';
+          const fileName = sendSelectedFile[j].num + '-' + 'File';
           label = label + '-' + fileName;
         }
         const chartData = {
@@ -65,29 +65,30 @@ export default function LineCard({
         };
 
         for (let k = 0; k < arr[j].length; k++) {
-          chartData.data.push({ x: k+1, y: arr[j][k] });
+          chartData.data.push({ x: k + 1, y: arr[j][k] });
         }
         useChartData.push(chartData);
       }
     }
     setUseChartData(useChartData);
-    if (fftData.length === 0 || fftData[activeIndex].length === 0) return;
+    if (fftData.length === undefined || fftData.length === 0) return;
     const useChartFftData = [];
-    const activeFftData = fftData[activeIndex];
-    for (let i = 0; i < activeFftData.length; i++) {
-      // src만큼 반복 예 : 3
-      const arrfft = activeFftData[i];
-      for (let j = 0; j < arrfft.length; j++) {
-        // 파일 갯수
+    for (let i = 0; i < fftData.length; i++) {
+      // 파일 갯수
+      const activeFftData = fftData[i];
+      const freqTemp = freq[i];
+      let label = 'FFT' + '-';
+      if (sendSelectedFile.length > i) {
+        const fileName = sendSelectedFile[i].num + '-' + 'File';
+        label = label + '-' + fileName;
+      }
+      for (let j = 0; j < activeFftData.length; j++) {
+        // src 갯수
+        const arrfft = activeFftData[j];
         const colorss = generateColor();
-        let label = isTabs[activeIndex].label + '-' + labels[i];
-        if (sendSelectedFile.length > j) {
-          const fileName = sendSelectedFile[j].num +'-'+ 'File';
-          label = label + '-' + fileName;
-        }
         const chartDatafft = {
           id: uuidv4(),
-          label: 'FFT' + '-' + label,
+          label: label + '-' + labels[j] + '-' + freqTemp[j] + 'Hz',
           borderColor: colorss,
           backgroundColor: colorss,
           fill: false,
@@ -97,14 +98,14 @@ export default function LineCard({
           data: [],
         };
 
-        for (let k = 0; k < arrfft[j].length; k++) {
-          chartDatafft.data.push({ x: k, y: arrfft[j][k] });
+        for (let k = 0; k < arrfft.length; k++) {
+          chartDatafft.data.push({ x: k, y: arrfft[k] });
         }
         useChartFftData.push(chartDatafft);
       }
     }
     setUseChartFFTData(useChartFftData);
-  }, [activeIndex, rawData, fftData]);
+  }, [activeIndex, rawData, fftData, freq]);
 
   return (
     <div className={styles.surface}>

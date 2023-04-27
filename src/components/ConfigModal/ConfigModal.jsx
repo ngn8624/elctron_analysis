@@ -12,6 +12,7 @@ export default function ConfigModal({
   setFftData,
   contents,
   setContents,
+  setFreq
 }) {
   const [isSavedSuccess, setIsSavedSuccess] = useState(false);
   const [isShowIcon, setIsShowIcon] = useState(false);
@@ -92,7 +93,7 @@ export default function ConfigModal({
       if (json === JSON.stringify(settingModel)) return;
       const strObj = convertToStrings(json);
       setSettingModel(strObj);
-      DaqInitFunction({ setRawData, setFftData });
+      DaqInitFunction({ setRawData, setFftData,setFreq });
     });
   };
 
@@ -100,7 +101,7 @@ export default function ConfigModal({
   const handleSave = async () => {
     await writeConfig({ contents, setIsSavedSuccess }).then((res) => {
       if (!res) return;
-      DaqInitFunction({ setRawData, setFftData });
+      DaqInitFunction({ setRawData, setFftData, setFreq });
     });
     setIsShowIcon((prev) => !prev);
     setTimeout(() => {

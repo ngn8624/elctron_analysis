@@ -59,7 +59,7 @@ export const daqGetStatisticsStop = async (json) => {
   console.log('daqGetStatisticsStop 있어야해용????');
 };
 
-export function DaqInitFunction({ setRawData, setFftData }) {
+export function DaqInitFunction({ setRawData, setFftData,setFreq }) {
   daqInit();
   daqSetWaveStatCallback((data) => {
     cbData({
@@ -71,6 +71,7 @@ export function DaqInitFunction({ setRawData, setFftData }) {
     cbFftData({
       data: data,
       setFftData: setFftData,
+      setFreq: setFreq
     });
   });
 }
@@ -98,26 +99,16 @@ export function cbData({ data, setRawData }) {
   });
 }
 
-export function cbFftData({ data, setFftData }) {
-  const { srcCnt, cycleCnt, fftData, fftDataFreq } = data;
-  console.log("srcCnt",srcCnt, "cycleCnt", cycleCnt, "fftData", fftData, "fftDataFreq", fftDataFreq);
-  // setFftData((prevData) => {
-  //   const newFftData = [...prevData];
-  //   for (let i = 0; i < dataCnt; i++) {
-  //     for (let j = 0; j < srcCnt; j++) {
-  //       if (!newFftData[i][j]) {
-  //         newFftData[i][j] = [];
-  //       }
-  //       const k = newFftData[i][j].length;
-  //       newFftData[i][j].length = k + 1;
-  //       if (!newFftData[i][j][k]) {
-  //         newFftData[i][j][k] = [];
-  //       }
-  //       for (let l = 0; l < cycleCnt; l++) {
-  //         newFftData[i][j][k].push(fftData[i][j][l]);
-  //       }
-  //     }
-  //   }
-  //   return newFftData;
-  // });
+export function cbFftData({ data, setFftData,setFreq }) {
+  const { srcCnt, cycleCnt, fftdata, fftDataFreq } = data;
+  setFftData((prevData) => {
+    const newRawData = [...prevData];
+    newRawData.push(fftdata); // 요소를 추가
+    return newRawData;
+  });
+  setFreq((prevData) => {
+    const newRawData = [...prevData];
+    newRawData.push(fftDataFreq); // 요소를 추가
+    return newRawData;
+  });
 }

@@ -29,6 +29,7 @@ export default function WaveSenseAnalysis() {
   // setting창 조작후 settingModel에 넣기
   const [defaultDataCnt, setDefaultDataCnt] = useState(1); // 추후 각각의 src가 몇개로 받을것인지 설정 : 현재 default 1
   const [startCalc, setStartCalc] = useState(false); // loading
+  const [freq, setFreq] = useState([]);
   // tab 클릭 시 activeIndex 업데이트
   function handleTabClick(index) {
     setActiveIndex(index);
@@ -143,6 +144,7 @@ export default function WaveSenseAnalysis() {
         setFftData={setFftData}
         contents={contents}
         setContents={setContents}
+        setFreq={setFreq}
       />
       <AppBar
         setRawData={setRawData}
@@ -159,6 +161,7 @@ export default function WaveSenseAnalysis() {
         setContents={setContents}
         startCalc={startCalc}
         setStartCalc={setStartCalc}
+        setFreq={setFreq}
       />
       <TabContainer
         isTabs={isTabs}
@@ -177,6 +180,7 @@ export default function WaveSenseAnalysis() {
         selectedFile={selectedFile}
         setSelectedFile={setSelectedFile}
         defaultDataCnt={defaultDataCnt}
+        freq={freq}
       />
     </div>
   );

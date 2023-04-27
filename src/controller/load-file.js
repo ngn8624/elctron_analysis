@@ -16,30 +16,36 @@ const waveFftCallbackData = ffi.Callback(
   'void',
   ['int', 'int', 'pointer', 'pointer'],
   (srcCnt, cycleCnt, ss, ssfft) => {
+
     const float64 = 8;
-    console.log("!!!!!fftDataFreq");
-    // fft slice
-    // const fftData = new Array(srcCnt);
-    // for (let i = 0; i < cycleCnt; i++) {
-    //   fftData[i] = new Float64Array(
-    //     ss.buffer.slice(i * float64 * cycleCnt, (i + 1) * float64 * cycleCnt)
-    //   );
-    // }
+    const cycleData3dFft=[];
+    for (let i = 0; i < cycleCnt; i++) {
+        const srcDataFft = [];
+        for (let k = 0; k < srcCnt; k++) {
+          const start = (i *srcCnt + k) * float64;
+          const end = start + float64;
+          const datafft = new Float64Array(ss.buffer.slice(start, end));
+          srcDataFft.push(datafft[0]); // 0번째 인덱스만 사용
+      }
+      cycleData3dFft.push(srcDataFft);
+    }
+    const fftdata = [];
+    for (let i = 0; i < srcCnt; i++) {
+      const fftdataRow = [];
+      for (let j = 0; j < cycleCnt; j++) {
+        fftdataRow.push(cycleData3dFft[j][i]);
+      }
+      fftdata.push(fftdataRow);
+    }
 
     // // fft 주파수
-    // const fftDataFreq = new Array(srcCnt); 
-    // for (let i = 0; i < cycleCnt; i++) {
-    //   fftData[i] = new Float64Array(
-    //     ss.buffer.slice(i * float64 * cycleCnt, (i + 1) * float64 * cycleCnt)
-    //   );
-    // }
-
-    console.log("!!!!!srcCnt", srcCnt, "cycleCnt", cycleCnt);
-    console.log("!!!!!fftDataFreq", fftDataFreq);
+    const fftDataFreq = new Float64Array(
+      ssfft.buffer.slice(0, srcCnt* float64)
+      );
     const dataset = {
       srcCnt,
       cycleCnt,
-      fftData,
+      fftdata,
       fftDataFreq,
     };
     if (fftCallback != null) fftCallback(dataset);
