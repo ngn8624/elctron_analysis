@@ -127,7 +127,6 @@ export default function WaveSenseAnalysis() {
   };
   useEffect(() => {
     if (startCalc) {
-      console.log('sel', selectedFile);
       const newCalcedFiles = selectedFile
         .filter((file) => file.checked)
         .map((file) => file.path);
@@ -136,7 +135,8 @@ export default function WaveSenseAnalysis() {
   }, [startCalc]);
   useEffect(() => {
     if (spotData === null) return;
-    console.log('res', calcedFiles[0], spotData[0].index);
+    if (spotData.length === 0) return;
+    if (spotData[0].index === undefined) return;
     daqGetDatasByIndex(calcedFiles[0], spotData[0].index);
   }, [spotData]);
   return (

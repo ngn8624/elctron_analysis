@@ -71,15 +71,12 @@ const waveStatcallbackData = ffi.Callback(
 );
 
 const rawDataCallbackData = ffi.Callback(
-  'void',
-  ['int', 'int', 'pointer', 'pointer'],
-  (waveCnt, fftCnt, waveDatas, fftDatas) => {
+  'int',
+  ['int', 'int', 'int', 'pointer', 'pointer'],
+  (srcCnt, sampleRate, fftCnt, waveDatas, fftDatas) => {
     const float64 = 8;
-    const wave = new Float64Array(waveDatas.buffer.slice(0, waveCnt * float64));
-    const fft = new Float64Array(fftDatas.buffer.slice(0, fftCnt * float64));
-
-    const dataset = { waveCnt, fftCnt, wave, fft };
-    if (rawDataCallback != null) rawDataCallback(dataset);
+    //waveData는 sampleRate * srcCnt 개, xyz 분리해야됨
+    //fftData는 fftCnt * srcCnt 개, xyz 분리해야됨
   }
 );
 
