@@ -204,6 +204,8 @@ export default function WaveSenseAnalysis() {
         setSelectedFile={setSelectedFile}
         defaultDataCnt={defaultDataCnt}
         onChartPopup={onChartPopup}
+        spotData={spotData}
+        calcedFiles={calcedFiles}
       />
     </div>
   );

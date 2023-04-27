@@ -14,6 +14,7 @@ import { Chart } from 'react-chartjs-2';
 import annotationPlugin from 'chartjs-plugin-annotation';
 import styles from './VibrationChart.module.css';
 import Container from '../Container/Container';
+import { daqGetDatasByIndex } from '../../../controller/daq';
 
 ChartJS.register(
   CategoryScale,
@@ -33,6 +34,8 @@ export default function VibrationChart({
   defaultDataCnt,
   onChartPopup,
   type,
+  spotData,
+  calcedFiles,
 }) {
   const chartRef = React.useRef(null);
   const chartData = {
@@ -54,6 +57,7 @@ export default function VibrationChart({
     onClick: (evt, item) => {
       if (type !== 'Statistics') return;
       onChartPopup(evt, item);
+      daqGetDatasByIndex(calcedFiles[0], spotData[0].index);
     },
     plugins: {
       autocolors: true,

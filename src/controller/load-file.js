@@ -7,8 +7,11 @@ const wgsFunction = ffi.Library('wave_sense_daq.dll', {
   setWaveStatCallback: ['int', ['pointer']],
   getStatistics: ['int', ['char *']],
   getCycleCount: ['int', ['char *']],
+  setRawDatasCallback: ['int', ['pointer']],
+  getDatasByIndex: ['int', ['char *', 'int']],
 });
 let waveStatCallback = null;
+let rawDataCallback = null;
 
 const waveStatcallbackData = ffi.Callback(
   'void',
@@ -67,6 +70,19 @@ const waveStatcallbackData = ffi.Callback(
   }
 );
 
+const rawDataCallbackData = ffi.Callback(
+  'void',
+  ['int', 'int', 'pointer', 'pointer'],
+  (waveCnt, fftCnt, waveDatas, fftDatas) => {
+    const float64 = 8;
+    const wave = new Float64Array(waveDatas.buffer.slice(0, waveCnt * float64));
+    const fft = new Float64Array(fftDatas.buffer.slice(0, fftCnt * float64));
+
+    const dataset = { waveCnt, fftCnt, wave, fft };
+    if (rawDataCallback != null) rawDataCallback(dataset);
+  }
+);
+
 // // 프로그램 시작시 call, return 0 이면 success
 async function analysisInit() {
   return wgsFunction.analysisInit();
@@ -89,11 +105,23 @@ async function setWaveStatCallback(cbData) {
   return wgsFunction.setWaveStatCallback(waveStatcallbackData);
 }
 
+async function setRawDatasCallback(data) {
+  rawDataCallback = data;
+  return wgsFunction.setRawDatasCallback(rawDataCallbackData);
+}
+
 async function getCycleCount(path) {
   const pathBuffer = Buffer.alloc(path.length + 1);
   pathBuffer.fill(0);
   pathBuffer.write(path, 0, 'utf-8');
   return wgsFunction.getCycleCount(pathBuffer);
+}
+
+async function getDatasByIndex(path, index) {
+  const pathBuffer = Buffer.alloc(path.length + 1);
+  pathBuffer.fill(0);
+  pathBuffer.write(path, 0, 'utf-8');
+  return wgsFunction.getDatasByIndex(pathBuffer, index);
 }
 
 //loadFile 함수 export
@@ -103,4 +131,6 @@ module.exports = {
   setWaveStatCallback,
   getStatistics,
   getCycleCount,
+  setRawDatasCallback,
+  getDatasByIndex,
 };
