@@ -25,12 +25,13 @@ export default function AppBar({
   setContents,
   startCalc,
   setStartCalc,
-  setFreq
+  setFreq,
+  setCnt,
 }) {
   const [isRunning, setIsRunning] = useState(false);
 
   useEffect(() => {
-    DaqInitFunction({ setRawData, setFftData,setFreq });
+    DaqInitFunction({ setCnt, setRawData, setFftData, setFreq });
   }, []);
 
   const openPopup = () => {
@@ -64,7 +65,7 @@ export default function AppBar({
       });
     }
     filesArray = await Promise.all(
-      filesArray.map(async (file, index) =>{
+      filesArray.map(async (file, index) => {
         let ret = await daqGetCycleCount(file.path);
         return new FileModel(
           file.name,
@@ -134,6 +135,7 @@ export default function AppBar({
         setRawData(Array.from({ length: isTabs.length }, () => []));
         setFftData([]);
         setFreq([]);
+        setCnt(0);
         // selectedFile중에서 check된것만 filter하는 code있어야함
         const sendSelectedFile = selectedFile.filter(
           (item) => item.checked == true

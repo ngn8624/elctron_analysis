@@ -77,10 +77,11 @@ export const daqGetDatasByIndex = async (path, index) => {
   });
 };
 
-export function DaqInitFunction({ setRawData, setFftData,setFreq }) {
+export function DaqInitFunction({ setCnt, setRawData, setFftData, setFreq }) {
   daqInit();
   daqSetWaveStatCallback((data) => {
     cbData({
+      setCnt: setCnt,
       data: data,
       setRawData: setRawData,
     });
@@ -89,17 +90,18 @@ export function DaqInitFunction({ setRawData, setFftData,setFreq }) {
     cbFftData({
       data: data,
       setFftData: setFftData,
-      setFreq: setFreq
+      setFreq: setFreq,
     });
   });
   daqSetRawDatasCallback((data) => {
     console.log('init data : ', data);
-    clickDatas({data: data});
+    clickDatas({ data: data });
   });
 }
 
-export function cbData({ data, setRawData }) {
+export function cbData({ setCnt, data, setRawData }) {
   const { srcCnt, cycleCnt, dataCnt, rawData } = data;
+
   setRawData((prevData) => {
     const newRawData = [...prevData];
     for (let i = 0; i < dataCnt; i++) {
@@ -117,11 +119,13 @@ export function cbData({ data, setRawData }) {
         }
       }
     }
+
     return newRawData;
   });
+  setCnt((p) => p + 1);
 }
 
-export function cbFftData({ data, setFftData,setFreq }) {
+export function cbFftData({ data, setFftData, setFreq }) {
   const { srcCnt, cycleCnt, fftdata, fftDataFreq } = data;
   setFftData((prevData) => {
     const newRawData = [...prevData];
@@ -137,5 +141,5 @@ export function cbFftData({ data, setFftData,setFreq }) {
 
 export function clickDatas({ data }) {
   const { srcCnt, waveSize, fftSize, rawData, fftData } = data;
-  console.log("clickDatas", data);
+  console.log('clickDatas', data);
 }
