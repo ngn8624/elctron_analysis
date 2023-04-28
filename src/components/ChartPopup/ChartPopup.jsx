@@ -1,12 +1,16 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import styles from './ChartPopup.module.css';
 import { VscChromeClose } from 'react-icons/vsc';
 import { Chart } from 'react-chartjs-2';
-function ChartPopup({ spotData, closeChartPopup, filePaths }) {
+
+function ChartPopup({ spotData, closeChartPopup, filePaths, checkRawData, checkFftData,selectedFile }) {
   const chartRef1 = React.useRef(null);
   const chartRef2 = React.useRef(null);
   const chartData = {
-    datasets: spotData,
+    datasets: checkRawData,
+  };
+  const chartfftData = {
+    datasets: checkFftData,
   };
   const options1 = {
     maintainAspectRatio: false,
@@ -66,12 +70,6 @@ function ChartPopup({ spotData, closeChartPopup, filePaths }) {
           },
           mode: 'x',
         },
-        limits: {
-          x: {
-            min: 0,
-            max: 1,
-          },
-        },
       },
     },
     layout: {
@@ -85,8 +83,6 @@ function ChartPopup({ spotData, closeChartPopup, filePaths }) {
     scales: {
       x: {
         type: 'linear',
-        min: 0,
-        max: 1,
         title: {
           display: true,
           text: 'File && Time (s)',
@@ -101,7 +97,7 @@ function ChartPopup({ spotData, closeChartPopup, filePaths }) {
     },
   };
   const idx = spotData[0].index;
-  console.log('paths', filePaths);
+
   return (
     <div className={styles.popup}>
       <div className={styles.popupTitle}>
@@ -114,7 +110,7 @@ function ChartPopup({ spotData, closeChartPopup, filePaths }) {
           <VscChromeClose onClick={closeChartPopup} />
         </button>
       </div>
-      인덱스 : {idx} , 파일명 : {filePaths}
+      {/* 시간대 : {idx+1} , 파일명 : {filePaths} */}
       <div className={styles.chart1}>
         <Chart
           ref={chartRef1}
@@ -129,7 +125,7 @@ function ChartPopup({ spotData, closeChartPopup, filePaths }) {
             ref={chartRef2}
             type='line'
             options={options1}
-            data={chartData}
+            data={chartfftData}
           />
         </div>
       </div>

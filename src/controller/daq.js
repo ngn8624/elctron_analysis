@@ -1,6 +1,6 @@
 import { generateColor } from '../constant/constant';
 import { getConfigPath } from '../utils/file';
-
+import { v4 as uuidv4 } from 'uuid';
 export const daqSetFFTCallback = async (cbData) => {
   if (!window.wgsFunction) return -1;
   return window.wgsFunction.setFFTCallback(cbData).then((res) => {
@@ -77,7 +77,14 @@ export const daqGetDatasByIndex = async (path, index) => {
   });
 };
 
-export function DaqInitFunction({ setCnt, setRawData, setFftData, setFreq }) {
+export function DaqInitFunction({
+  setCnt,
+  setRawData,
+  setFftData,
+  setFreq,
+  setCheckRawData,
+  setCheckFftData,
+}) {
   daqInit();
   daqSetWaveStatCallback((data) => {
     cbData({
@@ -94,8 +101,11 @@ export function DaqInitFunction({ setCnt, setRawData, setFftData, setFreq }) {
     });
   });
   daqSetRawDatasCallback((data) => {
-    console.log('init data : ', data);
-    clickDatas({ data: data });
+    clickDatas({
+      data: data,
+      setCheckRawData: setCheckRawData,
+      setCheckFftData: setCheckFftData,
+    });
   });
 }
 
@@ -139,7 +149,119 @@ export function cbFftData({ data, setFftData, setFreq }) {
   });
 }
 
-export function clickDatas({ data }) {
-  const { srcCnt, waveSize, fftSize, rawData, fftData } = data;
-  console.log('clickDatas', data);
+export function clickDatas({ data, setCheckRawData, setCheckFftData }) {
+  const { index, srcCnt, waveSize, fftSize, rawData, fftData } = data;
+  const tempRawData = Array.from({ length: srcCnt }, () => []);
+  const tempX = Array.from({ length: waveSize }, () => []);
+  for (let j = 0; j < waveSize; j++) {
+    tempX[j] = parseFloat(((j + 1) / waveSize).toFixed(6)) + index;
+  }
+  for (let i = 0; i < srcCnt; i++) {
+    for (let j = 0; j < waveSize; j++) {
+      tempRawData[i].push({ x: tempX[j], y: rawData[i][j] });
+    }
+  }
+  const tempFftData = Array.from({ length: srcCnt }, () => []);
+  for (let i = 0; i < srcCnt; i++) {
+    for (let j = 0; j < fftSize; j++) {
+      tempFftData[i].push({ x: fftData[0][j], y: fftData[i + 1][j] });
+    }
+  }
+  const colorsArray = [];
+  for (let i = 0; i < srcCnt; i++) {
+    colorsArray.push(generateColor());
+  }
+  setCheckRawData((prev) => {
+    let tempx = 1;
+    if (prev.length != 0) {
+      tempx += 1;
+    }
+    const newData = [
+      ...prev,
+      {
+        id: uuidv4(),
+        hidden: false,
+        label: 'X' + '-' + tempx,
+        borderColor: colorsArray[0],
+        backgroundColor: colorsArray[0],
+        fill: false,
+        borderWidth: 0.7,
+        radius: 0,
+        pointRaduis: 0,
+        data: tempRawData[0],
+      },
+      {
+        id: uuidv4(),
+        hidden: false,
+        label: 'Y' + '-' + tempx,
+        borderColor: colorsArray[1],
+        backgroundColor: colorsArray[1],
+        fill: false,
+        borderWidth: 0.7,
+        radius: 0,
+        pointRaduis: 0,
+        data: tempRawData[1],
+      },
+      {
+        id: uuidv4(),
+        hidden: false,
+        label: 'Z' + '-' + tempx,
+        borderColor: colorsArray[2],
+        backgroundColor: colorsArray[2],
+        fill: false,
+        borderWidth: 0.7,
+        radius: 0,
+        pointRaduis: 0,
+        data: tempRawData[2],
+      },
+    ];
+    return newData;
+  });
+
+  setCheckFftData((prev) => {
+    let tempx = 1;
+    if (prev.length != 0) {
+      tempx += 1;
+    }
+    const newData = [
+      ...prev,
+      {
+        id: uuidv4(),
+        hidden: false,
+        label: 'X' + '-' + tempx,
+        borderColor: colorsArray[0],
+        backgroundColor: colorsArray[0],
+        fill: false,
+        borderWidth: 0.7,
+        radius: 0,
+        pointRaduis: 0,
+        data: tempFftData[0],
+      },
+      {
+        id: uuidv4(),
+        hidden: false,
+        label: 'Y' + '-' + tempx,
+        borderColor: colorsArray[1],
+        backgroundColor: colorsArray[1],
+        fill: false,
+        borderWidth: 0.7,
+        radius: 0,
+        pointRaduis: 0,
+        data: tempFftData[1],
+      },
+      {
+        id: uuidv4(),
+        hidden: false,
+        label: 'Z' + '-' + tempx,
+        borderColor: colorsArray[2],
+        backgroundColor: colorsArray[2],
+        fill: false,
+        borderWidth: 0.7,
+        radius: 0,
+        pointRaduis: 0,
+        data: tempFftData[2],
+      },
+    ];
+    return newData;
+  });
 }
