@@ -102,8 +102,8 @@ const waveStatcallbackData = ffi.Callback(
 
 const rawDataCallbackData = ffi.Callback(
   'void',
-  [ 'int','int', 'int', 'pointer', 'pointer'],
-  (srcCnt, waveSize, fftSize, waveDatas, fftDatas) => {
+  [ 'int','int','int', 'int', 'pointer', 'pointer'],
+  (index,srcCnt, waveSize, fftSize, waveDatas, fftDatas) => {
     const float64 = 8;
     //waveData는 sampleRate * srcCnt 개, xyz 분리해야됨
     //fftData는 fftCnt * srcCnt 개, xyz 분리해야됨
@@ -113,7 +113,6 @@ const rawDataCallbackData = ffi.Callback(
         waveDatas.buffer.slice(i * float64 * waveSize, (i + 1) * float64 * waveSize)
       );
     }
-
     const fftData = new Array(srcCnt + 1);
     for (let i = 0; i < srcCnt + 1; i++) {
       fftData[i] = new Float64Array(
@@ -121,6 +120,7 @@ const rawDataCallbackData = ffi.Callback(
       );
     }
     const dataset = {
+      index,
       srcCnt,
       waveSize,
       fftSize,
@@ -169,8 +169,6 @@ async function getDatasByIndex(path, index) {
   const pathBuffer = Buffer.alloc(path.length + 1);
   pathBuffer.fill(0);
   pathBuffer.write(path, 0, 'utf-8');
-  console.log("path", path);
-  console.log("index", index);
   return wgsFunction.getDatasByIndex(pathBuffer, index);
 }
 async function setFFTCallback(cbData) {

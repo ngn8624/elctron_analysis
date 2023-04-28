@@ -12,46 +12,6 @@ import LineCard from '../LineCard/LineCard';
 import { ColorRing } from 'react-loader-spinner';
 import ChartPopup from '../ChartPopup/ChartPopup';
 import { daqGetDatasByIndex } from '../../controller/daq';
-import { v4 as uuidv4 } from 'uuid';
-
-export const chartDatas = [
-  {
-    id: uuidv4(),
-    hidden: false,
-    label: 'X',
-    borderColor: 'rgba(255, 99, 132, 1)',
-    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-    fill: false,
-    borderWidth: 0.7,
-    radius: 0,
-    pointRaduis: 0,
-    data: [],
-  },
-  {
-    id: uuidv4(),
-    hidden: false,
-    label: 'Y',
-    borderColor: 'rgba(54, 162, 235, 1)',
-    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-    fill: false,
-    borderWidth: 0.7,
-    radius: 0,
-    pointRaduis: 0,
-    data: [],
-  },
-  {
-    id: uuidv4(),
-    hidden: false,
-    label: 'Z',
-    borderColor: 'rgba(255, 206, 86, 1)',
-    backgroundColor: 'rgba(255, 206, 86, 0.2)',
-    fill: false,
-    borderWidth: 0.7,
-    radius: 0,
-    pointRaduis: 0,
-    data: [],
-  },
-];
 
 export default function WaveSenseAnalysis() {
   const [rawData, setRawData] = useState([]); // chart의 y 값 data 모음
@@ -75,8 +35,8 @@ export default function WaveSenseAnalysis() {
   const [spotData, setspotData] = useState(null);
   const [calcedFiles, setCalcedFiles] = useState([]);
   const [freq, setFreq] = useState([]);
-  const [checkRawData, setCheckRawData] = useState(chartDatas);
-  const [checkFftData, setCheckFftData] = useState(chartDatas);
+  const [checkRawData, setCheckRawData] = useState([]);
+  const [checkFftData, setCheckFftData] = useState([]);
   
   // tab 클릭 시 activeIndex 업데이트
   function handleTabClick(index) {
@@ -183,9 +143,11 @@ export default function WaveSenseAnalysis() {
     if (spotData === null) return;
     if (spotData.length === 0) return;
     if (spotData[0].index === undefined) return;
-    console.log("calcedFiles[0]",calcedFiles[0]);
-    console.log("spotData[0].index",spotData[0].index);
-    daqGetDatasByIndex(calcedFiles[0], spotData[0].index);
+    setCheckRawData([]);
+    setCheckFftData([]);
+    for (let i = 0; i < calcedFiles.length; i++) {
+      daqGetDatasByIndex(calcedFiles[i], spotData[0].index);
+    }
   }, [spotData]);
 
   return (
@@ -213,6 +175,7 @@ export default function WaveSenseAnalysis() {
             filePaths={calcedFiles}
             checkRawData={checkRawData}
             checkFftData={checkFftData}
+            selectedFile={selectedFile}
           />
         </div>
       )}
