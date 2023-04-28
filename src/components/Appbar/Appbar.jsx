@@ -25,12 +25,14 @@ export default function AppBar({
   setContents,
   startCalc,
   setStartCalc,
-  setFreq
+  setFreq,
+  setCheckRawData,
+  setCheckFftData
 }) {
   const [isRunning, setIsRunning] = useState(false);
 
   useEffect(() => {
-    DaqInitFunction({ setRawData, setFftData,setFreq });
+    DaqInitFunction({ setRawData, setFftData,setFreq, setCheckRawData, setCheckFftData });
   }, []);
 
   const openPopup = () => {
