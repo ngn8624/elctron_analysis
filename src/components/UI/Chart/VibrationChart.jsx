@@ -38,7 +38,24 @@ export default function VibrationChart({
 }) {
   const chartRef = React.useRef(null);
   const chartData = {
-    datasets: rawData,
+    datasets:
+      type === 'FFT'
+        ? rawData.map((r) => {
+            const hzLabel = r.label
+              .split('-')
+              .filter((splitted) => splitted.includes('Hz'))[0];
+            const onlyNum = parseFloat(hzLabel.split('Hz')[0]);
+            const numDigit = onlyNum.toString().length;
+            const kNum = Math.round(onlyNum / 10000);
+            const resList = r.label.split('-').filter((s) => !s.includes('Hz'));
+            resList.push(numDigit > 3 ? `${kNum} kHz` : `${onlyNum} Hz`);
+            const resLabel = resList.join('-');
+            return {
+              ...r,
+              label: resLabel,
+            };
+          })
+        : rawData,
   };
   const defaultOptions = {
     maintainAspectRatio: false,
