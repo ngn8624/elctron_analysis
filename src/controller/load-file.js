@@ -7,10 +7,14 @@ const wgsFunction = ffi.Library('wave_sense_daq.dll', {
   setWaveStatCallback: ['int', ['pointer']],
   getStatistics: ['int', ['char *']],
   getCycleCount: ['int', ['char *']],
+  setRawDatasCallback: ['int', ['pointer']],
+  getDatasByIndex: ['int', ['char *', 'int']],
   setFFTCallback: ['int', ['pointer']],
 });
+
 let waveStatCallback = null;
 let fftCallback = null;
+let rawDataCallback = null;
 
 const waveFftCallbackData = ffi.Callback(
   'void',
@@ -96,6 +100,24 @@ const waveStatcallbackData = ffi.Callback(
   }
 );
 
+const rawDataCallbackData = ffi.Callback(
+  'void',
+  [ 'int','int', 'int', 'pointer', 'pointer'],
+  (srcCnt, waveSize, fftSize, waveDatas, fftDatas) => {
+    const float64 = 8;
+    console.log("srcCnt",srcCnt,"waveSize",waveSize, "fftSize",fftSize);
+    //waveData는 sampleRate * srcCnt 개, xyz 분리해야됨
+    //fftData는 fftCnt * srcCnt 개, xyz 분리해야됨
+    
+    const dataset = {
+      srcCnt,
+      waveSize,
+      fftSize,
+    };
+    if (rawDataCallback != null) rawDataCallback(dataset);
+  }
+);
+
 // // 프로그램 시작시 call, return 0 이면 success
 async function analysisInit() {
   return wgsFunction.analysisInit();
@@ -118,6 +140,11 @@ async function setWaveStatCallback(cbData) {
   return wgsFunction.setWaveStatCallback(waveStatcallbackData);
 }
 
+async function setRawDatasCallback(data) {
+  rawDataCallback = data;
+  return wgsFunction.setRawDatasCallback(rawDataCallbackData);
+}
+
 async function getCycleCount(path) {
   const pathBuffer = Buffer.alloc(path.length + 1);
   pathBuffer.fill(0);
@@ -125,6 +152,14 @@ async function getCycleCount(path) {
   return wgsFunction.getCycleCount(pathBuffer);
 }
 
+async function getDatasByIndex(path, index) {
+  const pathBuffer = Buffer.alloc(path.length + 1);
+  pathBuffer.fill(0);
+  pathBuffer.write(path, 0, 'utf-8');
+  console.log("path", path);
+  console.log("index", index);
+  return wgsFunction.getDatasByIndex(pathBuffer, index);
+}
 async function setFFTCallback(cbData) {
   fftCallback = cbData;
   return wgsFunction.setFFTCallback(waveFftCallbackData);
@@ -137,5 +172,7 @@ module.exports = {
   setWaveStatCallback,
   getStatistics,
   getCycleCount,
+  setRawDatasCallback,
+  getDatasByIndex,
   setFFTCallback
 };

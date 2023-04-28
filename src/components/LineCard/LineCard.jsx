@@ -22,6 +22,9 @@ export default function LineCard({
   selectedFile,
   setSelectedFile,
   defaultDataCnt,
+  onChartPopup,
+  spotData,
+  calcedFiles,
   freq
 }) {
   const [titleContents, setTitleContents] = useState(''); // 해당 탭의 title
@@ -118,9 +121,13 @@ export default function LineCard({
           <Container title={titleContents}>
             <ul className={styles.ulCol}>
               <VibrationChart
+                type={'Statistics'}
                 rawData={useChartData}
                 selectedFile={selectedFile}
                 defaultDataCnt={defaultDataCnt}
+                onChartPopup={onChartPopup}
+                spotData={spotData}
+                calcedFiles={calcedFiles}
               />
             </ul>
           </Container>
@@ -147,6 +154,7 @@ export default function LineCard({
           <Container title={'FFT '}>
             <ul className={styles.ulCol}>
               <VibrationChart
+                type={'FFT'}
                 rawData={useChartFFTData}
                 selectedFile={selectedFile}
                 defaultDataCnt={defaultDataCnt}

@@ -10,6 +10,8 @@ import styles from './WaveSenseAnalysis.module.css';
 import TabContainer from '../TabContainer/TabContainer';
 import LineCard from '../LineCard/LineCard';
 import { ColorRing } from 'react-loader-spinner';
+import ChartPopup from '../ChartPopup/ChartPopup';
+import { daqGetDatasByIndex } from '../../controller/daq';
 
 export default function WaveSenseAnalysis() {
   const [rawData, setRawData] = useState([]); // chart의 y 값 data 모음
@@ -29,7 +31,11 @@ export default function WaveSenseAnalysis() {
   // setting창 조작후 settingModel에 넣기
   const [defaultDataCnt, setDefaultDataCnt] = useState(1); // 추후 각각의 src가 몇개로 받을것인지 설정 : 현재 default 1
   const [startCalc, setStartCalc] = useState(false); // loading
+  const [chartPopup, setChartPopup] = useState(false); // chart popup
+  const [spotData, setspotData] = useState(null);
+  const [calcedFiles, setCalcedFiles] = useState([]);
   const [freq, setFreq] = useState([]);
+
   // tab 클릭 시 activeIndex 업데이트
   function handleTabClick(index) {
     setActiveIndex(index);
@@ -76,16 +82,8 @@ export default function WaveSenseAnalysis() {
 
   // isTabs즉, 선택된 통계가 바뀌면 activeIndex 및 데이터 모음 업데이트
   useEffect(() => {
-    setRawData(
-      Array.from({ length: isTabs.length }, () =>
-        []
-      )
-    );
-    setFftData(
-      Array.from({ length: isTabs.length }, () =>
-        []
-      )
-    );
+    setRawData(Array.from({ length: isTabs.length }, () => []));
+    setFftData(Array.from({ length: isTabs.length }, () => []));
     setActiveIndex((prevIndex) => {
       if (prevIndex >= isTabs.length) {
         return isTabs.length - 1;
@@ -117,6 +115,37 @@ export default function WaveSenseAnalysis() {
     }
     return false;
   };
+  const onChartPopup = (evt, item) => {
+    setspotData(item);
+  };
+  useEffect(() => {
+    if (spotData !== null && spotData.length > 0) {
+      setChartPopup((p) => !p);
+    }
+  }, [spotData]);
+
+  const closeChartPopup = () => {
+    setChartPopup(false);
+  };
+
+  useEffect(() => {
+    if (startCalc) {
+      const newCalcedFiles = selectedFile
+        .filter((file) => file.checked)
+        .map((file) => file.path);
+      setCalcedFiles(newCalcedFiles);
+    }
+  }, [startCalc]);
+
+  useEffect(() => {
+    if (spotData === null) return;
+    if (spotData.length === 0) return;
+    if (spotData[0].index === undefined) return;
+    console.log("calcedFiles[0]",calcedFiles[0]);
+    console.log("spotData[0].index",spotData[0].index);
+    daqGetDatasByIndex(calcedFiles[0], spotData[0].index);
+  }, [spotData]);
+
   return (
     <div className={styles.waveSense}>
       <div className='loading'>
@@ -134,6 +163,15 @@ export default function WaveSenseAnalysis() {
           colors={['#ffffff', '#357dbb', '#2468a8', '#0d21a1', ' #73fbd3']}
         />
       </div>
+      {chartPopup && (
+        <div className='unableBg'>
+          <ChartPopup
+            spotData={spotData}
+            closeChartPopup={closeChartPopup}
+            filePaths={calcedFiles}
+          />
+        </div>
+      )}
 
       <ConfigModal
         showPopup={showPopup}
@@ -180,6 +218,9 @@ export default function WaveSenseAnalysis() {
         selectedFile={selectedFile}
         setSelectedFile={setSelectedFile}
         defaultDataCnt={defaultDataCnt}
+        onChartPopup={onChartPopup}
+        spotData={spotData}
+        calcedFiles={calcedFiles}
         freq={freq}
       />
     </div>

@@ -19,6 +19,15 @@ export const daqSetWaveStatCallback = async (cbData) => {
   });
 };
 
+export const daqSetRawDatasCallback = async (cbData) => {
+  if (!window.wgsFunction) return -1;
+  return window.wgsFunction.setRawDatasCallback(cbData).then((res) => {
+    if (res === 0) console.log('setRawDatasCallback');
+    else console.log('setRawDatasCallback fail');
+    return res;
+  });
+};
+
 export const daqInit = async () => {
   if (!window.wgsFunction) return -1; // 0 : success , -1 : fail
   return window.wgsFunction.analysisInit().then((res) => {
@@ -59,6 +68,15 @@ export const daqGetStatisticsStop = async (json) => {
   console.log('daqGetStatisticsStop 있어야해용????');
 };
 
+export const daqGetDatasByIndex = async (path, index) => {
+  if (!window.wgsFunction) return -1; // 0 : success , -1 : fail
+  return window.wgsFunction.getDatasByIndex(path, index).then((res) => {
+    if (res === 0) console.log('getDatasByIndex success');
+    else console.log('getDatasByIndex fail');
+    return res;
+  });
+};
+
 export function DaqInitFunction({ setRawData, setFftData,setFreq }) {
   daqInit();
   daqSetWaveStatCallback((data) => {
@@ -73,6 +91,10 @@ export function DaqInitFunction({ setRawData, setFftData,setFreq }) {
       setFftData: setFftData,
       setFreq: setFreq
     });
+  });
+  daqSetRawDatasCallback((data) => {
+    console.log('init data : ', data);
+    clickDatas({data: data});
   });
 }
 
@@ -111,4 +133,9 @@ export function cbFftData({ data, setFftData,setFreq }) {
     newRawData.push(fftDataFreq); // 요소를 추가
     return newRawData;
   });
+}
+
+export function clickDatas({ data }) {
+  const { srcCnt, waveSize, fftSize, rawData, fftData } = data;
+  console.log("clickDatas", data);
 }

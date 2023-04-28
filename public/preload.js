@@ -34,6 +34,14 @@ contextBridge.exposeInMainWorld('wgsFunction', {
     const dll = require('../src/controller/load-file');
     return await dll.setWaveStatCallback(cbData);
   },
+  setRawDatasCallback: async (data) => {
+    const dll = require('../src/controller/load-file');
+    return await dll.setRawDatasCallback(data);
+  },
+  getDatasByIndex: async (path, index) => {
+    const dll = require('../src/controller/load-file');
+    return await dll.getDatasByIndex(path, index);
+  },
   setFFTCallback: async (cbData) => {
     const dll = require('../src/controller/load-file');
     return await dll.setFFTCallback(cbData);
