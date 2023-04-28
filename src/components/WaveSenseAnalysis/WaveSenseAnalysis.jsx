@@ -186,6 +186,7 @@ export default function WaveSenseAnalysis() {
         setFreq={setFreq}
         setCheckRawData={setCheckRawData}
         setCheckFftData={setCheckFftData}
+        setCnt={setCnt}
       />
       <AppBar
         setRawData={setRawData}

@@ -85,7 +85,92 @@ function ChartPopup({ spotData, closeChartPopup, filePaths, checkRawData, checkF
         type: 'linear',
         title: {
           display: true,
-          text: 'File && Time (s)',
+          text: 'Time (s)',
+        },
+      },
+      y: {
+        title: {
+          display: false,
+          text: 'Amplitude',
+        },
+      },
+    },
+  };
+
+  const options2 = {
+    maintainAspectRatio: false,
+    spanGaps: true,
+    responsive: true,
+    parsing: false,
+    normalized: true,
+    animation: false,
+    interaction: {
+      enabled: true,
+      mode: 'point',
+      axis: 'r',
+      includeInvisible: false,
+    },
+    plugins: {
+      autocolors: true,
+      tooltip: {
+        intersect: false, // 툴팁 영역 확장 설정
+      },
+      legend: {
+        display: true,
+        position: 'top',
+        labels: {
+          usePointStyle: false,
+          padding: 10,
+        },
+        title: {
+          display: true,
+        },
+      },
+      annotation: {
+        annotations: {},
+      },
+      decimation: {
+        enabled: true,
+        samples: 500,
+        threshold: 1000,
+        algorithm: 'lttb',
+      },
+      zoom: {
+        //zoom 기능
+        pan: {
+          enabled: true,
+          mode: 'x',
+        },
+        zoom: {
+          minScaleLimit: 0.5,
+          wheel: {
+            enabled: true,
+          },
+          drag: {
+            modifierKey: 'ctrl',
+            enabled: true,
+          },
+          pinch: {
+            enabled: false,
+          },
+          mode: 'x',
+        },
+      },
+    },
+    layout: {
+      padding: {
+        top: 10,
+        bottom: 50,
+        left: 10,
+        right: 10,
+      },
+    },
+    scales: {
+      x: {
+        type: 'linear',
+        title: {
+          display: true,
+          text: 'Frequency (Hz)',
         },
       },
       y: {
@@ -110,7 +195,6 @@ function ChartPopup({ spotData, closeChartPopup, filePaths, checkRawData, checkF
           <VscChromeClose onClick={closeChartPopup} />
         </button>
       </div>
-      {/* 시간대 : {idx+1} , 파일명 : {filePaths} */}
       <div className={styles.chart1}>
         <Chart
           ref={chartRef1}
@@ -124,7 +208,7 @@ function ChartPopup({ spotData, closeChartPopup, filePaths, checkRawData, checkF
           <Chart
             ref={chartRef2}
             type='line'
-            options={options1}
+            options={options2}
             data={chartfftData}
           />
         </div>

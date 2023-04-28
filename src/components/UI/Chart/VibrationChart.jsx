@@ -125,7 +125,7 @@ export default function VibrationChart({
         max: 1,
         title: {
           display: true,
-          text: 'File && Time (s)',
+          text: type== 'Statistics' ? 'Time (s)' : 'Frequency (Hz)',
         },
       },
       y: {
