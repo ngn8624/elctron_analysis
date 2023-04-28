@@ -77,7 +77,7 @@ export const daqGetDatasByIndex = async (path, index) => {
   });
 };
 
-export function DaqInitFunction({ setRawData, setFftData,setFreq }) {
+export function DaqInitFunction({ setRawData, setFftData, setFreq,setCheckRawData, setCheckFftData}) {
   daqInit();
   daqSetWaveStatCallback((data) => {
     cbData({
@@ -93,8 +93,7 @@ export function DaqInitFunction({ setRawData, setFftData,setFreq }) {
     });
   });
   daqSetRawDatasCallback((data) => {
-    console.log('init data : ', data);
-    clickDatas({data: data});
+    clickDatas({data: data, setCheckRawData: setCheckRawData, setCheckFftData: setCheckFftData});
   });
 }
 
@@ -135,7 +134,38 @@ export function cbFftData({ data, setFftData,setFreq }) {
   });
 }
 
-export function clickDatas({ data }) {
+export function clickDatas({ data, setCheckRawData, setCheckFftData }) {
   const { srcCnt, waveSize, fftSize, rawData, fftData } = data;
-  console.log("clickDatas", data);
+  const tempRawData = Array.from({ length: srcCnt }, () => []);
+  const tempX = Array.from({ length: waveSize }, () => []);
+  for (let j = 0; j < waveSize; j++) {
+    tempX[j] = parseFloat(((j + 1) / waveSize).toFixed(6));
+  }
+  for (let i = 0; i < srcCnt; i++) {
+    for (let j = 0; j < waveSize; j++) {
+      tempRawData[i].push({ x: tempX[j], y: rawData[i][j] });
+    }
+  }
+  const tempFftData = Array.from({ length: srcCnt }, () => []);
+  for (let i = 0; i < srcCnt; i++) {
+    for (let j = 0; j < fftSize; j++) {
+      tempFftData[i].push({ x: fftData[0][j], y: fftData[i+1][j] });
+    }
+  }
+  setCheckRawData((prev) => {
+    return prev.map((d, index) => {
+      return {
+        ...d,
+        data: tempRawData[index],
+      };
+    });
+  });
+  setCheckFftData((prev) => {
+    return prev.map((d, index) => {
+      return {
+        ...d,
+        data: tempFftData[index],
+      };
+    });
+  });
 }

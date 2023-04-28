@@ -12,6 +12,46 @@ import LineCard from '../LineCard/LineCard';
 import { ColorRing } from 'react-loader-spinner';
 import ChartPopup from '../ChartPopup/ChartPopup';
 import { daqGetDatasByIndex } from '../../controller/daq';
+import { v4 as uuidv4 } from 'uuid';
+
+export const chartDatas = [
+  {
+    id: uuidv4(),
+    hidden: false,
+    label: 'X',
+    borderColor: 'rgba(255, 99, 132, 1)',
+    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+    fill: false,
+    borderWidth: 0.7,
+    radius: 0,
+    pointRaduis: 0,
+    data: [],
+  },
+  {
+    id: uuidv4(),
+    hidden: false,
+    label: 'Y',
+    borderColor: 'rgba(54, 162, 235, 1)',
+    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+    fill: false,
+    borderWidth: 0.7,
+    radius: 0,
+    pointRaduis: 0,
+    data: [],
+  },
+  {
+    id: uuidv4(),
+    hidden: false,
+    label: 'Z',
+    borderColor: 'rgba(255, 206, 86, 1)',
+    backgroundColor: 'rgba(255, 206, 86, 0.2)',
+    fill: false,
+    borderWidth: 0.7,
+    radius: 0,
+    pointRaduis: 0,
+    data: [],
+  },
+];
 
 export default function WaveSenseAnalysis() {
   const [rawData, setRawData] = useState([]); // chart의 y 값 data 모음
@@ -35,7 +75,9 @@ export default function WaveSenseAnalysis() {
   const [spotData, setspotData] = useState(null);
   const [calcedFiles, setCalcedFiles] = useState([]);
   const [freq, setFreq] = useState([]);
-
+  const [checkRawData, setCheckRawData] = useState(chartDatas);
+  const [checkFftData, setCheckFftData] = useState(chartDatas);
+  
   // tab 클릭 시 activeIndex 업데이트
   function handleTabClick(index) {
     setActiveIndex(index);
@@ -169,6 +211,8 @@ export default function WaveSenseAnalysis() {
             spotData={spotData}
             closeChartPopup={closeChartPopup}
             filePaths={calcedFiles}
+            checkRawData={checkRawData}
+            checkFftData={checkFftData}
           />
         </div>
       )}
@@ -183,6 +227,8 @@ export default function WaveSenseAnalysis() {
         contents={contents}
         setContents={setContents}
         setFreq={setFreq}
+        setCheckRawData={setCheckRawData}
+        setCheckFftData={setCheckFftData}
       />
       <AppBar
         setRawData={setRawData}
@@ -200,6 +246,8 @@ export default function WaveSenseAnalysis() {
         startCalc={startCalc}
         setStartCalc={setStartCalc}
         setFreq={setFreq}
+        setCheckRawData={setCheckRawData}
+        setCheckFftData={setCheckFftData}
       />
       <TabContainer
         isTabs={isTabs}
