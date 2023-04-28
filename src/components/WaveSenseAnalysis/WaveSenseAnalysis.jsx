@@ -34,6 +34,8 @@ export default function WaveSenseAnalysis() {
   const [chartPopup, setChartPopup] = useState(false); // chart popup
   const [spotData, setspotData] = useState(null);
   const [calcedFiles, setCalcedFiles] = useState([]);
+  const [freq, setFreq] = useState([]);
+
   // tab 클릭 시 activeIndex 업데이트
   function handleTabClick(index) {
     setActiveIndex(index);
@@ -125,6 +127,7 @@ export default function WaveSenseAnalysis() {
   const closeChartPopup = () => {
     setChartPopup(false);
   };
+
   useEffect(() => {
     if (startCalc) {
       const newCalcedFiles = selectedFile
@@ -133,12 +136,16 @@ export default function WaveSenseAnalysis() {
       setCalcedFiles(newCalcedFiles);
     }
   }, [startCalc]);
+
   useEffect(() => {
     if (spotData === null) return;
     if (spotData.length === 0) return;
     if (spotData[0].index === undefined) return;
+    console.log("calcedFiles[0]",calcedFiles[0]);
+    console.log("spotData[0].index",spotData[0].index);
     daqGetDatasByIndex(calcedFiles[0], spotData[0].index);
   }, [spotData]);
+
   return (
     <div className={styles.waveSense}>
       <div className='loading'>
@@ -175,6 +182,7 @@ export default function WaveSenseAnalysis() {
         setFftData={setFftData}
         contents={contents}
         setContents={setContents}
+        setFreq={setFreq}
       />
       <AppBar
         setRawData={setRawData}
@@ -191,6 +199,7 @@ export default function WaveSenseAnalysis() {
         setContents={setContents}
         startCalc={startCalc}
         setStartCalc={setStartCalc}
+        setFreq={setFreq}
       />
       <TabContainer
         isTabs={isTabs}
@@ -212,6 +221,7 @@ export default function WaveSenseAnalysis() {
         onChartPopup={onChartPopup}
         spotData={spotData}
         calcedFiles={calcedFiles}
+        freq={freq}
       />
     </div>
   );

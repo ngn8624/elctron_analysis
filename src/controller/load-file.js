@@ -9,74 +9,112 @@ const wgsFunction = ffi.Library('wave_sense_daq.dll', {
   getCycleCount: ['int', ['char *']],
   setRawDatasCallback: ['int', ['pointer']],
   getDatasByIndex: ['int', ['char *', 'int']],
+  setFFTCallback: ['int', ['pointer']],
 });
+
 let waveStatCallback = null;
+let fftCallback = null;
 let rawDataCallback = null;
 
+const waveFftCallbackData = ffi.Callback(
+  'void',
+  ['int', 'int', 'pointer', 'pointer'],
+  (srcCnt, cycleCnt, ss, ssfft) => {
+
+    const float64 = 8;
+    const cycleData3dFft=[];
+    for (let i = 0; i < cycleCnt; i++) {
+        const srcDataFft = [];
+        for (let k = 0; k < srcCnt; k++) {
+          const start = (i *srcCnt + k) * float64;
+          const end = start + float64;
+          const datafft = new Float64Array(ss.buffer.slice(start, end));
+          srcDataFft.push(datafft[0]); // 0번째 인덱스만 사용
+      }
+      cycleData3dFft.push(srcDataFft);
+    }
+    const fftdata = [];
+    for (let i = 0; i < srcCnt; i++) {
+      const fftdataRow = [];
+      for (let j = 0; j < cycleCnt; j++) {
+        fftdataRow.push(cycleData3dFft[j][i]);
+      }
+      fftdata.push(fftdataRow);
+    }
+
+    // // fft 주파수
+    const fftDataFreq = new Float64Array(
+      ssfft.buffer.slice(0, srcCnt* float64)
+      );
+    const dataset = {
+      srcCnt,
+      cycleCnt,
+      fftdata,
+      fftDataFreq,
+    };
+    if (fftCallback != null) fftCallback(dataset);
+  }
+);
+
+// setRawData
 const waveStatcallbackData = ffi.Callback(
   'void',
-  ['int', 'int', 'int', 'pointer', 'pointer'],
-  (srcCnt, cycleCnt, dataCnt, ss, ssfft) => {
+  ['int', 'int', 'int', 'pointer'],
+  (srcCnt, cycleCnt, dataCnt, ss) => {
     const float64 = 8;
     const cycleData3d = [];
-    const cycleData3dFft = [];
-
     for (let i = 0; i < cycleCnt; i++) {
       const dataData = [];
-      const dataDataFft = [];
       for (let j = 0; j < dataCnt; j++) {
         const srcData = [];
-        const srcDataFft = [];
+        // const srcDataFft = [];
         for (let k = 0; k < srcCnt; k++) {
           const start = (i * dataCnt * srcCnt + j * srcCnt + k) * float64;
           const end = start + float64;
           const data = new Float64Array(ss.buffer.slice(start, end));
-          const datafft = new Float64Array(ssfft.buffer.slice(start, end));
           srcData.push(data[0]); // 0번째 인덱스만 사용
-          srcDataFft.push(datafft[0]); // 0번째 인덱스만 사용
         }
         dataData.push(srcData);
-        dataDataFft.push(srcDataFft);
       }
       cycleData3d.push(dataData);
-      cycleData3dFft.push(dataDataFft);
     }
     const rawData = [];
-    const fftData = [];
     for (let i = 0; i < dataCnt; i++) {
       const rawDataRow = [];
-      const fftDataRow = [];
       for (let j = 0; j < srcCnt; j++) {
         const srcData = [];
-        const srcFFTData = [];
         for (let k = 0; k < cycleCnt; k++) {
           srcData.push(cycleData3d[k][i][j]);
-          srcFFTData.push(cycleData3dFft[k][i][j]);
         }
         rawDataRow.push(srcData);
-        fftDataRow.push(srcFFTData);
       }
       rawData.push(rawDataRow);
-      fftData.push(fftDataRow);
     }
     const dataset = {
       srcCnt,
       cycleCnt,
       dataCnt,
       rawData,
-      fftData,
     };
     if (waveStatCallback != null) waveStatCallback(dataset);
   }
 );
 
 const rawDataCallbackData = ffi.Callback(
-  'int',
-  ['int', 'int', 'int', 'pointer', 'pointer'],
-  (srcCnt, sampleRate, fftCnt, waveDatas, fftDatas) => {
+  'void',
+  [ 'int','int', 'int', 'pointer', 'pointer'],
+  (srcCnt, waveSize, fftSize, waveDatas, fftDatas) => {
     const float64 = 8;
+    console.log("srcCnt",srcCnt,"waveSize",waveSize, "fftSize",fftSize);
     //waveData는 sampleRate * srcCnt 개, xyz 분리해야됨
     //fftData는 fftCnt * srcCnt 개, xyz 분리해야됨
+    
+    const dataset = {
+      srcCnt,
+      waveSize,
+      fftSize,
+    };
+    if (rawDataCallback != null) rawDataCallback(dataset);
   }
 );
 
@@ -118,7 +156,13 @@ async function getDatasByIndex(path, index) {
   const pathBuffer = Buffer.alloc(path.length + 1);
   pathBuffer.fill(0);
   pathBuffer.write(path, 0, 'utf-8');
+  console.log("path", path);
+  console.log("index", index);
   return wgsFunction.getDatasByIndex(pathBuffer, index);
+}
+async function setFFTCallback(cbData) {
+  fftCallback = cbData;
+  return wgsFunction.setFFTCallback(waveFftCallbackData);
 }
 
 //loadFile 함수 export
@@ -130,4 +174,5 @@ module.exports = {
   getCycleCount,
   setRawDatasCallback,
   getDatasByIndex,
+  setFFTCallback
 };

@@ -37,22 +37,22 @@
 }
 .fileWindowTitleUl > li:first-child {
   margin-left: 0px;
-  margin-right: 60px;
+  margin-right: 10px;
   accent-color: var(--accent-color);
 }
 .fileWindowTitleUl > li:nth-child(2) {
-  margin-right: 70px;
+  margin-right: 20px;
 }
 
 .fileWindowTitleUl > li:nth-child(3) {
-  margin-right: 100px;
+  margin-right: 30px;
 }
 .fileWindowTitleUl > li:nth-child(4) {
-  margin-right: 20px;
+  margin-right: 30px;
 }
 .fileWindowTitleUl > li:nth-child(5) {
-  margin-left: 160px;
-  margin-right: 20px;
+  margin-left: 0px;
+  margin-right: 0px;
 }
 .fileWindowTitleUl > li > button {
   font-size: 12px;
@@ -82,11 +82,10 @@
   display: flex;
   align-items: start;
   justify-content: flex-start;
-  margin-right: 60px;
   accent-color: var(--accent-color);
 }
 .fileWindowContentsUl > li > span {
-  width: 100px;
+  width: 30px;
 }
 .fileWindowContentsUl > li > input {
   margin-left: 4px;
@@ -209,4 +208,17 @@
 }
 .cycle {
   margin-left: 70px;
+}
+
+.fileFirst {
+  margin-left: 0px;
+  margin-right: 20px;
+  accent-color: var(--accent-color);
+}
+.fileSecond {
+  margin-right: 0px;
+}
+
+.fileThird {
+  margin-right: 0px;
 }

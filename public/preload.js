@@ -42,6 +42,10 @@ contextBridge.exposeInMainWorld('wgsFunction', {
     const dll = require('../src/controller/load-file');
     return await dll.getDatasByIndex(path, index);
   },
+  setFFTCallback: async (cbData) => {
+    const dll = require('../src/controller/load-file');
+    return await dll.setFFTCallback(cbData);
+  },
   handleCounter: (callback) => ipcRenderer.on('update-counter', callback),
   receive: (channel, func) => {
     let validChannels = ['fromMain']; // IPC채널들 추가
