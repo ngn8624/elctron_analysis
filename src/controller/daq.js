@@ -78,6 +78,7 @@ export const daqGetDatasByIndex = async (path, index) => {
 };
 
 export function DaqInitFunction({
+  setCnt,
   setRawData,
   setFftData,
   setFreq,
@@ -87,6 +88,7 @@ export function DaqInitFunction({
   daqInit();
   daqSetWaveStatCallback((data) => {
     cbData({
+      setCnt: setCnt,
       data: data,
       setRawData: setRawData,
     });
@@ -107,8 +109,9 @@ export function DaqInitFunction({
   });
 }
 
-export function cbData({ data, setRawData }) {
+export function cbData({ setCnt, data, setRawData }) {
   const { srcCnt, cycleCnt, dataCnt, rawData } = data;
+
   setRawData((prevData) => {
     const newRawData = [...prevData];
     for (let i = 0; i < dataCnt; i++) {
@@ -126,8 +129,10 @@ export function cbData({ data, setRawData }) {
         }
       }
     }
+
     return newRawData;
   });
+  setCnt((p) => p + 1);
 }
 
 export function cbFftData({ data, setFftData, setFreq }) {
@@ -167,16 +172,16 @@ export function clickDatas({ data, setCheckRawData, setCheckFftData }) {
     colorsArray.push(generateColor());
   }
   setCheckRawData((prev) => {
-    let tempx=1;
+    let tempx = 1;
     if (prev.length != 0) {
-      tempx +=1;
+      tempx += 1;
     }
     const newData = [
       ...prev,
       {
         id: uuidv4(),
         hidden: false,
-        label: 'X'+ '-'+ tempx,
+        label: 'X' + '-' + tempx,
         borderColor: colorsArray[0],
         backgroundColor: colorsArray[0],
         fill: false,
@@ -188,7 +193,7 @@ export function clickDatas({ data, setCheckRawData, setCheckFftData }) {
       {
         id: uuidv4(),
         hidden: false,
-        label: 'Y'+ '-'+ tempx,
+        label: 'Y' + '-' + tempx,
         borderColor: colorsArray[1],
         backgroundColor: colorsArray[1],
         fill: false,
@@ -200,7 +205,7 @@ export function clickDatas({ data, setCheckRawData, setCheckFftData }) {
       {
         id: uuidv4(),
         hidden: false,
-        label: 'Z'+ '-'+ tempx,
+        label: 'Z' + '-' + tempx,
         borderColor: colorsArray[2],
         backgroundColor: colorsArray[2],
         fill: false,
@@ -214,16 +219,16 @@ export function clickDatas({ data, setCheckRawData, setCheckFftData }) {
   });
 
   setCheckFftData((prev) => {
-    let tempx=1;
+    let tempx = 1;
     if (prev.length != 0) {
-      tempx +=1;
+      tempx += 1;
     }
     const newData = [
       ...prev,
       {
         id: uuidv4(),
         hidden: false,
-        label: 'X'+ '-'+ tempx,
+        label: 'X' + '-' + tempx,
         borderColor: colorsArray[0],
         backgroundColor: colorsArray[0],
         fill: false,
@@ -235,7 +240,7 @@ export function clickDatas({ data, setCheckRawData, setCheckFftData }) {
       {
         id: uuidv4(),
         hidden: false,
-        label: 'Y'+ '-'+ tempx,
+        label: 'Y' + '-' + tempx,
         borderColor: colorsArray[1],
         backgroundColor: colorsArray[1],
         fill: false,
@@ -247,7 +252,7 @@ export function clickDatas({ data, setCheckRawData, setCheckFftData }) {
       {
         id: uuidv4(),
         hidden: false,
-        label: 'Z'+ '-'+ tempx,
+        label: 'Z' + '-' + tempx,
         borderColor: colorsArray[2],
         backgroundColor: colorsArray[2],
         fill: false,

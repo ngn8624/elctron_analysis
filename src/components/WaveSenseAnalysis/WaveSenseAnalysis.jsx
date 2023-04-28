@@ -35,9 +35,10 @@ export default function WaveSenseAnalysis() {
   const [spotData, setspotData] = useState(null);
   const [calcedFiles, setCalcedFiles] = useState([]);
   const [freq, setFreq] = useState([]);
+  const [cnt, setCnt] = useState(0);
   const [checkRawData, setCheckRawData] = useState([]);
   const [checkFftData, setCheckFftData] = useState([]);
-  
+
   // tab 클릭 시 activeIndex 업데이트
   function handleTabClick(index) {
     setActiveIndex(index);
@@ -111,12 +112,6 @@ export default function WaveSenseAnalysis() {
       alert('At least one property must be TRUE.');
     }
   };
-  const isEmptyArr = (arr) => {
-    if (Array.isArray(arr) && arr.length === 0) {
-      return true;
-    }
-    return false;
-  };
   const onChartPopup = (evt, item) => {
     setspotData(item);
   };
@@ -149,24 +144,23 @@ export default function WaveSenseAnalysis() {
       daqGetDatasByIndex(calcedFiles[i], spotData[0].index);
     }
   }, [spotData]);
-
   return (
     <div className={styles.waveSense}>
-      <div className='loading'>
-        <ColorRing
-          visible={
-            startCalc &&
-            isEmptyArr(rawData.flat(Infinity)) &&
-            isEmptyArr(fftData.flat(Infinity))
-          }
-          height='160'
-          width='160'
-          ariaLabel='blocks-loading'
-          wrapperStyle={{}}
-          wrapperClass='blocks-wrapper'
-          colors={['#ffffff', '#357dbb', '#2468a8', '#0d21a1', ' #73fbd3']}
-        />
-      </div>
+      {cnt !== calcedFiles.length && (
+        <div className='unableBg'>
+          <div className='loading'>
+            <ColorRing
+              visible={cnt !== calcedFiles.length}
+              height='160'
+              width='160'
+              ariaLabel='blocks-loading'
+              wrapperStyle={{}}
+              wrapperClass='blocks-wrapper'
+              colors={['#ffffff', '#357dbb', '#2468a8', '#0d21a1', ' #73fbd3']}
+            />
+          </div>{' '}
+        </div>
+      )}
       {chartPopup && (
         <div className='unableBg'>
           <ChartPopup
@@ -209,6 +203,8 @@ export default function WaveSenseAnalysis() {
         startCalc={startCalc}
         setStartCalc={setStartCalc}
         setFreq={setFreq}
+        cnt={cnt}
+        setCnt={setCnt}
         setCheckRawData={setCheckRawData}
         setCheckFftData={setCheckFftData}
       />
