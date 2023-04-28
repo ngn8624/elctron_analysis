@@ -7,7 +7,7 @@
   "viewMode": "DBV",
   "dbvRange": 100,
   "RMS": true,
-  "Mean": false,
+  "Mean": true,
   "MeanH": false,
   "MeanG": false,
   "StDev": false,
