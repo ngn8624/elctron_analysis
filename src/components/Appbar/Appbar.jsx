@@ -6,6 +6,7 @@ import {
   DaqInitFunction,
   daqGetStatistics,
   daqGetStatisticsStop,
+  daqGetCycleCount,
 } from '../../controller/daq';
 
 let timer = 0;
@@ -24,11 +25,12 @@ export default function AppBar({
   setContents,
   startCalc,
   setStartCalc,
+  setFreq
 }) {
   const [isRunning, setIsRunning] = useState(false);
 
   useEffect(() => {
-    DaqInitFunction({ setRawData, setFftData });
+    DaqInitFunction({ setRawData, setFftData,setFreq });
   }, []);
 
   const openPopup = () => {
@@ -48,12 +50,30 @@ export default function AppBar({
       const fileExtension = file.name.split('.').pop().toLowerCase();
       return fileExtension === 'bin';
     });
-    // 중복 제거
+    // 이름 중복 제거
     const selectedFileNames = selectedFile.map((file) => file.name);
     filesArray = filesArray.filter((file) => {
       return !selectedFileNames.includes(file.name);
     });
-    filesArray = filesArray.map((file,index) => new FileModel(file.name, file.path, index+1));
+    // 이름순으로 오름차순정렬
+    if (filesArray.length !== 0) {
+      filesArray.sort((a, b) => {
+        if (a.name < b.name) return -1;
+        if (a.name > b.name) return 1;
+        return 0;
+      });
+    }
+    filesArray = await Promise.all(
+      filesArray.map(async (file, index) =>{
+        let ret = await daqGetCycleCount(file.path);
+        return new FileModel(
+          file.name,
+          file.path,
+          selectedFile.length + index + 1,
+          ret
+        );
+      })
+    );
     if (filesArray.length !== 0) {
       setSelectedFile([...selectedFile, ...filesArray]);
       setIsFileRunning(true);
@@ -66,7 +86,6 @@ export default function AppBar({
     timer = setInterval(() => {
       const dataCnt = isTabs.length;
       const srcCnt = 3;
-
       setRawData((prevData) => {
         const newRawData = [...prevData];
         for (let i = 0; i < dataCnt; i++) {
@@ -86,19 +105,14 @@ export default function AppBar({
       });
       setFftData((prevData) => {
         const newRawData = [...prevData];
-        for (let i = 0; i < dataCnt; i++) {
-          for (let j = 0; j < srcCnt; j++) {
-            if (!newRawData[i][j]) {
-              newRawData[i][j] = [];
-            }
-            const k = newRawData[i][j].length;
-            newRawData[i][j].length = k + 1;
-            newRawData[i][j][k] = [];
-            for (let l = 0; l < 50; l++) {
-              newRawData[i][j][k].push(Math.floor(Math.random() * 100));
-            }
+        const fftData = Array.from({ length: 3 }, () => {
+          const arr = [];
+          for (let l = 0; l < 50; l++) {
+            arr.push(Math.floor(Math.random() * 100));
           }
-        }
+          return arr;
+        });
+        newRawData.push(fftData); // 요소를 추가
         return newRawData;
       });
     }, 1000);
@@ -117,16 +131,9 @@ export default function AppBar({
         // end(); // test용
       } else {
         setStartCalc(true);
-        setRawData(
-          Array.from({ length: isTabs.length }, () =>
-            []
-          )
-        );
-        setFftData(
-          Array.from({ length: isTabs.length }, () =>
-            []
-          )
-        );
+        setRawData(Array.from({ length: isTabs.length }, () => []));
+        setFftData([]);
+        setFreq([]);
         // selectedFile중에서 check된것만 filter하는 code있어야함
         const sendSelectedFile = selectedFile.filter(
           (item) => item.checked == true
