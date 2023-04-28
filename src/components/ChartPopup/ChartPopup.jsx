@@ -1,9 +1,9 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import styles from './ChartPopup.module.css';
 import { VscChromeClose } from 'react-icons/vsc';
 import { Chart } from 'react-chartjs-2';
 
-function ChartPopup({ spotData, closeChartPopup, filePaths, checkRawData, checkFftData }) {
+function ChartPopup({ spotData, closeChartPopup, filePaths, checkRawData, checkFftData,selectedFile }) {
   const chartRef1 = React.useRef(null);
   const chartRef2 = React.useRef(null);
   const chartData = {
@@ -97,7 +97,7 @@ function ChartPopup({ spotData, closeChartPopup, filePaths, checkRawData, checkF
     },
   };
   const idx = spotData[0].index;
-  console.log('paths', filePaths);
+
   return (
     <div className={styles.popup}>
       <div className={styles.popupTitle}>
@@ -110,7 +110,7 @@ function ChartPopup({ spotData, closeChartPopup, filePaths, checkRawData, checkF
           <VscChromeClose onClick={closeChartPopup} />
         </button>
       </div>
-      인덱스 : {idx} , 파일명 : {filePaths}
+      {/* 시간대 : {idx+1} , 파일명 : {filePaths} */}
       <div className={styles.chart1}>
         <Chart
           ref={chartRef1}
